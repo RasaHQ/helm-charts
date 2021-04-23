@@ -1,0 +1,11 @@
+{{- define "rasa-action-server.containers.env" -}}
+- name: "RASA_TELEMETRY_ENABLED"
+  value: {{ .Values.applicationSettings.telemetry.enabled | quote }}
+- name: "MPLCONFIGDIR"
+  value: "/tmp/.matplotlib"
+- name: "TF_CPP_MIN_LOG_LEVEL"
+  value: "2"
+{{- if .Values.extraEnv }}
+{{ toYaml .Values.extraEnv }}
+{{- end }}
+{{- end -}}
