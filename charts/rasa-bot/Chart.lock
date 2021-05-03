@@ -1,0 +1,18 @@
+dependencies:
+- name: rasa-common
+  repository: file://../rasa-common
+  version: 1.0.0
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 10.3.18
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 14.1.1
+- name: rabbitmq
+  repository: https://charts.bitnami.com/bitnami
+  version: 8.12.2
+- name: rasa-action-server
+  repository: file://../rasa-action-server
+  version: 0.1.0
+digest: sha256:29ae06c5c53daaa80e4defdec5d107f32292209fa9ee2834ea1dfd56b8e30e0e
+generated: "2021-05-18T17:17:58.845888+02:00"

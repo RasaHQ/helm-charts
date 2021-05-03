@@ -3,8 +3,17 @@ releases:
     namespace: default
     chart: ../../charts/rasa-bot
     values:
+      - service:
+          type: LoadBalancer
+      - nginx:
+          tls:
+            enabled: true
+            generateSelfSignedCert: true
       - applicationSettings:
           debugMode: true
+          credentials:
+            additionalChannelCredentials:
+              rest:
       - initContainers:
         - name: download-model
           image: "busybox"
@@ -20,3 +29,5 @@ releases:
       - volumeMounts:
           - mountPath: /app/models
             name: models
+      - ingress:
+          enabled: true
