@@ -53,8 +53,11 @@ applicationSettings:
       # -- URL address that models will be pulled from
       url: http://my-server.com/models/default
 
-      # -- Token used authentication token
+      # -- Token used as a authentication token
       token: "token"
+
+      # -- JWT Secret which is used to sign the jwtTokens of the users
+      jwtSecret: "jwtSecret"
 
       # -- Time in seconds how often the URL will be querying
       waitTimeBetweenPulls: 100
@@ -136,11 +139,14 @@ applicationSettings:
     # -- Run Rasa X (Enterprise) in a production environment
     production: true
 
-    # -- Port to run the Rasa X (Enterprise) server at
-    port: 5002
+    # -- Token Rasa Enterprise accepts as authentication token from other Rasa services
+    token: "rasaXToken"
+
+    url: ""
 
     # -- Rasa X (Enterprise) endpoint URL from which to pull the runtime config
-    configEndpoint: ""
+    useConfigEndpoint: false
+
 
 # -- Specify the number of model runner replicas
 replicaCount: 1
@@ -148,7 +154,7 @@ replicaCount: 1
 
 networkPolicy:
   # -- Enable Kubernetes Network Policy
-  enabled: true
+  enabled: false
 
 # -- Override the default arguments for the container
 args: []

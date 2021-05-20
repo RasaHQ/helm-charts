@@ -1,4 +1,4 @@
-{{ if not .Values.applicationSettings.enterprise.enabled }}
+{{ if not .Values.applicationSettings.enterprise.useConfigEndpoint }}
 apiVersion: "v1"
 kind: "ConfigMap"
 metadata:

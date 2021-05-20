@@ -1,7 +1,7 @@
 {{- define "rasa-bot.containers.volumes" -}}
 - name: config-dir
   emptyDir: {}
-{{- if not .Values.applicationSettings.enterprise.enabled }}
+{{- if not .Values.applicationSettings.enterprise.useConfigEndpoint }}
 - name: "rasa-configuration"
   configMap:
     name: {{ include "rasa-common.names.fullname" . }}
@@ -42,7 +42,7 @@
 # Mount the temporary directory for the Rasa global configuration
 - name: "config-dir"
   mountPath: "/.config"
-{{- if not .Values.applicationSettings.enterprise.enabled }}
+{{- if not .Values.applicationSettings.enterprise.useConfigEndpoint }}
 - mountPath: "/app/endpoints.yml"
   subPath: "endpoints.yml"
   name: "rasa-configuration"

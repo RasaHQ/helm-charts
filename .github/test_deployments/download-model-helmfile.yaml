@@ -2,6 +2,7 @@ releases:
   - name: rasa-bot
     namespace: default
     chart: ../../charts/rasa-bot
+    kubeContext: minikube
     values:
       - service:
           type: LoadBalancer
@@ -30,4 +31,4 @@ releases:
           - mountPath: /app/models
             name: models
       - ingress:
-          enabled: true
+          enabled: false

@@ -67,6 +67,12 @@ spec:
             - "{{ .Values.applicationSettings.port }}"
             - --cors
             - '*'
+            - --jwt-method
+            - HS256
+            - --jwt-secret
+            - "$(JWT_SECRET)"
+            - --auth-token
+            - "$(RASA_TOKEN)"
         {{- if .Values.extraArgs }}
         {{- toYaml .Values.extraArgs | nindent 12 }}
         {{- end }}

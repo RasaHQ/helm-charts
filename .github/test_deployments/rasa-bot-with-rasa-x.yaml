@@ -1,0 +1,24 @@
+releases:
+  - name: rasa-bot
+    chart: ../../charts/rasa-bot
+
+    values:
+      - service:
+          type: LoadBalancer
+      - nginx:
+          tls:
+            enabled: true
+            generateSelfSignedCert: true
+      - applicationSettings:
+          enterprise:
+            enabled: true
+            url: "http://rasa-x-rasa-x:5005"
+          debugMode: true
+          credentials:
+            additionalChannelCredentials:
+              rest:
+      - ingress:
+          enabled: false
+
+  - name: rasa-x
+    chart: ../../../rasa-x-helm/charts/rasa-x/

@@ -1,12 +1,12 @@
 Rasa-bot {{ .Values.image.tag }} has been deployed!
 
-{{- if and .Values.applicationSettings.enterprise.enabled .Values.applicationSettings.enterprise.configEndpoint }}
+{{- if and .Values.applicationSettings.enterprise.enabled .Values.applicationSettings.enterprise.useConfigEndpoint }}
 ##############################################################################
 ####               NOTICE: Rasa X/Enterprise is enabled                   ####
 ##############################################################################
 
 The runtime configuration will be pulled from the Rasa X/Enterprise endpoint.
-Endpoint: {{ .Values.applicationSettings.enterprise.configEndpoint }}
+Endpoint: {{ .Values.applicationSettings.enterprise.url }}
 
 It means that the endpoints configuration from the values is ignored.
 {{- end }}
@@ -83,13 +83,13 @@ You can disabled NGINX by setting the `nginx.enabled` parameter to `false`
 {{- printf $errorString | fail -}}
 {{- end }}
 
-{{- if and .Values.applicationSettings.enterprise.enabled (not .Values.applicationSettings.enterprise.configEndpoint) }}
+{{- if and .Values.applicationSettings.enterprise.useConfigEndpoint (not .Values.applicationSettings.enterprise.url) .Values.applicationSettings.enterprise.enabled }}
 {{- $errorString := "\n##############################################################################" -}}
 {{- $errorString = print $errorString "\n####               ERROR: Rasa X/Enterprise misconfiguration              ####" -}}
 {{- $errorString = print $errorString "\n##############################################################################" -}}
 {{- $errorString = print $errorString "\n" -}}
-{{- $errorString = print $errorString "\nRasa X/Enterprise is enabled but the configuration endpoint is not defined." -}}
-{{- $errorString = print $errorString "\nPlease use the `applicationSettings.enterprise.configEndpoint` value parameter to define endpoint." -}}
+{{- $errorString = print $errorString "\nRasa X/Enterprise is enabled with the configuration endpoint but URL is not defined." -}}
+{{- $errorString = print $errorString "\nPlease use the `applicationSettings.enterprise.url` value parameter to define Rasa X/Enterprise instance." -}}
 {{- printf $errorString | fail -}}
 {{- end }}
 

@@ -24,6 +24,23 @@
   value: "/tmp/.matplotlib"
 - name: "TF_CPP_MIN_LOG_LEVEL"
   value: "2"
+{{- if .Values.applicationSettings.enterprise.enabled }}
+- name: "RASA_ENTERPRISE_TOKEN"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "rasa-common.names.fullname" . }}
+      key: "rasa-enterprise-token"
+{{- end }}
+- name: "RASA_TOKEN"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "rasa-common.names.fullname" . }}
+      key: "rasa-token"
+- name: "JWT_SECRET"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "rasa-common.names.fullname" . }}
+      key: "jwt-secret"
 {{- if .Values.extraEnv }}
 {{ toYaml .Values.extraEnv }}
 {{- end }}
