@@ -3,14 +3,27 @@
 
 {{ template "chart.badgesSection" . }}
 
-{{ template "chart.description" . }}
+Rasa Bot (Rasa Open Source Server) is an open source machine learning framework for automated text and voice-based conversations. Understand messages, hold conversations, and connect to messaging channels and APIs.
+
+See [Rasa website](https://rasa.com/docs/rasa/) to learn more.
+
+## How to use Rasa Helm repository
+
+You need to add this repository to your Helm repositories:
+
+```shell
+helm repo add rasa https://helm.rasa.com
+helm repo update
+```
 
 {{ template "chart.homepageLine" . }}
-
-{{ template "chart.maintainersSection" . }}
 
 {{ template "chart.sourcesSection" . }}
 
 {{ template "chart.requirementsSection" . }}
+
+## Quick start
+
+Here will be described a quick start.
 
 {{ template "chart.valuesSection" . }}

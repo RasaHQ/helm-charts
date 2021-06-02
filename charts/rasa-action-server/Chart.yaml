@@ -23,6 +23,8 @@ version: 0.1.0
 # It is recommended to use it with quotes.
 appVersion: "2.5.0"
 
+icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+
 sources:
   - https://github.com/RasaHQ/charts/rasa-bot
   - https://rasa.com/

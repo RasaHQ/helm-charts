@@ -2,13 +2,18 @@
 
 ![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.5.0](https://img.shields.io/badge/AppVersion-2.5.0-informational?style=flat-square)
 
-A Helm chart for Kubernetes
+Rasa Bot (Rasa Open Source Server) is an open source machine learning framework for automated text and voice-based conversations. Understand messages, hold conversations, and connect to messaging channels and APIs.
 
-## Maintainers
+See [Rasa website](https://rasa.com/docs/rasa/) to learn more.
 
-| Name | Email | Url |
-| ---- | ------ | --- |
-| Rasa | contact@rasa.com |  |
+## How to use Rasa Helm repository
+
+You need to add this repository to your Helm repositories:
+
+```shell
+helm repo add rasa https://helm.rasa.com
+helm repo update
+```
 
 ## Source Code
 
@@ -24,6 +29,10 @@ A Helm chart for Kubernetes
 | https://charts.bitnami.com/bitnami | postgresql | ~10.3.18 |
 | https://charts.bitnami.com/bitnami | rabbitmq | ~8.12.1 |
 | https://charts.bitnami.com/bitnami | redis | ~14.1.0 |
+
+## Quick start
+
+Here will be described a quick start.
 
 ## Values
 
