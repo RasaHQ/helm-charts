@@ -37,11 +37,11 @@ You can disabled NGINX by setting the `nginx.enabled` parameter to `false`
 
 {{- if and .Values.nginx.enabled .Values.nginx.tls.enabled (and (not .Values.nginx.tls.generateSelfSignedCert) (not .Values.nginx.tls.certificateSecret)) }}
 {{- $errorString := "\n##############################################################################" -}}
-{{- $errorString = print $errorString "\n####               ERROR: Nginx TLS misconfiguration                      ####" -}}
+{{- $errorString = print $errorString "\n####               ERROR: NGINX TLS misconfiguration                      ####" -}}
 {{- $errorString = print $errorString "\n##############################################################################" -}}
 {{- $errorString = print $errorString "\n" -}}
 {{- $errorString = print $errorString "\n" -}}
-{{- $errorString = print $errorString "\nTLS for Nginx is enabled, but configuration for TLS certificates is not defined." -}}
+{{- $errorString = print $errorString "\nTLS for NGINX is enabled, but configuration for TLS certificates is not defined." -}}
 {{- $errorString = print $errorString "\n" -}}
 {{- $errorString = print $errorString "\nYou can generate self-signed certificated by setting the `nginx.tls.generateSelfSignedCert` parameter to `true`" -}}
 {{- $errorString = print $errorString "\n" -}}

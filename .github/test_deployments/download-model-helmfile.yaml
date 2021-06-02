@@ -2,7 +2,6 @@ releases:
   - name: rasa-bot
     namespace: default
     chart: ../../charts/rasa-bot
-    kubeContext: minikube
     values:
       - service:
           type: LoadBalancer

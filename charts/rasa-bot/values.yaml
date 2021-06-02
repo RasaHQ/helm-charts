@@ -56,12 +56,6 @@ applicationSettings:
       # -- Token used as a authentication token
       token: "token"
 
-      # -- JWT Secret which is used to sign the jwtTokens of the users
-      jwtSecret: "jwtSecret"
-
-      # -- Time in seconds how often the URL will be querying
-      waitTimeBetweenPulls: 100
-
     ## You can use an SQLTrackerStore to store your assistant's conversation history.
     trackerStore:
       # -- Enable endpoint for Tracker Store
@@ -142,10 +136,18 @@ applicationSettings:
     # -- Token Rasa Enterprise accepts as authentication token from other Rasa services
     token: "rasaXToken"
 
+    # -- URL to Rasa X (Enterprise), e.g. http://rasa-x.mydomain.com:5002
     url: ""
 
     # -- Rasa X (Enterprise) endpoint URL from which to pull the runtime config
     useConfigEndpoint: false
+
+    model:
+      # -- Time in seconds how often the the model server will be querying
+      waitTimeBetweenPulls: 100
+
+      # -- The model with a given tag that should be pulled from the model server
+      tag: "production"
 
 
 # -- Specify the number of model runner replicas

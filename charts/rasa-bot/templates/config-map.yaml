@@ -12,12 +12,21 @@ data:
     {{- toYaml . | nindent 4 }}
     {{- end }}
 {{- end }}
+{{- if and .Values.applicationSettings.enterprise.enabled .Values.applicationSettings.enterprise.url }}
+    rasa:
+      url: {{ .Values.applicationSettings.enterprise.url }}/api
+{{- end }}
   endpoints: |
 {{- if eq (include "rasa-bot.endpoints.models.enabled" .) "true" }}
     models:
       url: {{ .Values.applicationSettings.endpoints.models.url }}
       token: ${MODEL_SERVER_TOKEN}
       wait_time_between_pulls: {{ .Values.applicationSettings.endpoints.models.waitTimeBetweenPulls }}
+{{- else if and .Values.applicationSettings.enterprise.enabled .Values.applicationSettings.enterprise.url }}
+    models:
+      url: {{ .Values.applicationSettings.enterprise.url }}/api/projects/default/models/tags/{{ .Values.applicationSettings.enterprise.model.tag }}
+      token: ${RASA_ENTERPRISE_TOKEN}
+      wait_time_between_pulls: {{ .Values.applicationSettings.enterprise.model.waitTimeBetweenPulls }}
 {{- end }}
 {{- if eq (include "rasa-bot.endpoints.trackerStore.enabled" .) "true"  }}
     {{- if .Values.applicationSettings.endpoints.trackerStore.customConfiguration }}

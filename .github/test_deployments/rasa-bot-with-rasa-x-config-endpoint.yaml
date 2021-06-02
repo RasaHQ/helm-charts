@@ -13,24 +13,33 @@ releases:
           enterprise:
             enabled: true
             url: "http://rasa-x-rasa-x:5002"
-            useConfigEndpoint: false
+            useConfigEndpoint: true
           debugMode: true
           credentials:
             additionalChannelCredentials:
               rest:
-          endpoints:
-            eventBroker:
-              customConfiguration:
-                type: "pika"
-                url: "rasa-x-rabbit"
-                username: "user"
-                password: ${RABBITMQ_PASSWORD}
-                port: 5672
-                queues:
-                  - ${RABBITMQ_QUEUE}
       - ingress:
           enabled: false
       - extraEnv:
+         - name: RASA_MODEL_SERVER
+           value: http://rasa-x-rasa-x:5002/api/projects/default/models/tags/production
+         - name: RASA_X_TOKEN
+           valueFrom:
+             secretKeyRef:
+               name: rasa-x-rasa
+               key: "rasaXToken"
+         - name: "DB_PASSWORD"
+           valueFrom:
+             secretKeyRef:
+               name: rasa-x-postgresql
+               key: postgresql-password
+         - name: "DB_DATABASE"
+           value: "rasa_production"
+         - name: "REDIS_PASSWORD"
+           valueFrom:
+             secretKeyRef:
+               name: rasa-x-redis
+               key: redis-password
          - name: "RABBITMQ_QUEUE"
            value: rasa_production_events
          - name: "RABBITMQ_PASSWORD"
@@ -41,3 +50,6 @@ releases:
 
   - name: rasa-x
     chart: ../../../rasa-x-helm/charts/rasa-x/
+    values:
+      - app:
+          existingUrl: "http://rasa-bot-rasa-action-server/webhook"

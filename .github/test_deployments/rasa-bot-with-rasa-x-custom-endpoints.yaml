@@ -1,0 +1,79 @@
+releases:
+  - name: rasa-bot
+    chart: ../../charts/rasa-bot
+
+    values:
+      - service:
+          type: LoadBalancer
+      - nginx:
+          tls:
+            enabled: true
+            generateSelfSignedCert: true
+      - applicationSettings:
+          enterprise:
+            enabled: true
+            url: "http://rasa-x-rasa-x:5002"
+            useConfigEndpoint: false
+          debugMode: true
+          credentials:
+            additionalChannelCredentials:
+              rest:
+          endpoints:
+            eventBroker:
+              customConfiguration:
+                type: "pika"
+                url: "rasa-x-rabbit"
+                username: "user"
+                password: ${RABBITMQ_PASSWORD}
+                port: 5672
+                queues:
+                  - ${RABBITMQ_QUEUE}
+            trackerStore:
+              customConfiguration:
+                type: sql
+                dialect: "postgresql"
+                url: rasa-x-postgresql
+                port: 5432
+                username: postgres
+                password: ${DB_PASSWORD}
+                db: ${DB_DATABASE}
+                login_db: rasa
+            lockStore:
+              customConfiguration:
+                type: "redis"
+                url: rasa-x-redis-master
+                port: 6379
+                password: ${REDIS_PASSWORD}
+                db: 1
+      - ingress:
+          enabled: false
+      - extraEnv:
+         - name: RASA_MODEL_SERVER
+           value: http://rasa-x-rasa-x:5002/api/projects/default/models/tags/production
+         - name: RASA_X_TOKEN
+           valueFrom:
+             secretKeyRef:
+               name: rasa-x-rasa
+               key: "rasaXToken"
+         - name: "DB_PASSWORD"
+           valueFrom:
+             secretKeyRef:
+               name: rasa-x-postgresql
+               key: postgresql-password
+         - name: "DB_DATABASE"
+           value: "rasa_production"
+         - name: "REDIS_PASSWORD"
+           valueFrom:
+             secretKeyRef:
+               name: rasa-x-redis
+               key: redis-password
+         - name: "RABBITMQ_QUEUE"
+           value: rasa_production_events
+         - name: "RABBITMQ_PASSWORD"
+           valueFrom:
+             secretKeyRef:
+               name: rasa-x-rabbit
+               key: rabbitmq-password
+
+  - name: rasa-x
+    chart: ../../../rasa-x-helm/charts/rasa-x/

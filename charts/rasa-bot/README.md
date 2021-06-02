@@ -42,16 +42,18 @@ A Helm chart for Kubernetes
 | applicationSettings.endpoints.lockStore.database | string | `"1"` | The database in redis which Rasa uses to store the conversation locks |
 | applicationSettings.endpoints.lockStore.enabled | bool | `true` | Enable endpoint for Lock Store |
 | applicationSettings.endpoints.models.enabled | bool | `false` | Enable endpoint for a model server |
-| applicationSettings.endpoints.models.token | string | `"token"` | Token used authentication token |
+| applicationSettings.endpoints.models.token | string | `"token"` | Token used as a authentication token |
 | applicationSettings.endpoints.models.url | string | `"http://my-server.com/models/default"` | URL address that models will be pulled from |
-| applicationSettings.endpoints.models.waitTimeBetweenPulls | int | `100` | Time in seconds how often the URL will be querying |
 | applicationSettings.endpoints.trackerStore.customConfiguration | object | `{}` | Custom configuration for Tracker Store |
 | applicationSettings.endpoints.trackerStore.enabled | bool | `true` | Enable endpoint for Tracker Store |
 | applicationSettings.endpoints.trackerStore.useLoginDatabase | bool | `true` | Create the database for the tracker store. If `false` the tracker store database must have been created previously. |
-| applicationSettings.enterprise.configEndpoint | string | `""` | Rasa X (Enterprise) endpoint URL from which to pull the runtime config |
 | applicationSettings.enterprise.enabled | bool | `false` | Run Rasa X (Enterprise) server |
-| applicationSettings.enterprise.port | int | `5002` | Port to run the Rasa X (Enterprise) server at |
+| applicationSettings.enterprise.model.tag | string | `"production"` | The model with a given tag that should be pulled from the model server |
+| applicationSettings.enterprise.model.waitTimeBetweenPulls | int | `100` | Time in seconds how often the the model server will be querying |
 | applicationSettings.enterprise.production | bool | `true` | Run Rasa X (Enterprise) in a production environment |
+| applicationSettings.enterprise.token | string | `"rasaXToken"` | Token Rasa Enterprise accepts as authentication token from other Rasa services |
+| applicationSettings.enterprise.url | string | `""` | URL to Rasa X (Enterprise), e.g. http://rasa-x.mydomain.com:5002 |
+| applicationSettings.enterprise.useConfigEndpoint | bool | `false` | Rasa X (Enterprise) endpoint URL from which to pull the runtime config |
 | applicationSettings.port | int | `5005` | Port on which Rasa runs |
 | applicationSettings.scheme | string | `"http"` | Scheme by which the service are accessible |
 | applicationSettings.telemetry.enabled | bool | `false` | Enable telemetry See: https://rasa.com/docs/rasa/telemetry/telemetry/ |
@@ -91,7 +93,7 @@ A Helm chart for Kubernetes
 | initContainers | list | `[]` | Allow to specify init containers for the Model Runner Deployment |
 | livenessProbe | object | Every 15s / 6 KO / 1 OK | Override default liveness probe settings |
 | nameOverride | string | `nil` | Override name of app |
-| networkPolicy.enabled | bool | `true` | Enable Kubernetes Network Policy |
+| networkPolicy.enabled | bool | `false` | Enable Kubernetes Network Policy |
 | nginx.customConfiguration | object | `{}` | Custom configuration for Nginx sidecar |
 | nginx.enabled | bool | `true` | Enabled Nginx as a sidecar container |
 | nginx.image.name | string | `"nginx"` | Image name to use |
