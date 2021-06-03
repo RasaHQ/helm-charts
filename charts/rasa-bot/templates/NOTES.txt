@@ -122,7 +122,11 @@ Additional components:
     PostgreSQL:
       Installed:  {{ .Values.postgresql.install }}
       External:   {{ .Values.postgresql.external.enabled }}
+{{- if (eq (include "rasa-bot.defaultModel.loaded" .) "true") }}
 
+Loaded model: {{ .Values.applicationSettings.defaultModel }}
+
+{{ end -}}
 {{ if .Values.ingress.enabled }}
   Rasa URL: http{{ if .Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.hostname }}
 {{ else }}

@@ -27,7 +27,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-postgresql-rasa-bot-ingress
+  name: {{ include "rasa-common.names.fullname" . }}-allow-postgresql-rasa-bot-ingress
 spec:
   podSelector:
 {{- if and (not .Values.postgresql.external.enabled) (eq (include "rasa-common.psql.available" .) "true") }}

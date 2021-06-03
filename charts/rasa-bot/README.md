@@ -32,16 +32,91 @@ helm repo update
 
 ## Quick start
 
-Here will be described a quick start.
+The rasa-bot deploy Rasa Open Source Server with loaded a model that is defined by the `applicationSettings.defaultModel` value. Below you can find examples of how to configure your deployment or use more advanced configurations such as integration with Rasa Enterprise.
+
+Default components that will be installed along with the rasa-bot:
+
+* RabbitMQ used as backend for [Event Broker](https://rasa.com/docs/rasa/event-brokers)
+* PostgreSQL used as backend for [Tracker Store](https://rasa.com/docs/rasa/tracker-stores)
+* Redis used as backend for [Lock Store](https://rasa.com/docs/rasa/lock-stores)
+
+### Installing the Rasa Bot Chart
+
+To install the chart with the release name `<RELEASE_NAME>` run the following command:
+
+```bash
+helm install --name <RELEASE_NAME> rasa/rasa-bot
+```
+
+After the rasa-bot was deployed successfully you should see additional information on how to connect to Rasa OSS, e.g:
+
+```shell
+To access Rasa Bot from outside of the cluster, follow the steps below:
+
+1. Get the Rasa URL by running these commands:
+
+    export SERVICE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].port}" services <RELEASE_NAME>)
+    kubectl port-forward --namespace default svc/<RELEASE_NAME> ${SERVICE_PORT}:${SERVICE_PORT} &
+    echo "http://127.0.0.1:${SERVICE_PORT}"
+
+    NGINX is enabled, in order to send a request that goes through NGINX you can use port: 80
+```
+
+After executing the commands above we can send a request to Rasa Bot
+
+```shell
+curl http://127.0.0.1:${SERVICE_PORT}
+Hello from Rasa: 2.4.0
+```
+
+## Custom configuration
+
+As a best practice, a YAML file that specifies the values for the chart parameters should be provided to configure the chart:
+
+1. Copy the default [values.yaml](values.yaml) value file. From now on we'll use the `rasa-values.yaml` values file.
+2. Set custom parameters in the rasa-values.yaml
+3. Upgrade the Rasa Bot Helm chart with the new rasa-values.yaml file:
+
+```shell
+helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
+```
+
+### Enabling REST Channel
+
+The `RestInput and CallbackInput` channels can be used for custom integrations. They provide a URL where you can post messages and either receive response messages directly, or asynchronously via a webhook.
+To learn more see: https://rasa.com/docs/rasa/connectors/your-own-website/#rest-channels
+
+By default the rasa-bot run without enabled REST channel, update your rasa-values.yaml file with the following REST channel configuration:
+
+```yaml
+applicationSettings:
+    # (...)
+    credentials:
+        # (...)
+        additionalChannelCredentials:
+            rest:
+```
+
+then upgrade your Rasa Bot deployment:
+
+```shell
+helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
+```
+
+### Enabling TLS for NGINX
+
+Description here
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Allow the Model Runner Deployment to schedule using affinity rules |
+| applicationSettings.cors | string | `"*"` | CORS for the passed origin. Default is * to whitelist all origins |
 | applicationSettings.credentials.additionalChannelCredentials | object | `{}` | Additional channel credentials which should be used by Rasa to connect to various input channels |
 | applicationSettings.credentials.enabled | bool | `true` | Enable credentials configuration for channel connectors |
 | applicationSettings.debugMode | bool | `false` | Enable debug mode |
+| applicationSettings.defaultModel | string | `"https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true"` | Default model loaded if a model server or a remote storage is not used |
 | applicationSettings.endpoints.action.endpointURL | string | `"/webhook"` | the URL which Rasa Open Source calls to execute custom actions |
 | applicationSettings.endpoints.additionalEndpoints | object | `{}` | Additional endpoints |
 | applicationSettings.endpoints.eventBroker.customConfiguration | object | `{}` | Custom configuration for Event Broker |
@@ -102,6 +177,7 @@ Here will be described a quick start.
 | initContainers | list | `[]` | Allow to specify init containers for the Model Runner Deployment |
 | livenessProbe | object | Every 15s / 6 KO / 1 OK | Override default liveness probe settings |
 | nameOverride | string | `nil` | Override name of app |
+| networkPolicy.denyAll | bool | `false` | Create a network policy that deny all traffic |
 | networkPolicy.enabled | bool | `false` | Enable Kubernetes Network Policy |
 | nginx.customConfiguration | object | `{}` | Custom configuration for Nginx sidecar |
 | nginx.enabled | bool | `true` | Enabled Nginx as a sidecar container |

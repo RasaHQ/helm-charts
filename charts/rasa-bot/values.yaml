@@ -15,6 +15,9 @@ applicationSettings:
   # -- Enable debug mode
   debugMode: false
 
+  # -- Default model loaded if a model server or a remote storage is not used
+  defaultModel: https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true
+
   # -- Port on which Rasa runs
   port: 5005
 
@@ -23,6 +26,9 @@ applicationSettings:
 
   # -- Token Rasa accepts as authentication token from other Rasa services
   token: "rasaToken"
+
+  # -- CORS for the passed origin. Default is * to whitelist all origins
+  cors: '*'
 
   credentials:
     # -- Enable credentials configuration for channel connectors
@@ -157,6 +163,9 @@ replicaCount: 1
 networkPolicy:
   # -- Enable Kubernetes Network Policy
   enabled: false
+
+  # -- Create a network policy that deny all traffic
+  denyAll: false
 
 # -- Override the default arguments for the container
 args: []

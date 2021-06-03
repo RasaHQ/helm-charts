@@ -73,3 +73,14 @@ Determine if credential configuration for channel connectors is used
 {{- print "false" -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Determine if a default model should be loaded
+*/}}
+{{- define "rasa-bot.defaultModel.loaded" -}}
+{{- if and (not .Values.applicationSettings.enterprise.useConfigEndpoint) (not .Values.applicationSettings.endpoints.models.enabled) (not (empty .Values.applicationSettings.defaultModel)) -}}
+{{- print "true" -}}
+{{- else -}}
+{{- print "false" -}}
+{{- end -}}
+{{- end -}}

@@ -11,6 +11,7 @@ releases:
             generateSelfSignedCert: true
       - applicationSettings:
           debugMode: true
+          defaultModel: ""
           credentials:
             additionalChannelCredentials:
               rest:
