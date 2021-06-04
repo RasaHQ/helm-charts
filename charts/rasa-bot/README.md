@@ -91,11 +91,11 @@ By default the rasa-bot run without enabled REST channel, update your rasa-value
 
 ```yaml
 applicationSettings:
+  # (...)
+  credentials:
     # (...)
-    credentials:
-        # (...)
-        additionalChannelCredentials:
-            rest:
+    additionalChannelCredentials:
+      rest:
 ```
 
 then upgrade your Rasa Bot deployment:
@@ -110,9 +110,9 @@ Update your `rasa-values.yaml` with the following NGINX TLS self-singed configur
 
 ```yaml
 nginx:
-    tls:
-        enabled: true
-        generateSelfSignedCert: true
+  tls:
+    enabled: true
+    generateSelfSignedCert: true
 ```
 
 then upgrade your Rasa Bot deployment:
@@ -135,6 +135,50 @@ then upgrade your Rasa Bot deployment:
 ```shell
 helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 ```
+
+### Enabling Rasa Enterprise
+
+To use Rasa Bot along with Rasa Enterprise update `rasa-values.yaml` with the following configuration:
+
+```yaml
+applicationSettings:
+  enterprise:
+    enabled: true
+      # here you have to put URL to Rasa Enterprise
+    url: "http://rasa-x-rasa-x:5002"
+  endpoints:
+    # In order to send messages to the same
+    # event broker as Rasa Enterprise uses we can pass
+    # a custom configuration.
+    eventBroker:
+      customConfiguration:
+        type: "pika"
+        url: "rasa-x-rabbit"
+        username: "user"
+        password: ${RABBITMQ_PASSWORD}
+        port: 5672
+        queues:
+          - ${RABBITMQ_QUEUE}
+extraEnv:
+  # In the configuration for an event broker are used environment variables, thus
+  # you have to pass extra environment variables that read values from
+  # the rasa-x deployment in the same namespace
+  - name: "RABBITMQ_QUEUE"
+    value: rasa_production_events
+  - name: "RABBITMQ_PASSWORD"
+    valueFrom:
+      secretKeyRef:
+        name: rasa-x-rabbit
+        key: rabbitmq-password
+```
+
+In the example above we assumed that Rasa Enterprise is deployed with `rasa-x` release name in the same namespaces as the rasa bot.
+
+```shell
+helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
+```
+
+In addition to Rasa Bot configuration, you have to update Rasa Enterprise configuration as well, please visit the docs to learn more.
 
 ## Values
 
