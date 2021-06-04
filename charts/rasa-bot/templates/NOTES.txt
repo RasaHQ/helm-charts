@@ -1,3 +1,4 @@
+{{- if not .Values.applicationSettings.enterprise.usedAsParentChart }}
 Rasa-bot {{ .Values.image.tag }} has been deployed!
 
 {{- if and .Values.applicationSettings.enterprise.enabled .Values.applicationSettings.enterprise.useConfigEndpoint }}
@@ -71,11 +72,11 @@ You can disable NGINX by setting the `nginx.enabled` parameter to `false`
 {{- $errorString = print $errorString "\n" -}}
 {{- $errorString = print $errorString "\nPlease use the following options to fix the issue:" -}}
 {{- $errorString = print $errorString "\n" -}}
-{{- $errorString = print $errorString "\n  - use the `.applicationSettings.endpoints.lockStore.customConfiguration` value parameter to pass a custom configuration" -}}
+{{- $errorString = print $errorString "\n  - use the `applicationSettings.endpoints.lockStore.customConfiguration` value parameter to pass a custom configuration" -}}
 {{- $errorString = print $errorString "\n" -}}
 {{- $errorString = print $errorString "\n    OR" -}}
 {{- $errorString = print $errorString "\n" -}}
-{{- $errorString = print $errorString "\n  - set the `.redis.install` value parameter to `true` in order to install Redis instance" -}}
+{{- $errorString = print $errorString "\n  - set the `redis.install` value parameter to `true` in order to install Redis instance" -}}
 {{- $errorString = print $errorString "\n" -}}
 {{- $errorString = print $errorString "\n    OR" -}}
 {{- $errorString = print $errorString "\n" -}}
@@ -164,4 +165,5 @@ To access Rasa Bot from outside of the cluster, follow the steps below:
     echo "http://${NODE_IP}:${NODE_PORT}"
 
 {{- end }}
+{{ end }}
 {{ end }}

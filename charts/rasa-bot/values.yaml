@@ -148,6 +148,10 @@ applicationSettings:
     # -- Rasa X (Enterprise) endpoint URL from which to pull the runtime config
     useConfigEndpoint: false
 
+    # -- Define if Rasa X (Enterprise) is aviable as a parent helm chart.
+    ## Used by the rasa-x-helm chart
+    usedAsParentChart: false
+
     model:
       # -- Time in seconds how often the the model server will be querying
       waitTimeBetweenPulls: 100

@@ -84,6 +84,7 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 ### Enabling REST Channel
 
 The `RestInput and CallbackInput` channels can be used for custom integrations. They provide a URL where you can post messages and either receive response messages directly, or asynchronously via a webhook.
+
 To learn more see: https://rasa.com/docs/rasa/connectors/your-own-website/#rest-channels
 
 By default the rasa-bot run without enabled REST channel, update your rasa-values.yaml file with the following REST channel configuration:
@@ -103,9 +104,37 @@ then upgrade your Rasa Bot deployment:
 helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 ```
 
-### Enabling TLS for NGINX
+### Enabling TLS for NGINX (self-signed)
 
-Description here
+Update your `rasa-values.yaml` with the following NGINX TLS self-singed configuration:
+
+```yaml
+nginx:
+    tls:
+        enabled: true
+        generateSelfSignedCert: true
+```
+
+then upgrade your Rasa Bot deployment:
+
+```shell
+helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
+```
+
+### Exposing the rasa-bot deployment to the public
+
+By default the rasa-bot service is available within a Kubernetes cluster, in order to expose the rasa-bot service to the public update your `rasa-values.yaml` file with the following configuration:
+
+```yaml
+service:
+    type: LoadBalancer
+```
+
+then upgrade your Rasa Bot deployment:
+
+```shell
+helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
+```
 
 ## Values
 
@@ -138,6 +167,7 @@ Description here
 | applicationSettings.enterprise.token | string | `"rasaXToken"` | Token Rasa Enterprise accepts as authentication token from other Rasa services |
 | applicationSettings.enterprise.url | string | `""` | URL to Rasa X (Enterprise), e.g. http://rasa-x.mydomain.com:5002 |
 | applicationSettings.enterprise.useConfigEndpoint | bool | `false` | Rasa X (Enterprise) endpoint URL from which to pull the runtime config |
+| applicationSettings.enterprise.usedAsParentChart | bool | `false` | Define if Rasa X (Enterprise) is aviable as a parent helm chart. |
 | applicationSettings.port | int | `5005` | Port on which Rasa runs |
 | applicationSettings.scheme | string | `"http"` | Scheme by which the service are accessible |
 | applicationSettings.telemetry.enabled | bool | `false` | Enable telemetry See: https://rasa.com/docs/rasa/telemetry/telemetry/ |
