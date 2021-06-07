@@ -18,6 +18,13 @@ releases:
           credentials:
             additionalChannelCredentials:
               rest:
+      - postgresql:
+          install: false
+        redis:
+          install: false
+        rabbitmq:
+          install: false
+
       - ingress:
           enabled: false
       - extraEnv:

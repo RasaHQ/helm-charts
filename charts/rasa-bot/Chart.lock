@@ -15,4 +15,4 @@ dependencies:
   repository: file://../rasa-action-server
   version: 0.1.0
 digest: sha256:29ae06c5c53daaa80e4defdec5d107f32292209fa9ee2834ea1dfd56b8e30e0e
-generated: "2021-05-18T17:17:58.845888+02:00"
+generated: "2021-06-07T10:26:52.169541+02:00"

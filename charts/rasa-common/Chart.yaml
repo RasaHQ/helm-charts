@@ -16,12 +16,13 @@ keywords:
   - function
   - rasa
 
-icon: icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
 
 type: library
 sources:
   - https://github.com/RasaHQ/helm-charts/rasa-common
   - https://rasa.com/
+
 maintainers:
   - email: contact@rasa.com
     name: Rasa

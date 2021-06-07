@@ -23,7 +23,7 @@ version: 0.1.0
 # It is recommended to use it with quotes.
 appVersion: "2.5.0"
 
-icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU"
 
 sources:
   - https://github.com/RasaHQ/charts/rasa-bot
@@ -39,18 +39,22 @@ dependencies:
     tags:
       - rasa-common
     version: 1.x.x
+
   - name: postgresql
     version: ~10.3.18
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.install
+
   - name: redis
     version: ~14.1.0
     repository: https://charts.bitnami.com/bitnami
     condition: redis.install
+
   - name: rabbitmq
     version: ~8.12.1
     repository: https://charts.bitnami.com/bitnami
     condition: rabbitmq.install
+
   - name: rasa-action-server
     version: 0.38.0
     repository: file://../rasa-action-server
