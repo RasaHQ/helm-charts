@@ -180,6 +180,124 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 
 In addition to Rasa Bot configuration, you have to update Rasa Enterprise configuration as well, please visit the docs to learn more.
 
+### Enabling Rasa Enterprise (used as a configuration endpoint)
+
+It's possible to use Rasa Enterprise as a configuration endpoint, in a such care runtime configuration for Rasa OSS will be pulled from Rasa Enterprise.
+
+An example below shows how to configure the Rasa Bot to use Rasa Enterprise which are deployed in the same namespace.
+
+Update `rasa-values.yaml` with the following configuration:
+
+```yaml
+applicationSettings:
+  enterprise:
+    enabled: true
+    url: "http://rasa-x-rasa-x:5002"
+    # Define if a runtime configuration should be pulled
+    # from Rasa Enterprise
+    useConfigEndpoint: true
+```
+
+Below we can see an example of a runtime configuration that is pulled from Rasa Enterprise:
+
+```yaml
+models:
+  url: ${RASA_MODEL_SERVER}
+  token: ${RASA_X_TOKEN}
+  wait_time_between_pulls: 10
+tracker_store:
+  type: sql
+  dialect: "postgresql"
+  url: rasa-x-postgresql
+  port: 5432
+  username: postgres
+  password: ${DB_PASSWORD}
+  db: ${DB_DATABASE}
+  login_db: rasa
+event_broker:
+  type: "pika"
+  url: "rasa-x-rabbit"
+  username: "user"
+  password: ${RABBITMQ_PASSWORD}
+  port: 5672
+  queues:
+  - ${RABBITMQ_QUEUE}
+
+action_endpoint:
+  url: "http://rasa-bot-rasa-action-server/webhook"
+  token:  ""
+lock_store:
+  type: "redis"
+  url: rasa-x-redis-master
+  port: 6379
+  password: ${REDIS_PASSWORD}
+  db: 1
+cache:
+  type: "redis"
+  url: rasa-x-redis-master
+  port: 6379
+  password: ${REDIS_PASSWORD}
+  db: 2
+  key_prefix: "rasax_cache"
+```
+
+The configuration uses environment variables, that's you have to add extra environment variables to the rasa bot. Full `rasa-values.yaml` should look like this:
+
+```yaml
+applicationSettings:
+  enterprise:
+    enabled: true
+    url: "http://rasa-x-rasa-x:5002"
+    # Define if a runtime configuration should be pulled
+    # from Rasa Enterprise
+    useConfigEndpoint: true
+
+## Don't install additional components.
+## The components installed by Rasa Enterprise are used instead.
+postgresql:
+  install: false
+redis:
+  install: false
+rabbitmq:
+  install: false
+
+## Extra environment variables used in the Rasa Enterprise configuration
+extraEnv:
+ - name: RASA_MODEL_SERVER
+   value: http://rasa-x-rasa-x:5002/api/projects/default/models/tags/production
+ - name: RASA_X_TOKEN
+   valueFrom:
+     secretKeyRef:
+       name: rasa-x-rasa
+       key: "rasaXToken"
+ - name: "DB_PASSWORD"
+   valueFrom:
+     secretKeyRef:
+       name: rasa-x-postgresql
+       key: postgresql-password
+ - name: "DB_DATABASE"
+   value: "rasa_production"
+ - name: "REDIS_PASSWORD"
+   valueFrom:
+     secretKeyRef:
+       name: rasa-x-redis
+       key: redis-password
+ - name: "RABBITMQ_QUEUE"
+   value: rasa_production_events
+ - name: "RABBITMQ_PASSWORD"
+   valueFrom:
+     secretKeyRef:
+       name: rasa-x-rabbit
+       key: rabbitmq-password
+
+```
+
+then upgrade your Rasa Bot deployment:
+
+```shell
+helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
+```
+
 ## Values
 
 | Key | Type | Default | Description |
