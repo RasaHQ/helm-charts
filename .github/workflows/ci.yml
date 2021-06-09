@@ -1,0 +1,33 @@
+name: Continuous Integration
+on:
+  push:
+    branches:
+    - 'main'
+    - '[0-9]+.[0-9]+.x'
+    tags:
+    - '**'
+  pull_request:
+    types: [opened, synchronize, labeled]
+
+jobs:
+  render_readme:
+    name: Render README.md
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        chart:
+          - rasa-bot
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Update README.md
+        working-directory: charts/${{ matrix.chart }}
+        id: readme
+        run: |
+          SHASUM_RENDERED=$(docker run --rm --volume "$(pwd):/helm-docs" jnorwood/helm-docs:latest -d -l error | shasum)
+          SHASUM_CURRENT=$(cat README.md | shasum)
+
+          if [[ "${SHASUM_RENDERED}" != "${SHASUM_CURRENT}" ]]; then
+            docker run --rm --volume "$(pwd):/helm-docs" jnorwood/helm-docs:latest -d -l error > README.md
+            echo "::set-output name=changed::true"
+          fi

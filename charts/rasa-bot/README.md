@@ -419,8 +419,8 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | service.externalTrafficPolicy | string | `"Cluster"` | Enable client source IP preservation |
 | service.loadBalancerIP | string | `nil` |  |
 | service.nodePort | string | `nil` |  |
-| service.port | int | `5005` | Set port of action-server service (Kubernetes >= 1.15) |
-| service.type | string | `"ClusterIP"` | Set type of action-server service |
+| service.port | int | `5005` | Set port of rasa-bot service (Kubernetes >= 1.15) |
+| service.type | string | `"ClusterIP"` | Set type of rasa-bot service |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `false` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
