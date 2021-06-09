@@ -111,11 +111,12 @@ jobs:
 
       - name: Test Rasa Bot
         timeout-minutes: 5
+        if: ${{ matrix.chart }} == 'rasa-bot'
         run: |
-              kubectl wait --for=condition=Ready --selector app.kubernetes.io/name=rasa-bot pod
+          kubectl wait --timeout=0 --for=condition=Ready --selector app.kubernetes.io/name=rasa-bot pod
 
-              export SERVICE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].port}" services rasa-bot)
-              kubectl port-forward --namespace default svc/rasa-bot ${SERVICE_PORT}:${SERVICE_PORT} &
-              echo "http://127.0.0.1:${SERVICE_PORT}"
+          export SERVICE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].port}" services rasa-bot)
+          kubectl port-forward --namespace default svc/rasa-bot ${SERVICE_PORT}:${SERVICE_PORT} &
+          echo "http://127.0.0.1:${SERVICE_PORT}"
 
-              curl http://127.0.0.1:${SERVICE_PORT}
+          curl http://127.0.0.1:${SERVICE_PORT}
