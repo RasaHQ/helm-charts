@@ -65,7 +65,7 @@ jobs:
       - name: Render template
         run: |
           helm dep up charts/${{ matrix.chart }}
-          helm template charts/${{ matrix.chart }} > ${{ matrix.chart }}.yaml
+          helm template -f .github/kubeval.values.yaml charts/${{ matrix.chart }} > ${{ matrix.chart }}.yaml
 
       - name: Run kubeval
         uses: instrumenta/kubeval-action@5915e4adba5adccac07cb156b82e54c3fed74921
