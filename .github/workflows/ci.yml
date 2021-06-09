@@ -110,7 +110,10 @@ jobs:
           helm install ${{ matrix.chart }} charts/${{ matrix.chart }}
 
       - name: Test Rasa Bot
+        timeout-minutes: 5
         run: |
+              kubectl wait --for=condition=Ready --selector app.kubernetes.io/name=rasa-bot pod
+
               export SERVICE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].port}" services rasa-bot)
               kubectl port-forward --namespace default svc/rasa-bot ${SERVICE_PORT}:${SERVICE_PORT} &
               echo "http://127.0.0.1:${SERVICE_PORT}"
