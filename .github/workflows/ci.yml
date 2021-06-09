@@ -37,17 +37,22 @@ jobs:
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.1.0
 
-      - name: Run chart-testing (list-changed)
-        id: list-changed
-        run: |
-          changed=$(ct list-changed --config .github/.ct.yaml)
-          if [[ -n "$changed" ]]; then
-            echo "::set-output name=changed::true"
-          fi
-
       - name: Run chart-testing (lint)
         run: ct lint --config .github/.ct.yaml
 
-      - name: Create kind cluster
-        uses: helm/kind-action@v1.0.0
-        if: steps.list-changed.outputs.changed == 'true'
+
+  kubeval-chart:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        # When changing versions here, check that the version exists at: https://github.com/instrumenta/kubernetes-json-schema
+        k8s:
+          - v1.14.10
+          - v1.16.4
+          - v1.18.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run kubeval
+        uses: instrumenta/kubeval-action@5915e4adba5adccac07cb156b82e54c3fed74921
