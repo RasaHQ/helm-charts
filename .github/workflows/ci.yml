@@ -108,3 +108,11 @@ jobs:
         run: |
           helm dep up charts/${{ matrix.chart }}
           helm install ${{ matrix.chart }} charts/${{ matrix.chart }}
+
+      - name: Test Rasa Bot
+        run: |
+              export SERVICE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].port}" services rasa-bot)
+              kubectl port-forward --namespace default svc/rasa-bot ${SERVICE_PORT}:${SERVICE_PORT} &
+              echo "http://127.0.0.1:${SERVICE_PORT}"
+
+              curl http://127.0.0.1:${SERVICE_PORT}
