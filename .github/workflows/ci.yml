@@ -64,6 +64,7 @@ jobs:
 
       - name: Render template
         run: |
+          helm dep up charts/${{ matrix.chart }}
           helm template charts/${{ matrix.chart }} > ${{ matrix.chart }}.yaml
 
       - name: Run kubeval
