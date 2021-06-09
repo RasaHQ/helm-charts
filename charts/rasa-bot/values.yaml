@@ -167,7 +167,6 @@ applicationSettings:
 # -- Specify the number of model runner replicas
 replicaCount: 1
 
-
 networkPolicy:
   # -- Enable Kubernetes Network Policy
   enabled: false
@@ -257,11 +256,11 @@ service:
   # -- Annotations to add to the service
   annotations: {}
 
-  # - Specify the nodePort(s) value(s) for the LoadBalancer and NodePort service types
+  # -- Specify the nodePort(s) value(s) for the LoadBalancer and NodePort service types
   ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport
   nodePort:
 
-  # - Exposes the Service externally using a cloud provider's load balancer
+  # -- Exposes the Service externally using a cloud provider's load balancer
   ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
   loadBalancerIP:
 
@@ -321,7 +320,7 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-##  Autoscaling parameters for the Model Runner Deployment
+## Autoscaling parameters for the Model Runner Deployment
 ## See: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 autoscaling:
   # -- Enable autoscaling
