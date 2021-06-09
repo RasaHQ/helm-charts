@@ -14,6 +14,7 @@ jobs:
         chart:
           - rasa-bot
           - rasa-action-server
+          - rasa-common
     steps:
       - uses: actions/checkout@v2
 
