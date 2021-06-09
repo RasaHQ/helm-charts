@@ -35,6 +35,15 @@ You can disable Ingress by setting the `ingress.enabled` parameter to `false`
 You can disable NGINX by setting the `nginx.enabled` parameter to `false`
 {{- end }}
 
+{{- if and .Values.applicationSettings.endpoints.models.enabled .Values.applicationSettings.endpoints.models.useRasaXasModelServer.enabled (not .Values.applicationSettings.enterprise.enabled) }}
+##############################################################################
+####               WARNING: Rasa X is used as a model server              ####
+##############################################################################
+
+You want to use Rasa X as a model server but configuration for Rasa X is disabled.
+
+You can enable Rasa X configuration be setting the `applicationSettings.enterprise.enabled` parameter to `true`.
+{{- end }}
 
 {{- if and .Values.nginx.enabled .Values.nginx.tls.enabled (and (not .Values.nginx.tls.generateSelfSignedCert) (not .Values.nginx.tls.certificateSecret)) }}
 {{- $errorString := "\n##############################################################################" -}}

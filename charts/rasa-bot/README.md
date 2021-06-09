@@ -136,7 +136,7 @@ then upgrade your Rasa Bot deployment:
 helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 ```
 
-### Enabling Rasa Enterprise
+### Enabling Rasa X / Enterprise
 
 To use Rasa Bot along with Rasa Enterprise update `rasa-values.yaml` with the following configuration:
 
@@ -159,6 +159,10 @@ applicationSettings:
         port: 5672
         queues:
           - ${RABBITMQ_QUEUE}
+    # Use Rasa X as a model server
+    models:
+      useRasaXasModelServer:
+        enabled: true
 extraEnv:
   # In the configuration for an event broker are used environment variables, thus
   # you have to pass extra environment variables that read values from
@@ -305,9 +309,9 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | affinity | object | `{}` | Allow the Model Runner Deployment to schedule using affinity rules |
 | applicationSettings.cors | string | `"*"` | CORS for the passed origin. Default is * to whitelist all origins |
 | applicationSettings.credentials.additionalChannelCredentials | object | `{}` | Additional channel credentials which should be used by Rasa to connect to various input channels |
-| applicationSettings.credentials.enabled | bool | `true` | Enable credentials configuration for channel connectors |
+| applicationSettings.credentials.enabled | bool | `false` | Enable credentials configuration for channel connectors |
 | applicationSettings.debugMode | bool | `false` | Enable debug mode |
-| applicationSettings.defaultModel | string | `"https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true"` | Default model loaded if a model server or a remote storage is not used |
+| applicationSettings.defaultModel | string | `"https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true"` | Default model loaded if a model server or a remote storage is not used. It has to be a URL that points to a tag.gz file. |
 | applicationSettings.endpoints.action.endpointURL | string | `"/webhook"` | the URL which Rasa Open Source calls to execute custom actions |
 | applicationSettings.endpoints.additionalEndpoints | object | `{}` | Additional endpoints |
 | applicationSettings.endpoints.eventBroker.customConfiguration | object | `{}` | Custom configuration for Event Broker |
@@ -319,17 +323,17 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | applicationSettings.endpoints.models.enabled | bool | `false` | Enable endpoint for a model server |
 | applicationSettings.endpoints.models.token | string | `"token"` | Token used as a authentication token |
 | applicationSettings.endpoints.models.url | string | `"http://my-server.com/models/default"` | URL address that models will be pulled from |
+| applicationSettings.endpoints.models.useRasaXasModelServer.enabled | bool | `false` | Use Rasa X (Enterprise) as a model server |
+| applicationSettings.endpoints.models.useRasaXasModelServer.tag | string | `"production"` | The model with a given tag that should be pulled from the model server |
+| applicationSettings.endpoints.models.waitTimeBetweenPulls | int | `20` | Time in seconds how often the the model server will be querying |
 | applicationSettings.endpoints.trackerStore.customConfiguration | object | `{}` | Custom configuration for Tracker Store |
 | applicationSettings.endpoints.trackerStore.enabled | bool | `true` | Enable endpoint for Tracker Store |
 | applicationSettings.endpoints.trackerStore.useLoginDatabase | bool | `true` | Create the database for the tracker store. If `false` the tracker store database must have been created previously. |
 | applicationSettings.enterprise.enabled | bool | `false` | Run Rasa X (Enterprise) server |
-| applicationSettings.enterprise.model.tag | string | `"production"` | The model with a given tag that should be pulled from the model server |
-| applicationSettings.enterprise.model.waitTimeBetweenPulls | int | `100` | Time in seconds how often the the model server will be querying |
 | applicationSettings.enterprise.production | bool | `true` | Run Rasa X (Enterprise) in a production environment |
 | applicationSettings.enterprise.token | string | `"rasaXToken"` | Token Rasa Enterprise accepts as authentication token from other Rasa services |
 | applicationSettings.enterprise.url | string | `""` | URL to Rasa X (Enterprise), e.g. http://rasa-x.mydomain.com:5002 |
 | applicationSettings.enterprise.useConfigEndpoint | bool | `false` | Rasa X (Enterprise) endpoint URL from which to pull the runtime config |
-| applicationSettings.enterprise.usedAsParentChart | bool | `false` | Define if Rasa X (Enterprise) is aviable as a parent helm chart. |
 | applicationSettings.port | int | `5005` | Port on which Rasa runs |
 | applicationSettings.scheme | string | `"http"` | Scheme by which the service are accessible |
 | applicationSettings.telemetry.enabled | bool | `false` | Enable telemetry See: https://rasa.com/docs/rasa/telemetry/telemetry/ |

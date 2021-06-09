@@ -130,7 +130,7 @@ then upgrade your Rasa Bot deployment:
 helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 ```
 
-### Enabling Rasa Enterprise
+### Enabling Rasa X / Enterprise
 
 To use Rasa Bot along with Rasa Enterprise update `rasa-values.yaml` with the following configuration:
 
@@ -153,6 +153,10 @@ applicationSettings:
         port: 5672
         queues:
           - ${RABBITMQ_QUEUE}
+    # Use Rasa X as a model server
+    models:
+      useRasaXasModelServer:
+        enabled: true
 extraEnv:
   # In the configuration for an event broker are used environment variables, thus
   # you have to pass extra environment variables that read values from

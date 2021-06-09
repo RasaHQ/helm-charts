@@ -19,6 +19,9 @@ releases:
             additionalChannelCredentials:
               rest:
           endpoints:
+            models:
+              useRasaXasModelServer:
+                enabled: true
             eventBroker:
               customConfiguration:
                 type: "pika"
@@ -48,8 +51,6 @@ releases:
       - ingress:
           enabled: false
       - extraEnv:
-         - name: RASA_MODEL_SERVER
-           value: http://rasa-x-rasa-x:5002/api/projects/default/models/tags/production
          - name: RASA_X_TOKEN
            valueFrom:
              secretKeyRef:

@@ -15,7 +15,7 @@ applicationSettings:
   # -- Enable debug mode
   debugMode: false
 
-  # -- Default model loaded if a model server or a remote storage is not used
+  # -- Default model loaded if a model server or a remote storage is not used. It has to be a URL that points to a tag.gz file.
   defaultModel: https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true
 
   # -- Port on which Rasa runs
@@ -32,7 +32,7 @@ applicationSettings:
 
   credentials:
     # -- Enable credentials configuration for channel connectors
-    enabled: true
+    enabled: false
 
     # -- Additional channel credentials which should be used by Rasa to connect to various
     # input channels
@@ -62,7 +62,17 @@ applicationSettings:
       # -- Token used as a authentication token
       token: "token"
 
-    ## You can use an SQLTrackerStore to store your assistant's conversation history.
+      # -- Time in seconds how often the the model server will be querying
+      waitTimeBetweenPulls: 20
+
+      useRasaXasModelServer:
+        # -- Use Rasa X (Enterprise) as a model server
+        enabled: false
+
+        # -- The model with a given tag that should be pulled from the model server
+        tag: "production"
+
+    ## You can use an Tracker Store to store your assistant's conversation history.
     trackerStore:
       # -- Enable endpoint for Tracker Store
       enabled: true
@@ -150,14 +160,8 @@ applicationSettings:
 
     # -- Define if Rasa X (Enterprise) is aviable as a parent helm chart.
     ## Used by the rasa-x-helm chart
-    usedAsParentChart: false
-
-    model:
-      # -- Time in seconds how often the the model server will be querying
-      waitTimeBetweenPulls: 100
-
-      # -- The model with a given tag that should be pulled from the model server
-      tag: "production"
+    ## work in progress
+    #usedAsParentChart: false
 
 
 # -- Specify the number of model runner replicas

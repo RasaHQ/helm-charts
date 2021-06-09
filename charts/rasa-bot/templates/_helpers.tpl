@@ -22,7 +22,7 @@ Determine rasa server to run with arguments
 Determine if a model server endpoint is used
 */}}
 {{- define "rasa-bot.endpoints.models.enabled" -}}
-{{- if and (not .Values.applicationSettings.enterprise.useConfigEndpoint) .Values.applicationSettings.endpoints.models.enabled -}}
+{{- if and (not .Values.applicationSettings.enterprise.useConfigEndpoint) .Values.applicationSettings.endpoints.models.enabled (not .Values.applicationSettings.endpoints.models.useRasaXasModelServer.enabled) -}}
 {{- print "true" -}}
 {{- else -}}
 {{- print "false" -}}
