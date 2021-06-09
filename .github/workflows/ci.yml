@@ -31,3 +31,10 @@ jobs:
             docker run --rm --volume "$(pwd):/helm-docs" jnorwood/helm-docs:latest -d -l error > README.md
             echo "::set-output name=changed::true"
           fi
+
+      - uses: EndBug/add-and-commit@2d7c2e89fcb436f8e139cc80813bd030bdd40c4b # v7
+        if: steps.readme.changed == 'true'
+        with:
+          default_author: github_actions
+          add: 'charts/${{ matrix.chart }}/README.md'
+          message: '[helm-docs] Update README.md'
