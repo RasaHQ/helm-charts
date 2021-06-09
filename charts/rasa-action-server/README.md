@@ -58,8 +58,8 @@ Rasa Action Server Helm chart for Kubernetes
 | securityContext | object | `{}` | Allows you to overwrite the pod-level security context |
 | service.annotations | object | `{}` | Annotations to add to the service |
 | service.externalTrafficPolicy | string | `"Cluster"` | Enable client source IP preservation |
-| service.loadBalancerIP | string | `nil` |  |
-| service.nodePort | string | `nil` |  |
+| service.loadBalancerIP | string | `nil` | Exposes the Service externally using a cloud provider's load balancer |
+| service.nodePort | string | `nil` | Specify the nodePort(s) value(s) for the LoadBalancer and NodePort service types |
 | service.port | int | `80` | Set port of action-server service (Kubernetes >= 1.15) |
 | service.type | string | `"ClusterIP"` | Set type of action-server service |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
