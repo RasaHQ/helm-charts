@@ -15,11 +15,6 @@ helm repo add rasa https://helm.rasa.com
 helm repo update
 ```
 
-## Source Code
-
-* <https://github.com/RasaHQ/charts/rasa-bot>
-* <https://rasa.com/>
-
 ## Requirements
 
 | Repository | Name | Version |
