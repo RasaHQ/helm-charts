@@ -161,7 +161,7 @@ applicationSettings:
     # -- Define if Rasa X (Enterprise) is aviable as a parent helm chart.
     ## Used by the rasa-x-helm chart
     ## work in progress
-    #usedAsParentChart: false
+    # usedAsParentChart: false
 
 
 # -- Specify the number of model runner replicas
