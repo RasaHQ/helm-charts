@@ -120,4 +120,5 @@ jobs:
           kubectl port-forward --namespace default svc/rasa-bot ${SERVICE_PORT}:${SERVICE_PORT} &
           echo "http://127.0.0.1:${SERVICE_PORT}"
 
+          sleep 10
           curl http://127.0.0.1:${SERVICE_PORT}
