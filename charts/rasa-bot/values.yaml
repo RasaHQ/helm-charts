@@ -248,10 +248,10 @@ securityContext: {}
 
 ## Configuration for the service for the model-runner
 service:
-  # -- Set type of action-server service
+  # -- Set type of rasa-bot service
   type: ClusterIP
 
-  # -- Set port of action-server service (Kubernetes >= 1.15)
+  # -- Set port of rasa-bot service (Kubernetes >= 1.15)
   port: 5005
 
   # -- Annotations to add to the service
@@ -514,6 +514,7 @@ rabbitmq:
 
 nginx:
   # -- Enabled Nginx as a sidecar container
+  ## If you use ingress-nginx as an ingress controller you should disable NGINX.
   enabled: true
 
   image:
