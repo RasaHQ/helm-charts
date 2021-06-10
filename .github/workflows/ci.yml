@@ -131,13 +131,12 @@ jobs:
           export SERVICE_PORT=$(kubectl get -o jsonpath="{.spec.ports[0].port}" services rasa-bot)
           kubectl port-forward svc/rasa-bot ${SERVICE_PORT}:${SERVICE_PORT} &
 
-
           until `nc -w 2 -z 127.0.0.1 ${SERVICE_PORT}`; do
             echo "Waiting for ${SERVICE_PORT} port to be available."
             sleep 1
           done
 
-          curl -s  http://127.0.0.1:${SERVICE_PORT}/version
+          curl -s  http://127.0.0.1:${SERVICE_PORT}/
 
   validate:
     name: Validate the PR
