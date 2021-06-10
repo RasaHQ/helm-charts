@@ -128,8 +128,8 @@ jobs:
           kubectl logs -c model-runner -l app.kubernetes.io/name=rasa-bot
           kubectl get svc
 
-          export SERVICE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].port}" services rasa-bot)
-          kubectl port-forward --namespace default svc/rasa-bot ${SERVICE_PORT}:${SERVICE_PORT} &
+          export SERVICE_PORT=$(kubectl get -o jsonpath="{.spec.ports[0].port}" services rasa-bot)
+          kubectl port-forward svc/rasa-bot ${SERVICE_PORT}:${SERVICE_PORT} &
 
 
           until `nc -w 2 -z 127.0.0.1 ${SERVICE_PORT}`; do
