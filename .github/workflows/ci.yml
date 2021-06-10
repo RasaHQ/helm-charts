@@ -24,6 +24,7 @@ jobs:
       with:
         filters: |
           rasa-bot: charts/rasa-bot/**
+          rasa-action-server: charts/rasa-action-server/**
 
   lint-chart:
     runs-on: ubuntu-20.04
@@ -124,7 +125,8 @@ jobs:
         if: ${{ matrix.chart }} == 'rasa-bot'
         run: |
           kubectl wait --timeout=360s --for=condition=Ready --selector app.kubernetes.io/name=rasa-bot pod
-          kubectl logs  -c model-runner -l app.kubernetes.io/name=rasa-bot
+          kubectl logs -c model-runner -l app.kubernetes.io/name=rasa-bot
+          kubectl get svc
 
           export SERVICE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].port}" services rasa-bot)
           kubectl port-forward --namespace default svc/rasa-bot ${SERVICE_PORT}:${SERVICE_PORT} &
@@ -136,3 +138,12 @@ jobs:
           done
 
           curl -s  http://127.0.0.1:${SERVICE_PORT}/version
+
+  validate:
+    name: Validate the PR
+    runs-on: ubuntu-20.04
+    needs:
+      - install-chart
+    steps:
+      - name: Validate the PR
+        run: echo "All good!"
