@@ -7,16 +7,27 @@ on:
     - '[0-9]+.[0-9]+.x'
     tags:
     - '**'
-    paths:
-      - "charts/**"
   pull_request:
     types: [opened, synchronize, labeled]
-    paths:
-      - "charts/**"
 
 jobs:
+  # JOB to run change detection
+  changes:
+    runs-on: ubuntu-20.04
+    outputs:
+      # Expose matched filters as job 'charts' output variable
+      charts: ${{ steps.filter.outputs.changes }}
+    steps:
+    # For pull requests it's not necessary to checkout the code
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          rasa-bot: charts/rasa-bot
+
   lint-chart:
     runs-on: ubuntu-20.04
+    needs: changes
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -43,6 +54,7 @@ jobs:
 
   kubeval-chart:
     runs-on: ubuntu-20.04
+    needs: changes
     strategy:
       matrix:
         # When changing versions here, check that the version exists at: https://github.com/instrumenta/kubernetes-json-schema
@@ -50,9 +62,7 @@ jobs:
           - v1.14.10
           - v1.16.4
           - v1.18.1
-        chart:
-          - rasa-bot
-          - rasa-action-server
+        chart: ${{ fromJSON(needs.changes.outputs.charts) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -81,14 +91,14 @@ jobs:
     needs:
       - lint-chart
       - kubeval-chart
+      - changes
     strategy:
       matrix:
         k8s:
           - v1.14.10
           - v1.16.9
           - v1.18.4
-        chart:
-          - rasa-bot
+        chart: ${{ fromJSON(needs.changes.outputs.charts) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
