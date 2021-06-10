@@ -23,7 +23,7 @@ jobs:
       id: filter
       with:
         filters: |
-          rasa-bot: charts/rasa-bot
+          rasa-bot: charts/rasa-bot/**
 
   lint-chart:
     runs-on: ubuntu-20.04
