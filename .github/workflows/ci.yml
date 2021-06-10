@@ -125,4 +125,4 @@ jobs:
             sleep 1
           done
 
-          curl -s  http://127.0.0.1:${SERVICE_PORT}/version | jq .
+          curl -s  http://127.0.0.1:${SERVICE_PORT}/version
