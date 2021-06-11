@@ -24,7 +24,7 @@ helm repo update
 
 ## Quick start
 
-The rasa-bot deploy Rasa Open Source Server with loaded a model that is defined by the `applicationSettings.defaultModel` value. Below you can find examples of how to configure your deployment or use more advanced configurations such as integration with Rasa Enterprise.
+The rasa-bot deploy Rasa Open Source Server and load a model that is defined by the `applicationSettings.defaultModel` value (the value for `applicationSettings.defaultModel` has to be a URL that points to a tag.gz file). Below you can find examples of how to configure your deployment or use more advanced configurations such as integration with Rasa X / Enterprise.
 
 Default components that will be installed along with the rasa-bot:
 
@@ -67,7 +67,7 @@ Hello from Rasa: 2.4.0
 
 As a best practice, a YAML file that specifies the values for the chart parameters should be provided to configure the chart:
 
-1. Copy the default [values.yaml](values.yaml) value file. From now on we'll use the `rasa-values.yaml` values file.
+1. Copy the default [values.yaml](values.yaml) value file to `rasa-values.yaml`. From now on we'll use the `rasa-values.yaml` values file.
 2. Set custom parameters in the rasa-values.yaml
 3. Upgrade the Rasa Bot Helm chart with the new rasa-values.yaml file:
 
@@ -132,11 +132,11 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 
 ### Enabling Rasa X / Enterprise
 
-To use Rasa Bot along with Rasa Enterprise update `rasa-values.yaml` with the following configuration:
+To use Rasa Bot along with Rasa X / Enterprise update `rasa-values.yaml` with the following configuration:
 
 ```yaml
 applicationSettings:
-  enterprise:
+  rasaX:
     enabled: true
       # here you have to put URL to Rasa Enterprise
     url: "http://rasa-x-rasa-x:5002"
@@ -145,14 +145,13 @@ applicationSettings:
     # event broker as Rasa Enterprise uses we can pass
     # a custom configuration.
     eventBroker:
-      customConfiguration:
-        type: "pika"
-        url: "rasa-x-rabbit"
-        username: "user"
-        password: ${RABBITMQ_PASSWORD}
-        port: 5672
-        queues:
-          - ${RABBITMQ_QUEUE}
+      type: "pika"
+      url: "rasa-x-rabbit"
+      username: "user"
+      password: ${RABBITMQ_PASSWORD}
+      port: 5672
+      queues:
+        - ${RABBITMQ_QUEUE}
     # Use Rasa X as a model server
     models:
       useRasaXasModelServer:
@@ -170,33 +169,33 @@ extraEnv:
         key: rabbitmq-password
 ```
 
-In the example above we assumed that Rasa Enterprise is deployed with `rasa-x` release name in the same namespaces as the rasa bot.
+In the example above we assumed that Rasa X / Enterprise is deployed with `rasa-x` release name in the same namespaces as the rasa bot.
 
 ```shell
 helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 ```
 
-In addition to Rasa Bot configuration, you have to update Rasa Enterprise configuration as well, please visit the docs to learn more.
+In addition to Rasa Bot configuration, you have to update Rasa X / Enterprise configuration as well, please visit the docs to learn more.
 
-### Enabling Rasa Enterprise (used as a configuration endpoint)
+### Enabling Rasa X / Enterprise (used as a configuration endpoint)
 
-It's possible to use Rasa Enterprise as a configuration endpoint, in a such care runtime configuration for Rasa OSS will be pulled from Rasa Enterprise.
+It's possible to use Rasa X / Enterprise as a configuration endpoint, in a such case runtime configuration for Rasa OSS will be pulled from Rasa X / Enterprise.
 
-An example below shows how to configure the Rasa Bot to use Rasa Enterprise which are deployed in the same namespace.
+An example below shows how to configure the Rasa Bot to use Rasa X / Enterprise which are deployed in the same namespace.
 
 Update `rasa-values.yaml` with the following configuration:
 
 ```yaml
 applicationSettings:
-  enterprise:
+  rasaX:
     enabled: true
     url: "http://rasa-x-rasa-x:5002"
     # Define if a runtime configuration should be pulled
-    # from Rasa Enterprise
+    # from Rasa X / Enterprise
     useConfigEndpoint: true
 ```
 
-Below we can see an example of a runtime configuration that is pulled from Rasa Enterprise:
+Below we can see an example of a runtime configuration that is pulled from Rasa X / Enterprise:
 
 ```yaml
 models:
@@ -239,19 +238,19 @@ cache:
   key_prefix: "rasax_cache"
 ```
 
-The configuration uses environment variables, that's you have to add extra environment variables to the rasa bot. Full `rasa-values.yaml` should look like this:
+The configuration uses environment variables, that's why you have to add extra environment variables to the rasa bot. Full `rasa-values.yaml` should look like this:
 
 ```yaml
 applicationSettings:
-  enterprise:
+  rasaX:
     enabled: true
     url: "http://rasa-x-rasa-x:5002"
     # Define if a runtime configuration should be pulled
-    # from Rasa Enterprise
+    # from Rasa X / Enterprise
     useConfigEndpoint: true
 
 ## Don't install additional components.
-## The components installed by Rasa Enterprise are used instead.
+## The components installed by Rasa X / Enterprise are used instead.
 postgresql:
   install: false
 redis:
@@ -259,7 +258,7 @@ redis:
 rabbitmq:
   install: false
 
-## Extra environment variables used in the Rasa Enterprise configuration
+## Extra environment variables used in the Rasa X / Enterprise configuration
 extraEnv:
  - name: RASA_MODEL_SERVER
    value: http://rasa-x-rasa-x:5002/api/projects/default/models/tags/production

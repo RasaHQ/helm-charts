@@ -61,7 +61,7 @@ spec:
         {{- toYaml .Values.extraContainers | nindent 8 }}
       {{- end }}
 {{- (include "rasa-bot.nginx.sidecar" .)  | nindent 8 }}
-        - name: model-runner
+        - name: rasa-oss
           {{- if .Values.args }}
           args:
 {{ toYaml .Values.args | indent 12 }}

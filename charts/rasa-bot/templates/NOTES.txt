@@ -1,13 +1,13 @@
-{{- if not .Values.applicationSettings.enterprise.usedAsParentChart }}
+{{- if not .Values.applicationSettings.rasaX.usedAsParentChart }}
 Rasa-bot {{ .Values.image.tag }} has been deployed!
 
-{{- if and .Values.applicationSettings.enterprise.enabled .Values.applicationSettings.enterprise.useConfigEndpoint }}
+{{- if and .Values.applicationSettings.rasaX.enabled .Values.applicationSettings.rasaX.useConfigEndpoint }}
 ##############################################################################
 ####               NOTICE: Rasa X/Enterprise is enabled                   ####
 ##############################################################################
 
 The runtime configuration will be pulled from the Rasa X/Enterprise endpoint.
-Endpoint: {{ .Values.applicationSettings.enterprise.url }}
+Endpoint: {{ .Values.applicationSettings.rasaX.url }}
 
 It means that the endpoints configuration from the values is ignored.
 {{- end }}
@@ -35,14 +35,14 @@ You can disable Ingress by setting the `ingress.enabled` parameter to `false`
 You can disable NGINX by setting the `nginx.enabled` parameter to `false`
 {{- end }}
 
-{{- if and .Values.applicationSettings.endpoints.models.enabled .Values.applicationSettings.endpoints.models.useRasaXasModelServer.enabled (not .Values.applicationSettings.enterprise.enabled) }}
+{{- if and .Values.applicationSettings.endpoints.models.enabled .Values.applicationSettings.endpoints.models.useRasaXasModelServer.enabled (not .Values.applicationSettings.rasaX.enabled) }}
 ##############################################################################
 ####               WARNING: Rasa X is used as a model server              ####
 ##############################################################################
 
 You want to use Rasa X as a model server but configuration for Rasa X is disabled.
 
-You can enable Rasa X configuration be setting the `applicationSettings.enterprise.enabled` parameter to `true`.
+You can enable Rasa X configuration be setting the `applicationSettings.rasaX.enabled` parameter to `true`.
 {{- end }}
 
 {{- if and .Values.nginx.enabled .Values.nginx.tls.enabled (and (not .Values.nginx.tls.generateSelfSignedCert) (not .Values.nginx.tls.certificateSecret)) }}
@@ -72,7 +72,7 @@ You can enable Rasa X configuration be setting the `applicationSettings.enterpri
 {{- printf $errorString | fail -}}
 {{- end }}
 
-{{- if and (eq (include "rasa-bot.endpoints.lockStore.enabled" .) "true") (not .Values.applicationSettings.endpoints.lockStore.customConfiguration) (eq (include "rasa-common.redis.available" .) "false") }}
+{{- if and (eq (include "rasa-bot.endpoints.lockStore.enabled" .) "true") (eq (include "rasa-common.redis.available" .) "false") }}
 {{- $errorString := "\n##############################################################################" -}}
 {{- $errorString = print $errorString "\n####               WARNING: Lock Store endpoint misconfiguration          ####" -}}
 {{- $errorString = print $errorString "\n##############################################################################" -}}
@@ -80,10 +80,6 @@ You can enable Rasa X configuration be setting the `applicationSettings.enterpri
 {{- $errorString = print $errorString "\nLock Store endpoint is enabled but Redis instance is not available." -}}
 {{- $errorString = print $errorString "\n" -}}
 {{- $errorString = print $errorString "\nPlease use the following options to fix the issue:" -}}
-{{- $errorString = print $errorString "\n" -}}
-{{- $errorString = print $errorString "\n  - use the `applicationSettings.endpoints.lockStore.customConfiguration` value parameter to pass a custom configuration" -}}
-{{- $errorString = print $errorString "\n" -}}
-{{- $errorString = print $errorString "\n    OR" -}}
 {{- $errorString = print $errorString "\n" -}}
 {{- $errorString = print $errorString "\n  - set the `redis.install` value parameter to `true` in order to install Redis instance" -}}
 {{- $errorString = print $errorString "\n" -}}
@@ -93,13 +89,13 @@ You can enable Rasa X configuration be setting the `applicationSettings.enterpri
 {{- printf $errorString | fail -}}
 {{- end }}
 
-{{- if and .Values.applicationSettings.enterprise.useConfigEndpoint (not .Values.applicationSettings.enterprise.url) .Values.applicationSettings.enterprise.enabled }}
+{{- if and .Values.applicationSettings.rasaX.useConfigEndpoint (not .Values.applicationSettings.rasaX.url) .Values.applicationSettings.rasaX.enabled }}
 {{- $errorString := "\n##############################################################################" -}}
 {{- $errorString = print $errorString "\n####               ERROR: Rasa X/Enterprise misconfiguration              ####" -}}
 {{- $errorString = print $errorString "\n##############################################################################" -}}
 {{- $errorString = print $errorString "\n" -}}
 {{- $errorString = print $errorString "\nRasa X/Enterprise is enabled with the configuration endpoint but URL is not defined." -}}
-{{- $errorString = print $errorString "\nPlease use the `applicationSettings.enterprise.url` value parameter to define Rasa X/Enterprise instance." -}}
+{{- $errorString = print $errorString "\nPlease use the `applicationSettings.rasaX.url` value parameter to define Rasa X/Enterprise instance." -}}
 {{- printf $errorString | fail -}}
 {{- end }}
 

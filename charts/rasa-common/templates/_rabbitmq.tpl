@@ -60,8 +60,6 @@ Return the common RabbitMQ env variables.
   value: "{{ template "rasa-common.rabbitmq.host" . }}"
 - name: "RABBITMQ_PORT"
   value: "{{ template "rasa-common.rabbitmq.port" . }}"
-- name: "RABBITMQ_QUEUE"
-  value: "{{ .Values.applicationSettings.endpoints.eventBroker.queue }}"
 - name: "RABBITMQ_PASSWORD"
   valueFrom:
     secretKeyRef:

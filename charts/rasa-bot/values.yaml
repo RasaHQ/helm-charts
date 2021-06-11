@@ -73,66 +73,89 @@ applicationSettings:
         tag: "production"
 
     ## You can use an Tracker Store to store your assistant's conversation history.
+    ## See: https://rasa.com/docs/rasa/tracker-stores
+    ##
+    ## All environment variables used as values are added to the rasa-oss container automatically if `postgresql.install=true`.
     trackerStore:
       # -- Enable endpoint for Tracker Store
       enabled: true
 
+      # -- Tracker Store type
+      type: sql
+
+      # -- The dialect used to communicate with your SQL backend
+      dialect: "postgresql"
+
+      # -- URL of your SQL server
+      url: ${DB_HOST}
+
+      # -- Port of your SQL server
+      port: ${DB_PORT}
+
+      # -- The username which is used for authentication
+      username: ${DB_USER}
+
+      # -- The password which is used for authentication
+      password: ${DB_PASSWORD}
+
+      # -- The path to the database to be used
+      db: ${DB_DATABASE}
+
       # -- Create the database for the tracker store.
       # If `false` the tracker store database must have been created previously.
-      useLoginDatabase: true
-
-      # -- Custom configuration for Tracker Store
-      ## See: https://rasa.com/docs/rasa/tracker-stores
-      customConfiguration: {}
-      #  # Tracker Store type
-      #  type: "sql"
-      #
-      #  # The dialect used to communicate with your SQL backend
-      #  dialect: "postgresql"
-      #
-      #  # URL of your SQL server
-      #  url: ""
-      #
-      #  # Port of your SQL server
-      #  port:
-      #
-      #  # The path to the database to be used
-      #  db: "rasa.db"
-      #
-      #  # The username which is used for authentication
-      #  username: ""
-      #
-      #  # The password which is used for authentication
-      #  password: ""
+      login_db: ${DB_DATABASE}
 
     ## Rasa uses a ticket lock mechanism to ensure that incoming messages for a given conversation ID
     ## are processed in the right order, and locks conversations while messages are actively processed.
     ## See: https://rasa.com/docs/rasa/lock-stores
+    ##
+    ## All environment variables used as values are added to the rasa-oss container automatically if `redis.install=true`.
     lockStore:
       # -- Enable endpoint for Lock Store
       enabled: true
 
+      # -- Lock Store type
+      type: "redis"
+
+      # -- The url of your redis instance
+      url: ${REDIS_HOST}
+
+      # -- The port which redis is running on
+      port: ${REDIS_PORT}
+
+      # -- Password used for authentication
+      password: ${REDIS_PASSWORD}
+
       # -- The database in redis which Rasa uses to store the conversation locks
-      database: "1"
+      db: "1"
 
-      # -- Custom configuration for Lock Store
-      customConfiguration: {}
-      #  type: "redis"
-      #  url: <url of the redis instance, e.g. localhost>
-      #  port: <port of your redis instance, usually 6379>
-      #  password: <password used for authentication>
-      #  db: <number of your database within redis, e.g. 0>
-      #  key_prefix: <alphanumeric value to prepend to lock store keys>
-
+    ## An event broker allows you to connect your running assistant to other
+    ## services that process the data coming in from conversations.
+    ## See: https://rasa.com/docs/rasa/event-brokers
+    ##
+    ## All environment variables used as values are added to the rasa-oss container automatically if `rabbitmq.install=true`.
     eventBroker:
       # -- Enable endpoint for Event Broker
       enabled: true
 
-      # -- Send all messages to a given queue
-      queue: "rasa_events"
+      # -- Event Broker
+      type: "pika"
 
-      # -- Custom configuration for Event Broker
-      customConfiguration: {}
+      # -- The url of an event broker
+      url: ${RABBITMQ_HOST}
+
+      # -- Username used for authentication
+      username: ${RABBITMQ_USERNAME}
+
+      # -- Password used for authentication
+      password: ${RABBITMQ_PASSWORD}
+
+      # -- The port which an event broker is listening on
+      port: ${RABBITMQ_PORT}
+
+      # -- Send all messages to a given queue
+      queues:
+        - rasa_production_events
 
     action:
       # -- the URL which Rasa Open Source calls to execute custom actions
@@ -141,21 +164,21 @@ applicationSettings:
     # -- Additional endpoints
     additionalEndpoints: {}
 
-  # Enterprise settings
-  enterprise:
-    # -- Run Rasa X (Enterprise) server
+  # Rasa X / Enterprise settings
+  rasaX:
+    # -- Run Rasa X / Enterprise server
     enabled: false
 
-    # -- Run Rasa X (Enterprise) in a production environment
+    # -- Run Rasa X / Enterprise in a production environment
     production: true
 
-    # -- Token Rasa Enterprise accepts as authentication token from other Rasa services
+    # -- Token Rasa X / Enterprise accepts as authentication token from other Rasa services
     token: "rasaXToken"
 
-    # -- URL to Rasa X (Enterprise), e.g. http://rasa-x.mydomain.com:5002
+    # -- URL to Rasa X / Enterprise, e.g. http://rasa-x.mydomain.com:5002
     url: ""
 
-    # -- Rasa X (Enterprise) endpoint URL from which to pull the runtime config
+    # -- Rasa X / Enterprise endpoint URL from which to pull the runtime config
     useConfigEndpoint: false
 
     # -- Define if Rasa X (Enterprise) is aviable as a parent helm chart.
@@ -164,9 +187,8 @@ applicationSettings:
     #usedAsParentChart: false
 
 
-# -- Specify the number of model runner replicas
+# -- Specify the number of Rasa Open Source replicas
 replicaCount: 1
-
 
 networkPolicy:
   # -- Enable Kubernetes Network Policy
@@ -185,23 +207,26 @@ extraArgs: []
 command: []
 
 # -- Add extra environment variables
+## See:
 extraEnv: []
+  # - name: SOME_CUSTOM_ENV_VAR
+  #   value: "custom value"
 
 ## Define the rasa image to work with
 image:
-  # -- Model Runner image name to use (relative to `registry`)
+  # -- Rasa Open Source image name to use (relative to `registry`)
   name: rasa
 
-  # -- Model Runner image tag to use
+  # -- Rasa Open Source image tag to use
   tag: "2.4.0"
 
-  # -- Override default registry + image.name for Model Runner
+  # -- Override default registry + image.name for Rasa Open Source
   repository:
 
-  # -- Model Runner image pullPolicy
+  # -- Rasa Open Source image pullPolicy
   pullPolicy: IfNotPresent
 
-  # -- Model Runner repository pullSecret
+  # -- Rasa Open Source repository pullSecret
   ## See https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
   pullSecrets: []
   #   - name: "<SECRET>"
@@ -217,19 +242,19 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-# -- Annotations to add to the model-runner's pod(s)
+# -- Annotations to add to the rasa-oss's pod(s)
 podAnnotations: {}
 #  key: "value"
 
-# -- Labels to add to the model-runner's pod(s)
+# -- Labels to add to the rasa-oss's pod(s)
 podLabels: {}
 #  key: "value"
 
-# -- Annotations to add to the model-runner deployment
+# -- Annotations to add to the rasa-oss deployment
 deploymentAnnotations: {}
 #  key: "value"
 
-# -- Labels to add to the model-runner deployment
+# -- Labels to add to the rasa-oss deployment
 deploymentLabels: {}
 
 # -- Defines pod-level security attributes and common container settings
@@ -246,7 +271,7 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-## Configuration for the service for the model-runner
+## Configuration for the service for the rasa-oss
 service:
   # -- Set type of rasa-bot service
   type: ClusterIP
@@ -321,7 +346,7 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-##  Autoscaling parameters for the Model Runner Deployment
+##  Autoscaling parameters for the Rasa Open Source Deployment
 ## See: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 autoscaling:
   # -- Enable autoscaling
@@ -339,7 +364,7 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-# -- Allow the Model Runner Deployment to be scheduled on selected nodes
+# -- Allow the Rasa Open Source Deployment to be scheduled on selected nodes
 ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
 nodeSelector: {}
@@ -348,7 +373,7 @@ nodeSelector: {}
 ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 tolerations: []
 
-# -- Allow the Model Runner Deployment to schedule using affinity rules
+# -- Allow the Rasa Open Source Deployment to schedule using affinity rules
 ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 affinity: {}
 
@@ -366,6 +391,7 @@ strategy:
 livenessProbe:
   httpGet:
     path: /
+    ## The 'http' port value is defined in the rasa-oss container spec and can be controlled by the `applicationSettings.port` parameter
     port: http
     scheme: HTTP
   initialDelaySeconds: 15
@@ -380,6 +406,7 @@ livenessProbe:
 readinessProbe:
   httpGet:
     path: /
+    ## The 'http' port value is defined in the rasa-oss container spec and can be controlled by the `applicationSettings.port` parameter
     port: http
     scheme: HTTP
   initialDelaySeconds: 15
@@ -388,7 +415,7 @@ readinessProbe:
   timeoutSeconds: 5
   failureThreshold: 6
 
-# -- Allow to specify init containers for the Model Runner Deployment
+# -- Allow to specify init containers for the Rasa Open Source Deployment
 ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 initContainers: []
 #  - name: init
@@ -397,7 +424,7 @@ initContainers: []
 #    args:
 #      - echo "init container"
 
-# -- Allow to specify additional containers for the Model Runner Deployment
+# -- Allow to specify additional containers for the Rasa Open Source Deployment
 extraContainers: []
 #  - name: extra
 #    image: "busybox"
@@ -405,14 +432,14 @@ extraContainers: []
 #    args:
 #      - echo "init container"
 
-# -- Specify additional volumes to mount in the model-runner container
+# -- Specify additional volumes to mount in the rasa-oss container
 ## Ref: https://kubernetes.io/docs/concepts/storage/volumes/
 volumes: []
 #   - hostPath:
 #       path: <HOST_PATH>
 #     name: <VOLUME_NAME>
 
-# -- Specify additional volumes to mount in the model-runner container
+# -- Specify additional volumes to mount in the rasa-oss container
 volumeMounts: []
 #   - name: <VOLUME_NAME>
 #     mountPath: <CONTAINER_PATH>
@@ -596,7 +623,7 @@ nginx:
   #  nginx.conf: |
   #    # Custom configuration
   #  rasa.nginx.conf: |
-  #    # Custom configuration for Model Runner upstream
+  #    # Custom configuration for Rasa Open Source upstream
 
 ## Settings for Rasa Action Server
 rasa-action-server:

@@ -32,7 +32,7 @@ helm repo update
 
 ## Quick start
 
-The rasa-bot deploy Rasa Open Source Server with loaded a model that is defined by the `applicationSettings.defaultModel` value. Below you can find examples of how to configure your deployment or use more advanced configurations such as integration with Rasa Enterprise.
+The rasa-bot deploy Rasa Open Source Server and load a model that is defined by the `applicationSettings.defaultModel` value (the value for `applicationSettings.defaultModel` has to be a URL that points to a tag.gz file). Below you can find examples of how to configure your deployment or use more advanced configurations such as integration with Rasa X / Enterprise.
 
 Default components that will be installed along with the rasa-bot:
 
@@ -73,7 +73,7 @@ Hello from Rasa: 2.4.0
 
 As a best practice, a YAML file that specifies the values for the chart parameters should be provided to configure the chart:
 
-1. Copy the default [values.yaml](values.yaml) value file. From now on we'll use the `rasa-values.yaml` values file.
+1. Copy the default [values.yaml](values.yaml) value file to `rasa-values.yaml`. From now on we'll use the `rasa-values.yaml` values file.
 2. Set custom parameters in the rasa-values.yaml
 3. Upgrade the Rasa Bot Helm chart with the new rasa-values.yaml file:
 
@@ -138,11 +138,11 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 
 ### Enabling Rasa X / Enterprise
 
-To use Rasa Bot along with Rasa Enterprise update `rasa-values.yaml` with the following configuration:
+To use Rasa Bot along with Rasa X / Enterprise update `rasa-values.yaml` with the following configuration:
 
 ```yaml
 applicationSettings:
-  enterprise:
+  rasaX:
     enabled: true
       # here you have to put URL to Rasa Enterprise
     url: "http://rasa-x-rasa-x:5002"
@@ -151,14 +151,13 @@ applicationSettings:
     # event broker as Rasa Enterprise uses we can pass
     # a custom configuration.
     eventBroker:
-      customConfiguration:
-        type: "pika"
-        url: "rasa-x-rabbit"
-        username: "user"
-        password: ${RABBITMQ_PASSWORD}
-        port: 5672
-        queues:
-          - ${RABBITMQ_QUEUE}
+      type: "pika"
+      url: "rasa-x-rabbit"
+      username: "user"
+      password: ${RABBITMQ_PASSWORD}
+      port: 5672
+      queues:
+        - ${RABBITMQ_QUEUE}
     # Use Rasa X as a model server
     models:
       useRasaXasModelServer:
@@ -176,33 +175,33 @@ extraEnv:
         key: rabbitmq-password
 ```
 
-In the example above we assumed that Rasa Enterprise is deployed with `rasa-x` release name in the same namespaces as the rasa bot.
+In the example above we assumed that Rasa X / Enterprise is deployed with `rasa-x` release name in the same namespaces as the rasa bot.
 
 ```shell
 helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 ```
 
-In addition to Rasa Bot configuration, you have to update Rasa Enterprise configuration as well, please visit the docs to learn more.
+In addition to Rasa Bot configuration, you have to update Rasa X / Enterprise configuration as well, please visit the docs to learn more.
 
-### Enabling Rasa Enterprise (used as a configuration endpoint)
+### Enabling Rasa X / Enterprise (used as a configuration endpoint)
 
-It's possible to use Rasa Enterprise as a configuration endpoint, in a such care runtime configuration for Rasa OSS will be pulled from Rasa Enterprise.
+It's possible to use Rasa X / Enterprise as a configuration endpoint, in a such case runtime configuration for Rasa OSS will be pulled from Rasa X / Enterprise.
 
-An example below shows how to configure the Rasa Bot to use Rasa Enterprise which are deployed in the same namespace.
+An example below shows how to configure the Rasa Bot to use Rasa X / Enterprise which are deployed in the same namespace.
 
 Update `rasa-values.yaml` with the following configuration:
 
 ```yaml
 applicationSettings:
-  enterprise:
+  rasaX:
     enabled: true
     url: "http://rasa-x-rasa-x:5002"
     # Define if a runtime configuration should be pulled
-    # from Rasa Enterprise
+    # from Rasa X / Enterprise
     useConfigEndpoint: true
 ```
 
-Below we can see an example of a runtime configuration that is pulled from Rasa Enterprise:
+Below we can see an example of a runtime configuration that is pulled from Rasa X / Enterprise:
 
 ```yaml
 models:
@@ -245,19 +244,19 @@ cache:
   key_prefix: "rasax_cache"
 ```
 
-The configuration uses environment variables, that's you have to add extra environment variables to the rasa bot. Full `rasa-values.yaml` should look like this:
+The configuration uses environment variables, that's why you have to add extra environment variables to the rasa bot. Full `rasa-values.yaml` should look like this:
 
 ```yaml
 applicationSettings:
-  enterprise:
+  rasaX:
     enabled: true
     url: "http://rasa-x-rasa-x:5002"
     # Define if a runtime configuration should be pulled
-    # from Rasa Enterprise
+    # from Rasa X / Enterprise
     useConfigEndpoint: true
 
 ## Don't install additional components.
-## The components installed by Rasa Enterprise are used instead.
+## The components installed by Rasa X / Enterprise are used instead.
 postgresql:
   install: false
 redis:
@@ -265,7 +264,7 @@ redis:
 rabbitmq:
   install: false
 
-## Extra environment variables used in the Rasa Enterprise configuration
+## Extra environment variables used in the Rasa X / Enterprise configuration
 extraEnv:
  - name: RASA_MODEL_SERVER
    value: http://rasa-x-rasa-x:5002/api/projects/default/models/tags/production
@@ -306,7 +305,7 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` | Allow the Model Runner Deployment to schedule using affinity rules |
+| affinity | object | `{}` | Allow the Rasa Open Source Deployment to schedule using affinity rules |
 | applicationSettings.cors | string | `"*"` | CORS for the passed origin. Default is * to whitelist all origins |
 | applicationSettings.credentials.additionalChannelCredentials | object | `{}` | Additional channel credentials which should be used by Rasa to connect to various input channels |
 | applicationSettings.credentials.enabled | bool | `false` | Enable credentials configuration for channel connectors |
@@ -314,27 +313,40 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | applicationSettings.defaultModel | string | `"https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true"` | Default model loaded if a model server or a remote storage is not used. It has to be a URL that points to a tag.gz file. |
 | applicationSettings.endpoints.action.endpointURL | string | `"/webhook"` | the URL which Rasa Open Source calls to execute custom actions |
 | applicationSettings.endpoints.additionalEndpoints | object | `{}` | Additional endpoints |
-| applicationSettings.endpoints.eventBroker.customConfiguration | object | `{}` | Custom configuration for Event Broker |
 | applicationSettings.endpoints.eventBroker.enabled | bool | `true` | Enable endpoint for Event Broker |
-| applicationSettings.endpoints.eventBroker.queue | string | `"rasa_events"` | Send all messages to a given queue |
-| applicationSettings.endpoints.lockStore.customConfiguration | object | `{}` | Custom configuration for Lock Store |
-| applicationSettings.endpoints.lockStore.database | string | `"1"` | The database in redis which Rasa uses to store the conversation locks |
+| applicationSettings.endpoints.eventBroker.password | string | `"${RABBITMQ_PASSWORD}"` | Password used for authentication |
+| applicationSettings.endpoints.eventBroker.port | string | `"${RABBITMQ_PORT}"` | The port which an event broker is listening on |
+| applicationSettings.endpoints.eventBroker.queues | list | `["${RABBITMQ_QUEUE}"]` | Send all messages to a given queue |
+| applicationSettings.endpoints.eventBroker.type | string | `"pika"` | Event Broker |
+| applicationSettings.endpoints.eventBroker.url | string | `"${RABBITMQ_HOST}"` | The url of an event broker |
+| applicationSettings.endpoints.eventBroker.username | string | `"${RABBITMQ_USERNAME}"` | Username used for authentication |
+| applicationSettings.endpoints.lockStore.db | string | `"1"` | The database in redis which Rasa uses to store the conversation locks |
 | applicationSettings.endpoints.lockStore.enabled | bool | `true` | Enable endpoint for Lock Store |
+| applicationSettings.endpoints.lockStore.password | string | `"${REDIS_PASSWORD}"` | Password used for authentication |
+| applicationSettings.endpoints.lockStore.port | string | `"${REDIS_PORT}"` | The port which redis is running on |
+| applicationSettings.endpoints.lockStore.type | string | `"redis"` | Lock Store type |
+| applicationSettings.endpoints.lockStore.url | string | `"${REDIS_HOST}"` | The url of your redis instance |
 | applicationSettings.endpoints.models.enabled | bool | `false` | Enable endpoint for a model server |
 | applicationSettings.endpoints.models.token | string | `"token"` | Token used as a authentication token |
 | applicationSettings.endpoints.models.url | string | `"http://my-server.com/models/default"` | URL address that models will be pulled from |
 | applicationSettings.endpoints.models.useRasaXasModelServer.enabled | bool | `false` | Use Rasa X (Enterprise) as a model server |
 | applicationSettings.endpoints.models.useRasaXasModelServer.tag | string | `"production"` | The model with a given tag that should be pulled from the model server |
 | applicationSettings.endpoints.models.waitTimeBetweenPulls | int | `20` | Time in seconds how often the the model server will be querying |
-| applicationSettings.endpoints.trackerStore.customConfiguration | object | `{}` | Custom configuration for Tracker Store |
+| applicationSettings.endpoints.trackerStore.db | string | `"${DB_DATABASE}"` | The path to the database to be used |
+| applicationSettings.endpoints.trackerStore.dialect | string | `"postgresql"` | The dialect used to communicate with your SQL backend |
 | applicationSettings.endpoints.trackerStore.enabled | bool | `true` | Enable endpoint for Tracker Store |
-| applicationSettings.endpoints.trackerStore.useLoginDatabase | bool | `true` | Create the database for the tracker store. If `false` the tracker store database must have been created previously. |
-| applicationSettings.enterprise.enabled | bool | `false` | Run Rasa X (Enterprise) server |
-| applicationSettings.enterprise.production | bool | `true` | Run Rasa X (Enterprise) in a production environment |
-| applicationSettings.enterprise.token | string | `"rasaXToken"` | Token Rasa Enterprise accepts as authentication token from other Rasa services |
-| applicationSettings.enterprise.url | string | `""` | URL to Rasa X (Enterprise), e.g. http://rasa-x.mydomain.com:5002 |
-| applicationSettings.enterprise.useConfigEndpoint | bool | `false` | Rasa X (Enterprise) endpoint URL from which to pull the runtime config |
+| applicationSettings.endpoints.trackerStore.login_db | string | `"${DB_DATABASE}"` | Create the database for the tracker store. If `false` the tracker store database must have been created previously. |
+| applicationSettings.endpoints.trackerStore.password | string | `"${DB_PASSWORD}"` | The password which is used for authentication |
+| applicationSettings.endpoints.trackerStore.port | string | `"${DB_PORT}"` | Port of your SQL server |
+| applicationSettings.endpoints.trackerStore.type | string | `"sql"` | Tracker Store type |
+| applicationSettings.endpoints.trackerStore.url | string | `"${DB_HOST}"` | URL of your SQL server |
+| applicationSettings.endpoints.trackerStore.username | string | `"${DB_USER}"` | The username which is used for authentication |
 | applicationSettings.port | int | `5005` | Port on which Rasa runs |
+| applicationSettings.rasaX.enabled | bool | `false` | Run Rasa X / Enterprise server |
+| applicationSettings.rasaX.production | bool | `true` | Run Rasa X / Enterprise in a production environment |
+| applicationSettings.rasaX.token | string | `"rasaXToken"` | Token Rasa X / Enterprise accepts as authentication token from other Rasa services |
+| applicationSettings.rasaX.url | string | `""` | URL to Rasa X / Enterprise, e.g. http://rasa-x.mydomain.com:5002 |
+| applicationSettings.rasaX.useConfigEndpoint | bool | `false` | Rasa X / Enterprise endpoint URL from which to pull the runtime config |
 | applicationSettings.scheme | string | `"http"` | Scheme by which the service are accessible |
 | applicationSettings.telemetry.enabled | bool | `false` | Enable telemetry See: https://rasa.com/docs/rasa/telemetry/telemetry/ |
 | applicationSettings.token | string | `"rasaToken"` | Token Rasa accepts as authentication token from other Rasa services |
@@ -344,10 +356,10 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | autoscaling.minReplicas | int | `1` | Lower limit for the number of pods that can be set by the autoscaler |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Fraction of the requested CPU that should be utilized/used, e.g. 70 means that 70% of the requested CPU should be in use. |
 | command | list | `[]` | Override the default command for the container |
-| deploymentAnnotations | object | `{}` | Annotations to add to the model-runner deployment |
-| deploymentLabels | object | `{}` | Labels to add to the model-runner deployment |
+| deploymentAnnotations | object | `{}` | Annotations to add to the rasa-oss deployment |
+| deploymentLabels | object | `{}` | Labels to add to the rasa-oss deployment |
 | extraArgs | list | `[]` | Add additional arguments to the default one |
-| extraContainers | list | `[]` | Allow to specify additional containers for the Model Runner Deployment |
+| extraContainers | list | `[]` | Allow to specify additional containers for the Rasa Open Source Deployment |
 | extraEnv | list | `[]` | Add extra environment variables |
 | fullnameOverride | string | `nil` | Override the full qualified app name |
 | global.postgresql.existingSecret | string | `""` | existingSecret which should be used for the password instead of putting it in the values file |
@@ -357,11 +369,11 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | global.postgresql.servicePort | int | `5432` | servicePort which is used to expose postgres to the other components |
 | global.redis | object | `{"password":"redis-password"}` | global settings of the redis subchart |
 | global.redis.password | string | `"redis-password"` | password to use in case there no external secret was provided |
-| image.name | string | `"rasa"` | Model Runner image name to use (relative to `registry`) |
-| image.pullPolicy | string | `"IfNotPresent"` | Model Runner image pullPolicy |
-| image.pullSecrets | list | `[]` | Model Runner repository pullSecret |
-| image.repository | string | `nil` | Override default registry + image.name for Model Runner |
-| image.tag | string | `"2.4.0"` | Model Runner image tag to use |
+| image.name | string | `"rasa"` | Rasa Open Source image name to use (relative to `registry`) |
+| image.pullPolicy | string | `"IfNotPresent"` | Rasa Open Source image pullPolicy |
+| image.pullSecrets | list | `[]` | Rasa Open Source repository pullSecret |
+| image.repository | string | `nil` | Override default registry + image.name for Rasa Open Source |
+| image.tag | string | `"2.4.0"` | Rasa Open Source image tag to use |
 | ingress.annotations | object | `{}` | Ingress annotations |
 | ingress.enabled | bool | `false` | Set to true to enable ingress |
 | ingress.extraPaths | object | `{}` | Any additional arbitrary paths that may need to be added to the ingress under the main host |
@@ -370,7 +382,7 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | ingress.path | string | `"/"` | Ingress path |
 | ingress.pathType | string | `"ImplementationSpecific"` | Ingress Path type |
 | ingress.tls | list | `[]` | TLS configuration for ingress |
-| initContainers | list | `[]` | Allow to specify init containers for the Model Runner Deployment |
+| initContainers | list | `[]` | Allow to specify init containers for the Rasa Open Source Deployment |
 | livenessProbe | object | Every 15s / 6 KO / 1 OK | Override default liveness probe settings |
 | nameOverride | string | `nil` | Override name of app |
 | networkPolicy.denyAll | bool | `false` | Create a network policy that deny all traffic |
@@ -388,9 +400,9 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | nginx.tls.enabled | bool | `false` | Enable TLS for Nginx sidecar |
 | nginx.tls.generateSelfSignedCert | bool | `false` | Generate self-signed certificates |
 | nginx.tls.port | int | `443` |  |
-| nodeSelector | object | `{}` | Allow the Model Runner Deployment to be scheduled on selected nodes |
-| podAnnotations | object | `{}` | Annotations to add to the model-runner's pod(s) |
-| podLabels | object | `{}` | Labels to add to the model-runner's pod(s) |
+| nodeSelector | object | `{}` | Allow the Rasa Open Source Deployment to be scheduled on selected nodes |
+| podAnnotations | object | `{}` | Annotations to add to the rasa-oss's pod(s) |
+| podLabels | object | `{}` | Labels to add to the rasa-oss's pod(s) |
 | podSecurityContext | object | `{}` | Defines pod-level security attributes and common container settings |
 | postgresql.external.enabled | bool | `false` | Determine if use an external PostgreSQL host |
 | postgresql.external.host | string | `"external-postgresql"` | External PostgreSQL hostname |
@@ -412,7 +424,7 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | redis.install | bool | `true` | Install Redis(TM) |
 | redis.replica.replicaCount | int | `0` | Number of Redis(TM) replicas to deploy |
 | registry | string | `"docker.io/rasa"` | Registry to use for all Rasa images (default docker.io) |
-| replicaCount | int | `1` | Specify the number of model runner replicas |
+| replicaCount | int | `1` | Specify the number of Rasa Open Source replicas |
 | resources | object | `{}` | Resource requests and limits |
 | securityContext | object | `{}` | Allows you to overwrite the pod-level security context |
 | service.annotations | object | `{}` | Annotations to add to the service |
@@ -426,5 +438,5 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | strategy | object | `{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"}` | Allow the deployment to perform a rolling update |
 | tolerations | list | `[]` | Tolerations for pod assignment |
-| volumeMounts | list | `[]` | Specify additional volumes to mount in the model-runner container |
-| volumes | list | `[]` | Specify additional volumes to mount in the model-runner container |
+| volumeMounts | list | `[]` | Specify additional volumes to mount in the rasa-oss container |
+| volumes | list | `[]` | Specify additional volumes to mount in the rasa-oss container |
