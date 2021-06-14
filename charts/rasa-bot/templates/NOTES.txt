@@ -128,14 +128,15 @@ Additional components:
     PostgreSQL:
       Installed:  {{ .Values.postgresql.install }}
       External:   {{ .Values.postgresql.external.enabled }}
-{{- if (eq (include "rasa-bot.defaultModel.loaded" .) "true") }}
+{{- if (eq (include "rasa-bot.initialModel.download" .) "true") }}
 
-Loaded model: {{ .Values.applicationSettings.defaultModel }}
+Loaded model: {{ .Values.applicationSettings.initialModel }}
 
 {{ end -}}
 {{ if .Values.ingress.enabled }}
   Rasa URL: http{{ if .Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.hostname }}
 {{ else }}
+
 To access Rasa Bot from outside of the cluster, follow the steps below:
 
 1. Get the Rasa URL by running these commands:

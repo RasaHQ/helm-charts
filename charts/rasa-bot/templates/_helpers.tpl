@@ -75,10 +75,21 @@ Determine if credential configuration for channel connectors is used
 {{- end -}}
 
 {{/*
-Determine if a default model should be loaded
+Determine if a initial model should be downloaded
 */}}
-{{- define "rasa-bot.defaultModel.loaded" -}}
-{{- if and (not .Values.applicationSettings.rasaX.useConfigEndpoint) (not .Values.applicationSettings.endpoints.models.enabled) (not (empty .Values.applicationSettings.defaultModel)) -}}
+{{- define "rasa-bot.initialModel.download" -}}
+{{- if and (not .Values.applicationSettings.rasaX.useConfigEndpoint) (not .Values.applicationSettings.endpoints.models.enabled) (not (empty .Values.applicationSettings.initialModel)) -}}
+{{- print "true" -}}
+{{- else -}}
+{{- print "false" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Determine if a initial model should be trained
+*/}}
+{{- define "rasa-bot.initialModel.train" -}}
+{{- if and (not .Values.applicationSettings.rasaX.useConfigEndpoint) (not .Values.applicationSettings.endpoints.models.enabled) (empty .Values.applicationSettings.initialModel) .Values.applicationSettings.trainInitialModel -}}
 {{- print "true" -}}
 {{- else -}}
 {{- print "false" -}}

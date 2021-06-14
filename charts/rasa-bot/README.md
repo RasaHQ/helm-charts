@@ -32,7 +32,9 @@ helm repo update
 
 ## Quick start
 
-The rasa-bot deploy Rasa Open Source Server and load a model that is defined by the `applicationSettings.defaultModel` value (the value for `applicationSettings.defaultModel` has to be a URL that points to a tag.gz file). Below you can find examples of how to configure your deployment or use more advanced configurations such as integration with Rasa X / Enterprise.
+The rasa-bot deploy Rasa Open Source Server which will create a initial project and train model, the trained model is loaded.
+
+Below you can find examples of how to configure your deployment or use more advanced configurations such as integration with Rasa X / Enterprise.
 
 Default components that will be installed along with the rasa-bot:
 
@@ -76,6 +78,26 @@ As a best practice, a YAML file that specifies the values for the chart paramete
 1. Copy the default [values.yaml](values.yaml) value file to `rasa-values.yaml`. From now on we'll use the `rasa-values.yaml` values file.
 2. Set custom parameters in the rasa-values.yaml
 3. Upgrade the Rasa Bot Helm chart with the new rasa-values.yaml file:
+
+```shell
+helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
+```
+
+### Downloading a initial model
+
+By default, the rasa-bot chart creates an initial project and train a model, but it's also possible to define an existing model to download. In a such scenario, a model is downloaded from a defined URL.
+
+Update your `rasa-values.yaml` with the following configuration:
+
+```yaml
+applicationSettings:
+  # (...)
+  # Initial model to download and load if a model server or remote storage is not used.
+  # It has to be a URL (without auth) that points to a tag.gz file.
+  initialModel: "https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true"
+```
+
+then upgrade your Rasa Bot deployment:
 
 ```shell
 helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
@@ -136,7 +158,7 @@ then upgrade your Rasa Bot deployment:
 helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 ```
 
-### Enabling Rasa X / Enterprise
+### Enabling External Rasa X / Enterprise
 
 To use Rasa Bot along with Rasa X / Enterprise update `rasa-values.yaml` with the following configuration:
 
@@ -144,11 +166,11 @@ To use Rasa Bot along with Rasa X / Enterprise update `rasa-values.yaml` with th
 applicationSettings:
   rasaX:
     enabled: true
-      # here you have to put URL to Rasa Enterprise
+    # here you have to put URL to Rasa Enterprise
     url: "http://rasa-x-rasa-x:5002"
   endpoints:
     # In order to send messages to the same
-    # event broker as Rasa Enterprise uses we can pass
+    # event broker as Rasa X / Enterprise does we can pass
     # a custom configuration.
     eventBroker:
       type: "pika"
@@ -157,7 +179,7 @@ applicationSettings:
       password: ${RABBITMQ_PASSWORD}
       port: 5672
       queues:
-        - ${RABBITMQ_QUEUE}
+        - "rasa_production_events"
     # Use Rasa X as a model server
     models:
       useRasaXasModelServer:
@@ -165,9 +187,7 @@ applicationSettings:
 extraEnv:
   # In the configuration for an event broker are used environment variables, thus
   # you have to pass extra environment variables that read values from
-  # the rasa-x deployment in the same namespace
-  - name: "RABBITMQ_QUEUE"
-    value: rasa_production_events
+  # the rasa-x-rabbit secret.
   - name: "RABBITMQ_PASSWORD"
     valueFrom:
       secretKeyRef:
@@ -175,19 +195,19 @@ extraEnv:
         key: rabbitmq-password
 ```
 
-In the example above we assumed that Rasa X / Enterprise is deployed with `rasa-x` release name in the same namespaces as the rasa bot.
+In the example above we assumed that the `rasa-x-rabbit` secret already exists and contains the `rabbitmq-password` key.
 
 ```shell
 helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 ```
 
-In addition to Rasa Bot configuration, you have to update Rasa X / Enterprise configuration as well, please visit the docs to learn more.
+In addition to Rasa Bot configuration, you have to update Rasa X / Enterprise configuration as well, please visit [the docs](https://link-to-the-docs) to learn more.
 
-### Enabling Rasa X / Enterprise (used as a configuration endpoint)
+### Enabling Rasa X / Enterprise (within the same cluster)
 
 It's possible to use Rasa X / Enterprise as a configuration endpoint, in a such case runtime configuration for Rasa OSS will be pulled from Rasa X / Enterprise.
 
-An example below shows how to configure the Rasa Bot to use Rasa X / Enterprise which are deployed in the same namespace.
+An example below shows how to configure the Rasa Bot to use Rasa X / Enterprise which is deployed in the same namespace.
 
 Update `rasa-values.yaml` with the following configuration:
 
@@ -295,6 +315,8 @@ extraEnv:
 
 ```
 
+(The example above assumed that Rasa X / Enterprise is deployed via the rasa-x-helm chart in the same namespace as the rasa-bot)
+
 then upgrade your Rasa Bot deployment:
 
 ```shell
@@ -310,13 +332,12 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | applicationSettings.credentials.additionalChannelCredentials | object | `{}` | Additional channel credentials which should be used by Rasa to connect to various input channels |
 | applicationSettings.credentials.enabled | bool | `false` | Enable credentials configuration for channel connectors |
 | applicationSettings.debugMode | bool | `false` | Enable debug mode |
-| applicationSettings.defaultModel | string | `"https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true"` | Default model loaded if a model server or a remote storage is not used. It has to be a URL that points to a tag.gz file. |
 | applicationSettings.endpoints.action.endpointURL | string | `"/webhook"` | the URL which Rasa Open Source calls to execute custom actions |
 | applicationSettings.endpoints.additionalEndpoints | object | `{}` | Additional endpoints |
 | applicationSettings.endpoints.eventBroker.enabled | bool | `true` | Enable endpoint for Event Broker |
 | applicationSettings.endpoints.eventBroker.password | string | `"${RABBITMQ_PASSWORD}"` | Password used for authentication |
 | applicationSettings.endpoints.eventBroker.port | string | `"${RABBITMQ_PORT}"` | The port which an event broker is listening on |
-| applicationSettings.endpoints.eventBroker.queues | list | `["${RABBITMQ_QUEUE}"]` | Send all messages to a given queue |
+| applicationSettings.endpoints.eventBroker.queues | list | `["rasa_production_events"]` | Send all messages to a given queue |
 | applicationSettings.endpoints.eventBroker.type | string | `"pika"` | Event Broker |
 | applicationSettings.endpoints.eventBroker.url | string | `"${RABBITMQ_HOST}"` | The url of an event broker |
 | applicationSettings.endpoints.eventBroker.username | string | `"${RABBITMQ_USERNAME}"` | Username used for authentication |
@@ -341,6 +362,7 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | applicationSettings.endpoints.trackerStore.type | string | `"sql"` | Tracker Store type |
 | applicationSettings.endpoints.trackerStore.url | string | `"${DB_HOST}"` | URL of your SQL server |
 | applicationSettings.endpoints.trackerStore.username | string | `"${DB_USER}"` | The username which is used for authentication |
+| applicationSettings.initialModel | string | `""` | Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tag.gz file e.g. https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true |
 | applicationSettings.port | int | `5005` | Port on which Rasa runs |
 | applicationSettings.rasaX.enabled | bool | `false` | Run Rasa X / Enterprise server |
 | applicationSettings.rasaX.production | bool | `true` | Run Rasa X / Enterprise in a production environment |
@@ -350,6 +372,7 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | applicationSettings.scheme | string | `"http"` | Scheme by which the service are accessible |
 | applicationSettings.telemetry.enabled | bool | `false` | Enable telemetry See: https://rasa.com/docs/rasa/telemetry/telemetry/ |
 | applicationSettings.token | string | `"rasaToken"` | Token Rasa accepts as authentication token from other Rasa services |
+| applicationSettings.trainInitialModel | bool | `true` | Train a model if a initial model is not defined. This parameter is ignored if the `appplication.Settings.initialModel` is defined. |
 | args | list | `[]` | Override the default arguments for the container |
 | autoscaling.enabled | bool | `false` | Enable autoscaling |
 | autoscaling.maxReplicas | int | `20` | Upper limit for the number of pods that can be set by the autoscaler. It cannot be smaller than minReplicas. |

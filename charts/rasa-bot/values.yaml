@@ -15,8 +15,12 @@ applicationSettings:
   # -- Enable debug mode
   debugMode: false
 
-  # -- Default model loaded if a model server or a remote storage is not used. It has to be a URL that points to a tag.gz file.
-  defaultModel: https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true
+  # -- Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tag.gz file
+  # e.g. https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true
+  initialModel: ""
+
+  # -- Train a model if a initial model is not defined. This parameter is ignored if the `appplication.Settings.initialModel` is defined.
+  trainInitialModel: true
 
   # -- Port on which Rasa runs
   port: 5005
