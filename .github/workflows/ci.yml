@@ -131,7 +131,10 @@ jobs:
 
       - name: Install and run minishift
         run: |
-          brew install --cask minishift
+          curl -L https://github.com/minishift/minishift/releases/download/v1.34.3/minishift-1.34.3-linux-amd64.tgz --output minishift.tag.gz
+          tar -zxvf minishift.tag.gz
+          mv minishift*/minishift /usr/local/bin/minishift
+          chmod +x /usr/local/bin/minishift
           minishift start
 
   install-chart:
