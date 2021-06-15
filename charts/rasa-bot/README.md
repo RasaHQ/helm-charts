@@ -310,8 +310,6 @@ extraEnv:
 
 ```
 
-(The example above assumed that Rasa X / Enterprise is deployed via the rasa-x-helm chart in the same namespace as the rasa-bot)
-
 then upgrade your Rasa Bot deployment:
 
 ```shell
