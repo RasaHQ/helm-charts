@@ -58,8 +58,8 @@ jobs:
       matrix:
         test:
           - ./test/common
-          - ./charts/rasa-bot
-          - ./charts/rasa-action-server
+          - ./charts/rasa-bot/test
+          - ./charts/rasa-action-server/test
 
     steps:
       - name: Checkout
@@ -114,6 +114,25 @@ jobs:
         with:
           files: ${{ matrix.chart }}.yaml
           ignore_missing_schemas: true
+
+  install-chart-oc:
+    name: Install chart - OpenShift
+    runs-on: ubuntu-20.04
+    needs:
+      - lint-chart
+      - kubeval-chart
+      - changes
+    strategy:
+      matrix:
+        chart: ${{ fromJSON(needs.changes.outputs.charts) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install and run minishift
+        run: |
+          brew cask install minishift
+          minishift start
 
   install-chart:
     name: Install chart
