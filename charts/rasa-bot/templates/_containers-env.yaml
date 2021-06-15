@@ -6,13 +6,13 @@
       name: {{ include "rasa-common.names.fullname" . }}
       key: model-server-token
 {{- end }}
-{{- if and (eq (include "rasa-bot.endpoints.trackerStore.enabled" .) "true") (not .Values.applicationSettings.endpoints.trackerStore.customConfiguration) (eq (include "rasa-common.psql.available" .) "true") }}
+{{- if and (eq (include "rasa-bot.endpoints.trackerStore.enabled" .) "true") (eq (include "rasa-common.psql.available" .) "true") }}
 {{ include "rasa-common.psql.envs" . }}
 {{- end }}
-{{- if and (eq (include "rasa-bot.endpoints.lockStore.enabled" .) "true") (not .Values.applicationSettings.endpoints.lockStore.customConfiguration) (eq (include "rasa-common.redis.available" .) "true") }}
+{{- if and (eq (include "rasa-bot.endpoints.lockStore.enabled" .) "true") (eq (include "rasa-common.redis.available" .) "true") }}
 {{ include "rasa-common.redis.envs" . }}
 {{- end }}
-{{- if and (eq (include "rasa-bot.endpoints.eventBroker.enabled" .) "true") (not .Values.applicationSettings.endpoints.eventBroker.customConfiguration) (eq (include "rasa-common.rabbitmq.available" .) "true") }}
+{{- if and (eq (include "rasa-bot.endpoints.eventBroker.enabled" .) "true") (eq (include "rasa-common.rabbitmq.available" .) "true") }}
 {{ include "rasa-common.rabbitmq.envs" . }}
 {{- end }}
 {{- if eq (include "rasa-bot.endpoints.action" .) "true" }}
@@ -24,12 +24,12 @@
   value: "/tmp/.matplotlib"
 - name: "TF_CPP_MIN_LOG_LEVEL"
   value: "2"
-{{- if .Values.applicationSettings.enterprise.enabled }}
-- name: "RASA_ENTERPRISE_TOKEN"
+{{- if .Values.applicationSettings.rasaX.enabled }}
+- name: "RASA_X_TOKEN"
   valueFrom:
     secretKeyRef:
       name: {{ include "rasa-common.names.fullname" . }}
-      key: "rasa-enterprise-token"
+      key: "rasa-x-token"
 {{- end }}
 - name: "RASA_TOKEN"
   valueFrom:

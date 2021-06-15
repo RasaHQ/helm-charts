@@ -1,5 +1,5 @@
 {{- define "rasa-bot.nginx.rasa.conf" -}}
-upstream model-runner {
+upstream rasa-oss {
   server 127.0.0.1:{{ .Values.applicationSettings.port }} max_fails=0;
 }
 
@@ -18,15 +18,7 @@ server {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header Host $host;
-    proxy_pass http://model-runner/;
-  }
-
-  location /core/ {
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $remote_addr;
-    proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_set_header Host $host;
-
+    proxy_pass {{ .Values.applicationSettings.scheme }}://rasa-oss/;
   }
 
   location /socket.io {
@@ -37,7 +29,7 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "Upgrade";
-    proxy_pass http://model-runner/;
+    proxy_pass {{ .Values.applicationSettings.scheme }}://rasa-oss/;
   }
 
   location /robots.txt {

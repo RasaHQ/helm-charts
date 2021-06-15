@@ -1,4 +1,4 @@
-{{ if not .Values.applicationSettings.enterprise.useConfigEndpoint }}
+{{ if not .Values.applicationSettings.rasaX.useConfigEndpoint }}
 apiVersion: "v1"
 kind: "ConfigMap"
 metadata:
@@ -12,9 +12,9 @@ data:
     {{- toYaml . | nindent 4 }}
     {{- end }}
 {{- end }}
-{{- if and .Values.applicationSettings.enterprise.enabled .Values.applicationSettings.enterprise.url }}
+{{- if and .Values.applicationSettings.rasaX.enabled .Values.applicationSettings.rasaX.url }}
     rasa:
-      url: {{ .Values.applicationSettings.enterprise.url }}/api
+      url: {{ .Values.applicationSettings.rasaX.url }}/api
 {{- end }}
   endpoints: |
 {{- if eq (include "rasa-bot.endpoints.models.enabled" .) "true" }}
@@ -22,56 +22,34 @@ data:
       url: {{ .Values.applicationSettings.endpoints.models.url }}
       token: ${MODEL_SERVER_TOKEN}
       wait_time_between_pulls: {{ .Values.applicationSettings.endpoints.models.waitTimeBetweenPulls }}
-{{- else if and .Values.applicationSettings.enterprise.enabled .Values.applicationSettings.enterprise.url .Values.applicationSettings.endpoints.models.useRasaXasModelServer.enabled }}
+{{- else if and .Values.applicationSettings.rasaX.enabled .Values.applicationSettings.rasaX.url .Values.applicationSettings.endpoints.models.useRasaXasModelServer.enabled }}
     models:
-      url: {{ .Values.applicationSettings.enterprise.url }}/api/projects/default/models/tags/{{ .Values.applicationSettings.endpoints.models.useRasaXasModelServer.tag }}
-      token: ${RASA_ENTERPRISE_TOKEN}
+      url: {{ .Values.applicationSettings.rasaX.url }}/api/projects/default/models/tags/{{ .Values.applicationSettings.endpoints.models.useRasaXasModelServer.tag }}
+      token: ${RASA_X_TOKEN}
       wait_time_between_pulls: {{ .Values.applicationSettings.endpoints.models.waitTimeBetweenPulls }}
 {{- end }}
 {{- if eq (include "rasa-bot.endpoints.trackerStore.enabled" .) "true"  }}
-    {{- if .Values.applicationSettings.endpoints.trackerStore.customConfiguration }}
     tracker_store:
-      {{- toYaml .Values.applicationSettings.endpoints.trackerStore.customConfiguration | nindent 6 }}
-    {{- else if eq (include "rasa-common.psql.available" .) "true" }}
-    tracker_store:
-      type: sql
-      dialect: "postgresql"
-      url: ${DB_HOST}
-      port: ${DB_PORT}
-      username: ${DB_USER}
-      password: ${DB_PASSWORD}
-      db: ${DB_DATABASE}
-      {{- if .Values.applicationSettings.endpoints.trackerStore.useLoginDatabase }}
-      login_db: ${DB_DATABASE}
+    {{- range $key, $value := .Values.applicationSettings.endpoints.trackerStore }}
+      {{- if not (eq $key "enabled") }}
+      {{ $key }}: {{ $value }}
       {{- end }}
     {{- end }}
 {{- end }}
 {{- if eq (include "rasa-bot.endpoints.lockStore.enabled" .) "true" }}
-    {{- if .Values.applicationSettings.endpoints.lockStore.customConfiguration }}
     lock_store:
-      {{- toYaml .Values.applicationSettings.endpoints.lockStore.customConfiguration | nindent 6 }}
-    {{- else if eq (include "rasa-common.redis.available" .) "true" }}
-    lock_store:
-      type: "redis"
-      url: ${REDIS_HOST}
-      port: ${REDIS_PORT}
-      password: ${REDIS_PASSWORD}
-      db: {{ .Values.applicationSettings.endpoints.lockStore.database | quote }}
+    {{- range $key, $value := .Values.applicationSettings.endpoints.lockStore }}
+      {{- if not (eq $key "enabled") }}
+      {{ $key }}: {{ $value }}
+      {{- end }}
     {{- end }}
 {{- end }}
 {{- if eq (include "rasa-bot.endpoints.eventBroker.enabled" .) "true" }}
-    {{- if .Values.applicationSettings.endpoints.eventBroker.customConfiguration }}
     event_broker:
-      {{- toYaml .Values.applicationSettings.endpoints.eventBroker.customConfiguration | nindent 6 }}
-    {{- else if eq (include "rasa-common.rabbitmq.available" .) "true" }}
-    event_broker:
-      type: "pika"
-      url: ${RABBITMQ_HOST}
-      username: ${RABBITMQ_USERNAME}
-      password: ${RABBITMQ_PASSWORD}
-      port: ${RABBITMQ_PORT}
-      queues:
-        - ${RABBITMQ_QUEUE}
+    {{- range $key, $value := .Values.applicationSettings.endpoints.eventBroker }}
+      {{- if not (eq $key "enabled") }}
+      {{ $key }}: {{ $value }}
+      {{- end }}
     {{- end }}
 {{- end }}
 {{- if eq (include "rasa-bot.endpoints.action" .) "true" }}

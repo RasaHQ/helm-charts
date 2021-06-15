@@ -47,13 +47,15 @@ spec:
       serviceAccountName: "{{ include "rasa-common.names.serviceAccount" . }}"
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      {{- if or .Values.initContainers (eq (include "rasa-bot.defaultModel.loaded" .) "true") }}
+      {{- if or .Values.initContainers (eq (include "rasa-bot.initialModel.download" .) "true") (eq (include "rasa-bot.initialModel.train" .) "true") }}
       initContainers:
         {{- if .Values.initContainers }}
         {{- toYaml .Values.initContainers | nindent 8 }}
         {{- end }}
-        {{- if eq (include "rasa-bot.defaultModel.loaded" .) "true"}}
-        {{- include "rasa-bot.defaultModel.initContainer" . | nindent 8 }}
+        {{- if eq (include "rasa-bot.initialModel.download" .) "true" }}
+        {{- include "rasa-bot.downloadInitialModel.initContainer" . | nindent 8 }}
+        {{- else if eq (include "rasa-bot.initialModel.train" .) "true" }}
+        {{- include "rasa-bot.trainInitialModel.initContainer" . | nindent 8 }}
         {{- end }}
       {{- end }}
       containers:
@@ -61,7 +63,7 @@ spec:
         {{- toYaml .Values.extraContainers | nindent 8 }}
       {{- end }}
 {{- (include "rasa-bot.nginx.sidecar" .)  | nindent 8 }}
-        - name: model-runner
+        - name: rasa-oss
           {{- if .Values.args }}
           args:
 {{ toYaml .Values.args | indent 12 }}
@@ -104,16 +106,16 @@ spec:
           env:
           {{- include "rasa-bot.containers.env" . | nindent 12 }}
           volumeMounts:
-          {{- if (eq (include "rasa-bot.defaultModel.loaded" .) "true") }}
-          {{- include "rasa-bot.defaultModel.initContainer.volumeMounts" . | nindent 12 }}
+          {{- if or (eq (include "rasa-bot.initialModel.download" .) "true") (eq (include "rasa-bot.initialModel.train" .) "true") }}
+          {{- include "rasa-bot.initialModel.initContainer.volumeMounts" . | nindent 12 }}
           {{- end }}
           {{- include "rasa-bot.containers.volumeMounts" . | nindent 12 }}
 {{- if .Values.volumeMounts }}
 {{ toYaml .Values.volumeMounts | indent 12 }}
 {{- end }}
       volumes:
-      {{- if (eq (include "rasa-bot.defaultModel.loaded" .) "true") }}
-      {{- include "rasa-bot.defaultModel.initContainer.volumes" . | nindent 8 }}
+      {{- if or (eq (include "rasa-bot.initialModel.download" .) "true") (eq (include "rasa-bot.initialModel.train" .) "true") }}
+      {{- include "rasa-bot.initialModel.initContainer.volumes" . | nindent 8 }}
       {{- end }}
       {{- include "rasa-bot.containers.volumes" . | nindent 8 }}
 {{- if .Values.volumes }}

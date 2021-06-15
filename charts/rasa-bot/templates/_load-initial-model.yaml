@@ -1,0 +1,37 @@
+{{- define "rasa-bot.downloadInitialModel.initContainer" -}}
+- name: download-initial-model
+  image: "busybox"
+  command: ["/bin/sh", "-c"]
+  args:
+    - cd /app/models/ && wget {{ .Values.applicationSettings.initialModel }} -O model.tar.gz
+  volumeMounts:
+    - mountPath: /app/models
+      name: models
+{{- end -}}
+
+{{- define "rasa-bot.trainInitialModel.initContainer" -}}
+- name: train-initial-model
+  image: "{{ include "rasa-common.images.image" . }}"
+  imagePullPolicy: {{ .Values.image.pullPolicy }}
+  command: ["/bin/sh", "-c"]
+  env:
+    - name: "TF_CPP_MIN_LOG_LEVEL"
+      value: "2"
+    - name: "HOME"
+      value: "/app"
+  args:
+    - rasa init --no-prompt
+  volumeMounts:
+    - mountPath: /app/models
+      name: models
+{{- end -}}
+
+{{- define "rasa-bot.initialModel.initContainer.volumes" -}}
+- name: models
+  emptyDir: {}
+{{- end -}}
+
+{{- define "rasa-bot.initialModel.initContainer.volumeMounts" -}}
+- mountPath: /app/models
+  name: models
+{{- end -}}

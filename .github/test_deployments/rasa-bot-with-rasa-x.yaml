@@ -10,7 +10,7 @@ releases:
             enabled: true
             generateSelfSignedCert: true
       - applicationSettings:
-          enterprise:
+          rasaX:
             enabled: true
             url: "http://rasa-x-rasa-x:5002"
             useConfigEndpoint: false

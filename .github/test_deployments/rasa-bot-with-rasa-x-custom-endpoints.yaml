@@ -10,7 +10,7 @@ releases:
             enabled: true
             generateSelfSignedCert: true
       - applicationSettings:
-          enterprise:
+          rasaX:
             enabled: true
             url: "http://rasa-x-rasa-x:5002"
             useConfigEndpoint: false
@@ -23,31 +23,28 @@ releases:
               useRasaXasModelServer:
                 enabled: true
             eventBroker:
-              customConfiguration:
-                type: "pika"
-                url: "rasa-x-rabbit"
-                username: "user"
-                password: ${RABBITMQ_PASSWORD}
-                port: 5672
-                queues:
-                  - ${RABBITMQ_QUEUE}
+              type: "pika"
+              url: "rasa-x-rabbit"
+              username: "user"
+              password: ${RABBITMQ_PASSWORD}
+              port: 5672
+              queues:
+                - ${RABBITMQ_QUEUE}
             trackerStore:
-              customConfiguration:
-                type: sql
-                dialect: "postgresql"
-                url: rasa-x-postgresql
-                port: 5432
-                username: postgres
-                password: ${DB_PASSWORD}
-                db: ${DB_DATABASE}
-                login_db: rasa
+              type: sql
+              dialect: "postgresql"
+              url: rasa-x-postgresql
+              port: 5432
+              username: postgres
+              password: ${DB_PASSWORD}
+              db: ${DB_DATABASE}
+              login_db: rasa
             lockStore:
-              customConfiguration:
-                type: "redis"
-                url: rasa-x-redis-master
-                port: 6379
-                password: ${REDIS_PASSWORD}
-                db: 1
+              type: "redis"
+              url: rasa-x-redis-master
+              port: 6379
+              password: ${REDIS_PASSWORD}
+              db: 1
       - ingress:
           enabled: false
       - extraEnv:
