@@ -137,11 +137,14 @@ jobs:
           chmod +x /tmp/docker-machine-driver-kvm
           sudo cp /tmp/docker-machine-driver-kvm /usr/local/bin/docker-machine-driver-kvm
 
+          virsh net-start default
+          virsh net-list --all
+
           curl -L https://github.com/minishift/minishift/releases/download/v1.34.3/minishift-1.34.3-linux-amd64.tgz --output minishift.tag.gz
           tar -zxvf minishift.tag.gz
           sudo mv minishift*/minishift /usr/local/bin/minishift
           sudo chmod +x /usr/local/bin/minishift
-          minishift start
+          sudo minishift start
 
   install-chart:
     name: Install chart
