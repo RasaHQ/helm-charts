@@ -131,6 +131,8 @@ jobs:
 
       - name: Install and run minishift
         run: |
+          sudo apt install qemu-kvm libvirt-daemon libvirt-daemon-system
+
           curl -L https://github.com/minishift/minishift/releases/download/v1.34.3/minishift-1.34.3-linux-amd64.tgz --output minishift.tag.gz
           tar -zxvf minishift.tag.gz
           sudo mv minishift*/minishift /usr/local/bin/minishift
