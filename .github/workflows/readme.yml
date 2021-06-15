@@ -10,6 +10,7 @@ jobs:
     name: Render README.md
     runs-on: ubuntu-20.04
     strategy:
+      max-parallel: 1
       matrix:
         chart:
           - rasa-bot

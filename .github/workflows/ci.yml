@@ -52,11 +52,27 @@ jobs:
       - name: Run chart-testing (lint)
         run: ct lint --config .github/.ct.yaml
 
+  unit-tests:
+    runs-on: ubuntu-20.04
+    needs: changes
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '^1.16.5'
+
+      - name: Download dependencies
+        run: cd test/common; go mod download -x all
+
+      - name: Run tests
+        run: cd test/common; go test -v
+
   kubeval-chart:
     runs-on: ubuntu-20.04
     needs: changes
     strategy:
-      max-parallel: 1
       matrix:
         # When changing versions here, check that the version exists at: https://github.com/instrumenta/kubernetes-json-schema
         k8s:
