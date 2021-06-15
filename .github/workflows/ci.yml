@@ -131,7 +131,7 @@ jobs:
 
       - name: Install and run minishift
         run: |
-          brew cask install minishift
+          brew install --cask minishift
           minishift start
 
   install-chart:
