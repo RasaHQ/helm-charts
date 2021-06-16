@@ -63,6 +63,7 @@ jobs:
           - ./test/common
           - ./charts/rasa-bot/test
           - ./charts/rasa-action-server/test
+          - ./charts/duckling/test
 
     steps:
       - name: Checkout
