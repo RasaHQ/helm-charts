@@ -1,4 +1,4 @@
-# Default values for rasa-bot.
+# Default values for rasa-action-server.
 # This is a YAML-formatted file.
 
 # -- (string) Override name of app
@@ -17,7 +17,7 @@ applicationSettings:
     # -- Enable telemetry
     # See: https://rasa.com/docs/rasa/telemetry/telemetry/
     enabled: false
-# -- Specify the number of model runner replicas
+# -- Specify the number of Action Server replicas
 replicaCount: 1
 # -- Override the default arguments for the container
 args: []
@@ -30,15 +30,15 @@ extraEnv: []
 
 ## Define the rasa image to work with
 image:
-  # -- Model Runner image name to use (relative to `registry`)
+  # -- Action Server image name to use (relative to `registry`)
   name: rasa-x-demo
-  # -- Model Runner image tag to use
+  # -- Action Server image tag to use
   tag: "0.40.0"
-  # -- Override default registry + image.name for Model Runner
+  # -- Override default registry + image.name for Action Server
   repository:
-  # -- Model Runner image pullPolicy
+  # -- Action Server image pullPolicy
   pullPolicy: IfNotPresent
-  # -- Model Runner repository pullSecret
+  # -- Action Server repository pullSecret
   ## See https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
   pullSecrets: []
   #   - name: "<SECRET>"
@@ -141,7 +141,7 @@ resources: {}
 #   cpu: 100m
 #   memory: 128Mi
 
-## Autoscaling parameters for the Model Runner Deployment
+## Autoscaling parameters for the Action Server Deployment
 ## See: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 autoscaling:
   # -- Enable autoscaling
@@ -155,14 +155,14 @@ autoscaling:
   # e.g. 70 means that 70% of the requested CPU should be in use.
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
-# -- Allow the Model Runner Deployment to be scheduled on selected nodes
+# -- Allow the Action Server Deployment to be scheduled on selected nodes
 ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
 nodeSelector: {}
 # -- Tolerations for pod assignment
 ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 tolerations: []
-# -- Allow the Model Runner Deployment to schedule using affinity rules
+# -- Allow the Action Server Deployment to schedule using affinity rules
 ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 affinity: {}
 # -- Allow the deployment to perform a rolling update
@@ -198,7 +198,7 @@ readinessProbe:
   successThreshold: 1
   timeoutSeconds: 5
   failureThreshold: 6
-# -- Allow to specify init containers for the Model Runner Deployment
+# -- Allow to specify init containers for the Action Server Deployment
 ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 initContainers: []
 #  - name: init
