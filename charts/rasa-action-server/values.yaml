@@ -2,10 +2,10 @@
 # This is a YAML-formatted file.
 
 # -- (string) Override name of app
-nameOverride: # ""
+nameOverride:  # ""
 
 # -- (string) Override the full qualified app name
-fullnameOverride: # ""
+fullnameOverride:  # ""
 
 # -- Registry to use for all Rasa images (default docker.io)
 ## DockerHub - use docker.io/rasa
