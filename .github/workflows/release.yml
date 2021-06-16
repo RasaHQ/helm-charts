@@ -26,8 +26,12 @@ jobs:
       - name: Helm dependency update
         run: |
           cd ${{ github.workspace }}/charts
-          ls -la
-          for x in `ls`; do helm dependency update ./${x}; done
+
+          for x in `ls`; do
+            echo "Chart: ${x}"
+
+            helm dependency update ${{ github.workspace }}/charts/${x}
+          done
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1
