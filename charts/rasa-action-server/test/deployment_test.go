@@ -17,7 +17,7 @@ import (
 
 // Path to the helm chart we will test
 var helmChartPath string = "../"
-var releaseName string = "rasa-bot"
+var releaseName string = "rasa-action-server"
 var namespaceName string = "ns-" + strings.ToLower(random.UniqueId())
 
 func TestTemplateRendersContainerImage(t *testing.T) {

@@ -11,6 +11,7 @@ var (
 	helmChartPath []string = []string{
 		"../../charts/rasa-bot",
 		"../../charts/rasa-action-server",
+		"../../charts/duckling",
 	}
 	releaseName   string = "test-release-name"
 	namespaceName string = "ns-" + strings.ToLower(random.UniqueId())
