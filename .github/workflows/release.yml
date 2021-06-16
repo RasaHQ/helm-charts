@@ -1,8 +1,9 @@
 name: Release Charts
 
 on:
-  pull_request:
-    types: [opened, synchronize, labeled]
+  push:
+    branches:
+      - main
 
 jobs:
   release:
