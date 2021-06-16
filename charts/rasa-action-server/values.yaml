@@ -69,15 +69,15 @@ serviceAccount:
 
 # -- Annotations to add to the action-server's pod(s)
 podAnnotations: {}
-#  key: "value"
+  # key: "value"
 
 # -- Labels to add to the action-server's pod(s)
 podLabels: {}
-#  key: "value"
+  # key: "value"
 
 # -- Annotations to add to the action-server deployment
 deploymentAnnotations: {}
-#  key: "value"
+  # key: "value"
 
 # -- Labels to add to the action-server deployment
 deploymentLabels: {}
@@ -85,16 +85,16 @@ deploymentLabels: {}
 # -- Defines pod-level security attributes and common container settings
 ## See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 podSecurityContext: {}
-# fsGroup: 2000
+  # fsGroup: 2000
 
 # -- Allows you to overwrite the pod-level security context
 securityContext: {}
-# capabilities:
-#   drop:
-#   - ALL
-# readOnlyRootFilesystem: true
-# runAsNonRoot: true
-# runAsUser: 1000
+  # capabilities:
+  #  drop:
+  #    - ALL
+  #  readOnlyRootFilesystem: true
+  #  runAsNonRoot: true
+  #  runAsUser: 1000
 
 ## Configuration for the service for the action-server
 service:
