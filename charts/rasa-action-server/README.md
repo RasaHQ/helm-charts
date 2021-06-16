@@ -1,6 +1,6 @@
 # rasa-action-server
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.5.0](https://img.shields.io/badge/AppVersion-2.5.0-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.38.0](https://img.shields.io/badge/AppVersion-0.38.0-informational?style=flat-square)
 
 Rasa Action Server Helm chart for Kubernetes
 
@@ -8,7 +8,7 @@ Rasa Action Server Helm chart for Kubernetes
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| Rasa | contact@rasa.com |  |
+| Rasa | hi@rasa.com |  |
 
 ## Source Code
 
@@ -44,6 +44,14 @@ Rasa Action Server Helm chart for Kubernetes
 | image.pullSecrets | list | `[]` | Model Runner repository pullSecret |
 | image.repository | string | `nil` | Override default registry + image.name for Model Runner |
 | image.tag | string | `"0.38.0"` | Model Runner image tag to use |
+| ingress.annotations | object | `{}` | Ingress annotations |
+| ingress.enabled | bool | `false` | Set to true to enable ingress |
+| ingress.extraPaths | object | `{}` | Any additional arbitrary paths that may need to be added to the ingress under the main host |
+| ingress.hostname | string | `"chart-example.local"` | Hostname used for the ingress |
+| ingress.labels | object | `{}` | Labels to add to the ingress |
+| ingress.path | string | `"/"` | Ingress path |
+| ingress.pathType | string | `"ImplementationSpecific"` | Ingress Path type |
+| ingress.tls | list | `[]` | TLS configuration for ingress |
 | initContainers | list | `[]` | Allow to specify init containers for the Model Runner Deployment |
 | livenessProbe | object | Every 15s / 6 KO / 1 OK | Override default liveness probe settings |
 | nameOverride | string | `nil` | Override name of app |
@@ -58,8 +66,8 @@ Rasa Action Server Helm chart for Kubernetes
 | securityContext | object | `{}` | Allows you to overwrite the pod-level security context |
 | service.annotations | object | `{}` | Annotations to add to the service |
 | service.externalTrafficPolicy | string | `"Cluster"` | Enable client source IP preservation |
-| service.loadBalancerIP | string | `nil` |  |
-| service.nodePort | string | `nil` |  |
+| service.loadBalancerIP | string | `nil` | Exposes the Service externally using a cloud provider's load balancer |
+| service.nodePort | string | `nil` | Specify the nodePort(s) value(s) for the LoadBalancer and NodePort service types |
 | service.port | int | `80` | Set port of action-server service (Kubernetes >= 1.15) |
 | service.type | string | `"ClusterIP"` | Set type of action-server service |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |

@@ -21,7 +21,7 @@ version: 0.1.0
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "2.5.0"
+appVersion: "0.38.0"
 
 icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
 
@@ -30,7 +30,7 @@ sources:
   - https://rasa.com/
 
 maintainers:
-  - email: contact@rasa.com
+  - email: hi@rasa.com
     name: Rasa
 
 dependencies:
@@ -39,3 +39,9 @@ dependencies:
     tags:
       - rasa-common
     version: 1.x.x
+
+annotations:
+  # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
+  artifacthub.io/changes: |
+    - kind: added
+      description: Add the rasa-action-server chart

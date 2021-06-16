@@ -1,6 +1,6 @@
 # rasa-bot
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.5.0](https://img.shields.io/badge/AppVersion-2.5.0-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.0](https://img.shields.io/badge/AppVersion-2.7.0-informational?style=flat-square)
 
 Rasa Bot (Rasa Open Source Server) is an open source machine learning framework for automated text and voice-based conversations. Understand messages, hold conversations, and connect to messaging channels and APIs.
 
@@ -14,11 +14,6 @@ You need to add this repository to your Helm repositories:
 helm repo add rasa https://helm.rasa.com
 helm repo update
 ```
-
-## Source Code
-
-* <https://github.com/RasaHQ/charts/rasa-bot>
-* <https://rasa.com/>
 
 ## Requirements
 
@@ -450,8 +445,8 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | securityContext | object | `{}` | Allows you to overwrite the pod-level security context |
 | service.annotations | object | `{}` | Annotations to add to the service |
 | service.externalTrafficPolicy | string | `"Cluster"` | Enable client source IP preservation |
-| service.loadBalancerIP | string | `nil` |  |
-| service.nodePort | string | `nil` |  |
+| service.loadBalancerIP | string | `nil` | Exposes the Service externally using a cloud provider's load balancer |
+| service.nodePort | string | `nil` | Specify the nodePort(s) value(s) for the LoadBalancer and NodePort service types |
 | service.port | int | `5005` | Set port of rasa-bot service (Kubernetes >= 1.15) |
 | service.type | string | `"ClusterIP"` | Set type of rasa-bot service |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
