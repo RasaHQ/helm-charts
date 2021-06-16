@@ -25,7 +25,7 @@ Rasa Action Server Helm chart for Kubernetes
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` | Allow the Model Runner Deployment to schedule using affinity rules |
+| affinity | object | `{}` | Allow the Action Server Deployment to schedule using affinity rules |
 | applicationSettings.port | int | `5055` | Port on which Rasa Action Server runs |
 | applicationSettings.scheme | string | `"http"` | Scheme by which the service are accessible |
 | applicationSettings.telemetry.enabled | bool | `false` | Enable telemetry See: https://rasa.com/docs/rasa/telemetry/telemetry/ |
@@ -39,11 +39,11 @@ Rasa Action Server Helm chart for Kubernetes
 | deploymentLabels | object | `{}` | Labels to add to the action-server deployment |
 | extraEnv | list | `[]` | Add extra environment variables |
 | fullnameOverride | string | `nil` | Override the full qualified app name |
-| image.name | string | `"rasa-x-demo"` | Model Runner image name to use (relative to `registry`) |
-| image.pullPolicy | string | `"IfNotPresent"` | Model Runner image pullPolicy |
-| image.pullSecrets | list | `[]` | Model Runner repository pullSecret |
-| image.repository | string | `nil` | Override default registry + image.name for Model Runner |
-| image.tag | string | `"0.40.0"` | Model Runner image tag to use |
+| image.name | string | `"rasa-x-demo"` | Action Server image name to use (relative to `registry`) |
+| image.pullPolicy | string | `"IfNotPresent"` | Action Server image pullPolicy |
+| image.pullSecrets | list | `[]` | Action Server repository pullSecret |
+| image.repository | string | `nil` | Override default registry + image.name for Action Server |
+| image.tag | string | `"0.40.0"` | Action Server image tag to use |
 | ingress.annotations | object | `{}` | Ingress annotations |
 | ingress.enabled | bool | `false` | Set to true to enable ingress |
 | ingress.extraPaths | object | `{}` | Any additional arbitrary paths that may need to be added to the ingress under the main host |
@@ -52,16 +52,16 @@ Rasa Action Server Helm chart for Kubernetes
 | ingress.path | string | `"/"` | Ingress path |
 | ingress.pathType | string | `"ImplementationSpecific"` | Ingress Path type |
 | ingress.tls | list | `[]` | TLS configuration for ingress |
-| initContainers | list | `[]` | Allow to specify init containers for the Model Runner Deployment |
+| initContainers | list | `[]` | Allow to specify init containers for the Action Server Deployment |
 | livenessProbe | object | Every 15s / 6 KO / 1 OK | Override default liveness probe settings |
 | nameOverride | string | `nil` | Override name of app |
-| nodeSelector | object | `{}` | Allow the Model Runner Deployment to be scheduled on selected nodes |
+| nodeSelector | object | `{}` | Allow the Action Server Deployment to be scheduled on selected nodes |
 | podAnnotations | object | `{}` | Annotations to add to the action-server's pod(s) |
 | podLabels | object | `{}` | Labels to add to the action-server's pod(s) |
 | podSecurityContext | object | `{}` | Defines pod-level security attributes and common container settings |
 | readinessProbe | object | Every 15s / 6 KO / 1 OK | Override default readiness probe settings |
 | registry | string | `"docker.io/rasa"` | Registry to use for all Rasa images (default docker.io) |
-| replicaCount | int | `1` | Specify the number of model runner replicas |
+| replicaCount | int | `1` | Specify the number of Action Server replicas |
 | resources | object | `{}` | Resource requests and limits |
 | securityContext | object | `{}` | Allows you to overwrite the pod-level security context |
 | service.annotations | object | `{}` | Annotations to add to the service |
