@@ -35,6 +35,12 @@ To contribute via pull request, follow these steps:
 1. Create an issue describing the feature you want to work on
 2. Create a pull request describing your changes
 
+Remember that your PR should include!
+
+1. Details about the changes introduced by a given chart version (use the `artifacthub.io/changes` annotation in the `Chart.yaml` file)
+2. Update the chart version
+3. Add additional annotations that indicate your changes (see: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations)
+
 ## License
 
 Licensed under the Apache License, Version 2.0. Copyright 2021 Rasa Technologies GmbH. Copy of the license.
