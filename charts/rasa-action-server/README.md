@@ -1,6 +1,6 @@
 # rasa-action-server
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.38.0](https://img.shields.io/badge/AppVersion-0.38.0-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.40.0](https://img.shields.io/badge/AppVersion-0.40.0-informational?style=flat-square)
 
 Rasa Action Server Helm chart for Kubernetes
 
@@ -43,7 +43,7 @@ Rasa Action Server Helm chart for Kubernetes
 | image.pullPolicy | string | `"IfNotPresent"` | Model Runner image pullPolicy |
 | image.pullSecrets | list | `[]` | Model Runner repository pullSecret |
 | image.repository | string | `nil` | Override default registry + image.name for Model Runner |
-| image.tag | string | `"0.38.0"` | Model Runner image tag to use |
+| image.tag | string | `"0.40.0"` | Model Runner image tag to use |
 | ingress.annotations | object | `{}` | Ingress annotations |
 | ingress.enabled | bool | `false` | Set to true to enable ingress |
 | ingress.extraPaths | object | `{}` | Any additional arbitrary paths that may need to be added to the ingress under the main host |
