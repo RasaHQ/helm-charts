@@ -188,7 +188,7 @@ applicationSettings:
     # -- Define if Rasa X (Enterprise) is aviable as a parent helm chart.
     ## Used by the rasa-x-helm chart
     ## work in progress
-    #usedAsParentChart: false
+    # usedAsParentChart: false
 
 # -- Specify the number of Rasa Open Source replicas
 replicaCount: 1
@@ -284,11 +284,11 @@ service:
   # -- Annotations to add to the service
   annotations: {}
 
-  # - Specify the nodePort(s) value(s) for the LoadBalancer and NodePort service types
+  # -- Specify the nodePort(s) value(s) for the LoadBalancer and NodePort service types
   ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport
   nodePort:
 
-  # - Exposes the Service externally using a cloud provider's load balancer
+  # -- Exposes the Service externally using a cloud provider's load balancer
   ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
   loadBalancerIP:
 

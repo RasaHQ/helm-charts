@@ -24,8 +24,12 @@ sources:
   - https://rasa.com/
 
 maintainers:
-  - email: contact@rasa.com
+  - email: hi@rasa.com
     name: Rasa
 
 annotations:
   category: Infrastructure
+  # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
+  artifacthub.io/changes: |
+    - kind: added
+      description: Add the rasa-common chart
