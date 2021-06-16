@@ -18,6 +18,11 @@ jobs:
       # Expose matched filters as job 'charts' output variable
       charts: ${{ steps.filter.outputs.changes }}
     steps:
+    - name: Cancel Previous Runs
+      uses: styfle/cancel-workflow-action@6135c0ff6214e01d42a5736c988e39b7831f1e2f #0.9.0
+      with:
+        access_token: ${{ github.token }}
+
     # For pull requests it's not necessary to checkout the code
     - uses: dorny/paths-filter@v2
       id: filter
