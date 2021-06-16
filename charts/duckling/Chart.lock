@@ -1,0 +1,6 @@
+dependencies:
+- name: rasa-common
+  repository: file://../rasa-common
+  version: 1.0.0
+digest: sha256:610df65000b0b46ccd6a6561ade365e7de04be2a6fc0a2c2a946f6f25e68e8f0
+generated: "2021-05-03T11:44:35.227939+02:00"

@@ -11,18 +11,6 @@ fullnameOverride:  # ""
 ## DockerHub - use docker.io/rasa
 registry: docker.io/rasa
 
-applicationSettings:
-  # -- Port on which Rasa Action Server runs
-  port: 5055
-
-  # -- Scheme by which the service are accessible
-  scheme: http
-
-  telemetry:
-    # -- Enable telemetry
-    # See: https://rasa.com/docs/rasa/telemetry/telemetry/
-    enabled: false
-
 # -- Specify the number of model runner replicas
 replicaCount: 1
 
@@ -40,10 +28,10 @@ extraEnv: []
 ## Define the rasa image to work with
 image:
   # -- Model Runner image name to use (relative to `registry`)
-  name: rasa-x-demo
+  name: duckling
 
   # -- Model Runner image tag to use
-  tag: "0.38.0"
+  tag: "0.1.6.5-r2"
 
   # -- Override default registry + image.name for Model Runner
   repository:
@@ -102,16 +90,16 @@ service:
   type: ClusterIP
 
   # -- Set port of action-server service (Kubernetes >= 1.15)
-  port: 80
+  port: 8000
 
   # -- Annotations to add to the service
   annotations: {}
 
-  # -- Specify the nodePort(s) value(s) for the LoadBalancer and NodePort service types
+  # - Specify the nodePort(s) value(s) for the LoadBalancer and NodePort service types
   ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport
   nodePort:
 
-  # -- Exposes the Service externally using a cloud provider's load balancer
+  # - Exposes the Service externally using a cloud provider's load balancer
   ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
   loadBalancerIP:
 
@@ -171,7 +159,7 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-## Autoscaling parameters for the Model Runner Deployment
+##  Autoscaling parameters for the Model Runner Deployment
 ## See: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 autoscaling:
   # -- Enable autoscaling
@@ -215,7 +203,7 @@ strategy:
 ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
 livenessProbe:
   httpGet:
-    path: /health
+    path: /
     port: http
     scheme: HTTP
   initialDelaySeconds: 15
@@ -229,7 +217,7 @@ livenessProbe:
 ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
 readinessProbe:
   httpGet:
-    path: /health
+    path: /
     port: http
     scheme: HTTP
   initialDelaySeconds: 15

@@ -190,7 +190,6 @@ applicationSettings:
     ## work in progress
     # usedAsParentChart: false
 
-
 # -- Specify the number of Rasa Open Source replicas
 replicaCount: 1
 
@@ -211,7 +210,6 @@ extraArgs: []
 command: []
 
 # -- Add extra environment variables
-## See:
 extraEnv: []
   # - name: SOME_CUSTOM_ENV_VAR
   #   value: "custom value"

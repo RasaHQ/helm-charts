@@ -5,10 +5,14 @@ Official Helm charts for Rasa products:
 - [Rasa Bot (Rasa Open Source Server)](charts/rasa-bot)
 - [Rasa Action Server](charts/rasa-action-server)
 
+Helm charts for components used by Rasa:
+
+- [Duckling](charts/duckling)
+
 ## Prerequisites
 
-- [Helm 3](https://helm.sh/)
-- Kubernetes
+- [Helm 3](https://helm.sh/) (>= 3.5 )
+- Kubernetes 1.10+
 
 ## How to use Rasa Helm repository?
 
