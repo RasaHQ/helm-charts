@@ -95,6 +95,8 @@ jobs:
           yq e '.appVersion = "'${LATEST_VERSION}'"' -i charts/${{ matrix.chart }}/Chart.yaml
           yq e '.image.tag = "'${LATEST_VERSION}'"' -i charts/${{ matrix.chart }}/values.yaml
 
+          docker run --rm --volume "${{ github.workspace }}/charts/${{ matrix.chart }}/:/helm-docs" jnorwood/helm-docs:latest -d -l error > charts/${{ matrix.chart }}/README.md
+
           git add -u
           git commit -m "other: Bump version to ${LATEST_VERSION}"
           git push origin ${{ steps.get-branch-name.outputs.new_branch }}
