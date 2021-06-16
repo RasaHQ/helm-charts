@@ -1,0 +1,1 @@
+Duckling {{ .Values.image.tag }} has been deployed!

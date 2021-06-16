@@ -1,0 +1,5 @@
+{{- define "duckling.containers.env" -}}
+{{- if .Values.extraEnv }}
+{{ toYaml .Values.extraEnv }}
+{{- end }}
+{{- end -}}
