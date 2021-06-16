@@ -4,9 +4,6 @@ on:
     # Run once a day at 08:00
     - cron: '0 8 * * *'
   workflow_dispatch: {}
-  pull_request:
-    types: [opened, synchronize, labeled]
-
 
 jobs:
   open_pull_request:
@@ -93,7 +90,10 @@ jobs:
           git checkout ${{ steps.get-branch-name.outputs.new_branch }}
 
           yq e '.appVersion = "'${LATEST_VERSION}'"' -i charts/${{ matrix.chart }}/Chart.yaml
-          yq e '.image.tag = "'${LATEST_VERSION}'"' -i charts/${{ matrix.chart }}/values.yaml
+
+
+          diff -Bwb "charts/${{ matrix.chart }}/values.yaml" <(yq e '.image.tag = "'${LATEST_VERSION}'"' charts/${{ matrix.chart }}/values.yaml) > /tmp/tmp.patch
+          patch charts/${{ matrix.chart }}/values.yaml < /tmp/tmp.patch
 
           docker run --rm --volume "${{ github.workspace }}/charts/${{ matrix.chart }}/:/helm-docs" jnorwood/helm-docs:latest -d -l error > charts/${{ matrix.chart }}/README.md
 
