@@ -1,0 +1,49 @@
+name: Release Charts
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@6135c0ff6214e01d42a5736c988e39b7831f1e2f #0.9.0
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.6.0
+
+      - name: Helm dependency update
+        run: |
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+
+          cd ${{ github.workspace }}/charts
+
+          for x in `ls`; do
+            echo "Chart: ${x}"
+
+            helm dependency update ${{ github.workspace }}/charts/${x}
+          done
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.2.1
+        with:
+          config: .github/.cr.yaml
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: debug
+        if: always()
+        run: |
+          cat .cr-index/index.yaml || true

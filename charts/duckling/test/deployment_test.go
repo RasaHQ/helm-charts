@@ -1,8 +1,8 @@
 package tests
 
 import (
-	"testing"
 	"strings"
+	"testing"
 
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -10,13 +10,13 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/gruntwork-io/terratest/modules/helm"
-	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/gruntwork-io/terratest/modules/k8s"
+	"github.com/gruntwork-io/terratest/modules/random"
 )
 
 // Path to the helm chart we will test
 var helmChartPath string = "../"
-var releaseName string = "rasa-bot"
+var releaseName string = "duckling"
 var namespaceName string = "ns-" + strings.ToLower(random.UniqueId())
 
 func TestTemplateRendersContainerImage(t *testing.T) {
@@ -25,9 +25,9 @@ func TestTemplateRendersContainerImage(t *testing.T) {
 	// Setup the args. For this test, we will set the following input values:
 	options := &helm.Options{
 		SetValues: map[string]string{
-			"image.name": "test-image",
-			"image.tag": "2.0.0",
-			"image.pullPolicy": "Always",
+			"image.name":                "test-image",
+			"image.tag":                 "2.0.0",
+			"image.pullPolicy":          "Always",
 			"image.pullSecrets[0].name": "pull_secret",
 		},
 		KubectlOptions: k8s.NewKubectlOptions("", "", namespaceName),
@@ -44,7 +44,7 @@ func TestTemplateRendersContainerImage(t *testing.T) {
 	require.Equal(t, len(deploymentSpec.Containers), 1)
 	require.Equal(t, deploymentSpec.Containers[0].Image, "docker.io/rasa/test-image:2.0.0")
 	require.Equal(t, deploymentSpec.Containers[0].ImagePullPolicy, corev1.PullAlways)
-	require.Equal(t, deploymentSpec.ImagePullSecrets, []corev1.LocalObjectReference{corev1.LocalObjectReference{Name:"pull_secret"}})
+	require.Equal(t, deploymentSpec.ImagePullSecrets, []corev1.LocalObjectReference{corev1.LocalObjectReference{Name: "pull_secret"}})
 }
 
 func TestTemplateRendersContainerImageRepository(t *testing.T) {
@@ -54,6 +54,7 @@ func TestTemplateRendersContainerImageRepository(t *testing.T) {
 	options := &helm.Options{
 		SetValues: map[string]string{
 			"image.repository": "test-image",
+			"image.tag":        "2.4.0",
 		},
 		KubectlOptions: k8s.NewKubectlOptions("", "", namespaceName),
 	}
@@ -67,5 +68,5 @@ func TestTemplateRendersContainerImageRepository(t *testing.T) {
 	// Verify the deployment pod template spec is set to the expected container image value
 	deploymentSpec := deployment.Spec.Template.Spec
 	require.Equal(t, len(deploymentSpec.Containers), 1)
-	require.Equal(t, deploymentSpec.Containers[0].Image, "test-image:2.4.0")
+	require.Equal(t, "test-image:2.4.0", deploymentSpec.Containers[0].Image)
 }

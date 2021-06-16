@@ -24,6 +24,7 @@ func TestTemplateRendersContainerImage(t *testing.T) {
 				"image.tag":                 "2.0.0",
 				"image.pullPolicy":          "Always",
 				"image.pullSecrets[0].name": "pull_secret",
+				"nginx.enabled":             "false",
 			},
 			KubectlOptions: k8s.NewKubectlOptions("", "", namespaceName),
 		}
@@ -55,6 +56,7 @@ func TestTemplateDeploymentLabelsAndAnnotations(t *testing.T) {
 				"deploymentLabels.test-label":           "test-label-deployment",
 				"deploymentAnnotations.test-annotation": "test-annotation-annotations",
 				"podAnnotations.test-annotation":        "test-annotation-pod",
+				"nginx.enabled":                         "false",
 			},
 			KubectlOptions: k8s.NewKubectlOptions("", "", namespaceName),
 		}
@@ -85,6 +87,7 @@ func TestTemplateDeploymentSecurityContext(t *testing.T) {
 			SetValues: map[string]string{
 				"podSecurityContext.fsGroup":           "200",
 				"securityContext.capabilities.drop[0]": "ALL",
+				"nginx.enabled":                        "false",
 			},
 			KubectlOptions: k8s.NewKubectlOptions("", "", namespaceName),
 		}
@@ -128,62 +131,9 @@ func TestTemplateDeploymentNodeSelectorAndAffinityAndTolerations(t *testing.T) {
 		// Verify the deployment pod template spec is set to the expected container image value
 		deploymentTemplateSpec := deployment.Spec.Template.Spec
 		msg := fmt.Sprintf("Chart path: %s", chartPath)
-		require.Equal(t, deploymentTemplateSpec.Tolerations, []corev1.Toleration{corev1.Toleration{Key: "key1", Operator: "Exists", Value: "", Effect: "NoSchedule", TolerationSeconds: (*int64)(nil)}}, msg)
+		require.Equal(t, deploymentTemplateSpec.Tolerations, []corev1.Toleration{{Key: "key1", Operator: "Exists", Value: "", Effect: "NoSchedule", TolerationSeconds: (*int64)(nil)}}, msg)
 		require.Equal(t, deploymentTemplateSpec.NodeSelector, map[string]string{"test": "test"}, msg)
 		require.Equal(t, deploymentTemplateSpec.Affinity.NodeAffinity.RequiredDuringSchedulingIgnoredDuringExecution.NodeSelectorTerms[0].MatchExpressions[0].Operator, corev1.NodeSelectorOperator("In"), msg)
-	}
-}
-
-func TestTemplateRendersContainerArgsAndCommand(t *testing.T) {
-	t.Parallel()
-
-	// Setup the args. For this test, we will set the following input values:
-	for _, chartPath := range helmChartPath {
-		testCases := []struct {
-			name   string
-			values map[string]string
-		}{
-			{
-				"OverrideArgsAndCommand",
-				map[string]string{
-					"args[0]":    "test-args",
-					"command[0]": "test-command",
-				},
-			},
-			{
-				"AddExtraArgs",
-				map[string]string{
-					"extraArgs[0]": "extra-args",
-				},
-			},
-		}
-		for _, testCase := range testCases {
-			testCase := testCase
-
-			t.Run(testCase.name, func(subT *testing.T) {
-				subT.Parallel()
-
-				// Now we try rendering the template, but verify we get an error
-				options := &helm.Options{SetValues: testCase.values}
-				// Run RenderTemplate to render the template and capture the output.
-				output := helm.RenderTemplate(t, options, chartPath, releaseName, []string{"templates/deployment.yaml"})
-				var deployment appsv1.Deployment
-				helm.UnmarshalK8SYaml(t, output, &deployment)
-
-				// Verify the deployment pod template spec is set to the expected container image value
-				deploymentSpec := deployment.Spec.Template.Spec
-				msg := fmt.Sprintf("Chart path: %s, case: %s", chartPath, testCase.name)
-				require.Equal(t, len(deploymentSpec.Containers), 1)
-
-				switch testCase.name {
-				case "OverrideArgsAndCommand":
-					require.Equal(t, deploymentSpec.Containers[0].Command, []string{"test-command"}, msg)
-					require.Equal(t, deploymentSpec.Containers[0].Args, []string{"test-args"}, msg)
-				case "AddExtraArgs":
-					require.Contains(t, deploymentSpec.Containers[0].Args, "extra-args", msg)
-				}
-			})
-		}
 	}
 }
 
@@ -195,6 +145,8 @@ func TestTemplateRendersContainerImageRepository(t *testing.T) {
 		options := &helm.Options{
 			SetValues: map[string]string{
 				"image.repository": "test-image",
+				"image.tag":        "2.4.0",
+				"nginx.enabled":    "false",
 			},
 			KubectlOptions: k8s.NewKubectlOptions("", "", namespaceName),
 		}
@@ -208,7 +160,7 @@ func TestTemplateRendersContainerImageRepository(t *testing.T) {
 		// Verify the deployment pod template spec is set to the expected container image value
 		deploymentSpec := deployment.Spec.Template.Spec
 		require.Equal(t, len(deploymentSpec.Containers), 1)
-		require.Equal(t, deploymentSpec.Containers[0].Image, "test-image:2.4.0", "Chart path: %s", chartPath)
+		require.Equal(t, "test-image:2.4.0", deploymentSpec.Containers[0].Image, "Chart path: %s", chartPath)
 	}
 }
 
