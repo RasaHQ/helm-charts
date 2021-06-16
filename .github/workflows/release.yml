@@ -25,6 +25,8 @@ jobs:
 
       - name: Helm dependency update
         run: |
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+
           cd ${{ github.workspace }}/charts
 
           for x in `ls`; do
