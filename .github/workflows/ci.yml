@@ -115,36 +115,6 @@ jobs:
           files: ${{ matrix.chart }}.yaml
           ignore_missing_schemas: true
 
-  install-chart-oc:
-    name: Install chart - OpenShift
-    runs-on: ubuntu-20.04
-    needs:
-      - lint-chart
-      - kubeval-chart
-      - changes
-    strategy:
-      matrix:
-        chart: ${{ fromJSON(needs.changes.outputs.charts) }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Install and run minishift
-        run: |
-          sudo apt install qemu-kvm libvirt-daemon libvirt-daemon-system
-
-          curl -L https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.10.0/docker-machine-driver-kvm-ubuntu16.04 > /tmp/docker-machine-driver-kvm
-          chmod +x /tmp/docker-machine-driver-kvm
-          sudo cp /tmp/docker-machine-driver-kvm /usr/local/bin/docker-machine-driver-kvm
-
-          sudo virsh net-list --all
-
-          curl -L https://github.com/minishift/minishift/releases/download/v1.34.3/minishift-1.34.3-linux-amd64.tgz --output minishift.tag.gz
-          tar -zxvf minishift.tag.gz
-          sudo mv minishift*/minishift /usr/local/bin/minishift
-          sudo chmod +x /usr/local/bin/minishift
-          sudo minishift start
-
   install-chart:
     name: Install chart
     runs-on: ubuntu-20.04
