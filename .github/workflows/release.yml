@@ -41,3 +41,8 @@ jobs:
           config: .github/.cr.yaml
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: debug
+        if: always()
+        run: |
+          cat .cr-index/index.yaml || true
