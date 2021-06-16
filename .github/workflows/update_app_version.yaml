@@ -42,7 +42,8 @@ jobs:
       - name: Compare the latest version with a chart version ⏯
         run: |
           # Get current version in Chart.yaml using yq
-          brew install yq
+          sudo curl -L https://github.com/mikefarah/yq/releases/download/v4.9.6/yq_linux_amd64 --output /usr/local/bin/yq
+          sudo chmod +x /usr/local/bin/yq
 
           CURRENT_CHART_VERSION=$(yq e .appVersion charts/${{ matrix.chart}}/Chart.yaml)
 
