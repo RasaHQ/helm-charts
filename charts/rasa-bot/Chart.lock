@@ -13,9 +13,9 @@ dependencies:
   version: 8.12.2
 - name: rasa-action-server
   repository: file://../rasa-action-server
-  version: 0.1.0
+  version: 1.0.0
 - name: duckling
   repository: file://../duckling
-  version: 0.1.0
-digest: sha256:9828f291b11a5aeaa076cc7b7c8909a532c5f6f9cfc6f87160738c3719cec184
-generated: "2021-06-17T13:25:33.913197+02:00"
+  version: 1.0.0
+digest: sha256:f4e57d27e654ef71a4c55bd50f990bcf3766caa4e0aa5f75e044032385ba7a47
+generated: "2021-06-17T13:55:39.707785+02:00"
