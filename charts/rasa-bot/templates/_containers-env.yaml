@@ -18,6 +18,9 @@
 {{- if eq (include "rasa-bot.endpoints.action" .) "true" }}
 {{ include "rasa-bot.actionServer.envs" . }}
 {{- end }}
+{{- if eq (include "rasa-bot.endpoints.duckling" .) "true" }}
+{{ include "rasa-bot.duckling.envs" . }}
+{{- end }}
 - name: "RASA_TELEMETRY_ENABLED"
   value: {{ .Values.applicationSettings.telemetry.enabled | quote }}
 - name: "MPLCONFIGDIR"

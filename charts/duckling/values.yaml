@@ -11,6 +11,13 @@ fullnameOverride:  # ""
 ## DockerHub - use docker.io/rasa
 registry: docker.io/rasa
 
+applicationSettings:
+  # -- Port on which Duckling runs
+  port: 8000
+
+  # -- Scheme by which the service are accessible
+  scheme: http
+
 # -- Specify the number of model runner replicas
 replicaCount: 1
 
