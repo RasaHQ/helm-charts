@@ -19,7 +19,8 @@ helm repo update
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../rasa-action-server | rasa-action-server | 0.38.0 |
+| file://../duckling | duckling | 0.1.0 |
+| file://../rasa-action-server | rasa-action-server | 0.1.0 |
 | file://../rasa-common | rasa-common | 1.x.x |
 | https://charts.bitnami.com/bitnami | postgresql | ~10.3.18 |
 | https://charts.bitnami.com/bitnami | rabbitmq | ~8.12.1 |
@@ -374,6 +375,9 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | command | list | `[]` | Override the default command for the container |
 | deploymentAnnotations | object | `{}` | Annotations to add to the rasa-oss deployment |
 | deploymentLabels | object | `{}` | Labels to add to the rasa-oss deployment |
+| duckling.external.enabled | bool | `false` | Determine if external URL is used |
+| duckling.external.url | string | `""` | External URL to Duckling |
+| duckling.install | bool | `false` | Install Duckling |
 | extraArgs | list | `[]` | Add additional arguments to the default one |
 | extraContainers | list | `[]` | Allow to specify additional containers for the Rasa Open Source Deployment |
 | extraEnv | list | `[]` | Add extra environment variables |
@@ -432,7 +436,7 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | rabbitmq.install | bool | `true` | Install RabbitMQ |
 | rasa-action-server.external.enabled | bool | `false` | Determine if external URL is used |
 | rasa-action-server.external.url | string | `""` | External URL to Rasa Action Server |
-| rasa-action-server.install | bool | `true` | Install Rasa Action Server |
+| rasa-action-server.install | bool | `false` | Install Rasa Action Server |
 | readinessProbe | object | Every 15s / 6 KO / 1 OK | Override default readiness probe settings |
 | redis.auth.password | string | `"redis-password"` | Redis(TM) password |
 | redis.external.enabled | bool | `false` | Determine if use an external Redis host |
