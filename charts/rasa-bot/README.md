@@ -317,6 +317,10 @@ then upgrade your Rasa Bot deployment:
 helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 ```
 
+## Exmaples of usage
+
+More examples of usage you can find in the `examples/rasa-bot` directory.
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -324,7 +328,7 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | affinity | object | `{}` | Allow the Rasa Open Source Deployment to schedule using affinity rules |
 | applicationSettings.cors | string | `"*"` | CORS for the passed origin. Default is * to whitelist all origins |
 | applicationSettings.credentials.additionalChannelCredentials | object | `{}` | Additional channel credentials which should be used by Rasa to connect to various input channels |
-| applicationSettings.credentials.enabled | bool | `false` | Enable credentials configuration for channel connectors |
+| applicationSettings.credentials.enabled | bool | `true` | Enable credentials configuration for channel connectors |
 | applicationSettings.debugMode | bool | `false` | Enable debug mode |
 | applicationSettings.endpoints.action.endpointURL | string | `"/webhook"` | the URL which Rasa Open Source calls to execute custom actions |
 | applicationSettings.endpoints.additionalEndpoints | object | `{}` | Additional endpoints |

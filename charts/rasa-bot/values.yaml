@@ -36,7 +36,7 @@ applicationSettings:
 
   credentials:
     # -- Enable credentials configuration for channel connectors
-    enabled: false
+    enabled: true
 
     # -- Additional channel credentials which should be used by Rasa to connect to various
     # input channels

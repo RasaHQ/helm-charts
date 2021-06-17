@@ -1,0 +1,56 @@
+# This example shows how to download a model from a remote location.
+#
+# Execute command: helmfile -f examples/rasa-bot/download-model-helmfile.yaml sync
+#
+repositories:
+- name: rasa
+  url: https://helm.rasa.com
+
+releases:
+  - name: rasa-bot
+    chart: rasa/rasa-bot
+    values:
+      # Expose deployment via LoadBalancer
+      - service:
+          type: LoadBalancer
+
+      # Enable HTTPS for NGINX (self-signed)
+      - nginx:
+          tls:
+            enabled: true
+            generateSelfSignedCert: true
+
+      # Configure Rasa OSS
+      - applicationSettings:
+          # Enable debug mode
+          debugMode: true
+          # Don't train an initial model (you're going to download a model, that's why you don't need it)
+          trainInitialModel: false
+
+          # Credentials configuration
+          credentials:
+            additionalChannelCredentials:
+              # Enable REST channel
+              rest:
+
+      # Add a init container to the rasa-bot deployment that downloads a model
+      - initContainers:
+        - name: download-model
+          image: "busybox"
+          command: ["/bin/sh", "-c"]
+          args:
+            - cd /app/models/ && wget https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true -O model.tar.gz
+          # The Rasa OSS by default loads models located in the /app/models directory,
+          # that's why you have to mount the directory to the init container
+          volumeMounts:
+            - mountPath: /app/models
+              name: models
+      # Create an emptyDir that is shared across containers within a pod
+      - volumes:
+        - name: models
+          emptyDir: {}
+
+      # Mount the /app/models directory to the rasa-oss container (the main container)
+      - volumeMounts:
+          - mountPath: /app/models
+            name: models

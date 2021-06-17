@@ -1,0 +1,11 @@
+# This example deploys the rasa-bot chart with default values.
+#
+# Execute command: helmfile -f examples/rasa-bot/default-values-helmfile.yaml sync
+#
+repositories:
+- name: rasa
+  url: https://helm.rasa.com
+
+releases:
+  - name: rasa-bot
+    chart: rasa/rasa-bot

@@ -11,8 +11,9 @@ releases:
             generateSelfSignedCert: true
       - applicationSettings:
           debugMode: true
-          defaultModel: ""
+          trainInitialModel: false
           credentials:
+            enable: true
             additionalChannelCredentials:
               rest:
       - initContainers:
