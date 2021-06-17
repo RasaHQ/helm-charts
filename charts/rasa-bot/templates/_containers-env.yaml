@@ -6,7 +6,7 @@
       name: {{ include "rasa-common.names.fullname" . }}
       key: model-server-token
 {{- end }}
-{{- if and (eq (include "rasa-bot.endpoints.trackerStore.enabled" .) "true") (eq (include "rasa-common.psql.available" .) "true") }}
+{{- if or (and (eq (include "rasa-bot.endpoints.trackerStore.enabled" .) "true") (eq (include "rasa-common.psql.available" .) "true")) }}
 {{ include "rasa-common.psql.envs" . }}
 {{- end }}
 {{- if and (eq (include "rasa-bot.endpoints.lockStore.enabled" .) "true") (eq (include "rasa-common.redis.available" .) "true") }}
@@ -17,6 +17,9 @@
 {{- end }}
 {{- if eq (include "rasa-bot.endpoints.action" .) "true" }}
 {{ include "rasa-bot.actionServer.envs" . }}
+{{- end }}
+{{- if eq (include "rasa-bot.endpoints.duckling" .) "true" }}
+{{ include "rasa-bot.duckling.envs" . }}
 {{- end }}
 - name: "RASA_TELEMETRY_ENABLED"
   value: {{ .Values.applicationSettings.telemetry.enabled | quote }}

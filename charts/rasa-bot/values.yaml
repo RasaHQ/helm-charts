@@ -185,11 +185,6 @@ applicationSettings:
     # -- Rasa X / Enterprise endpoint URL from which to pull the runtime config
     useConfigEndpoint: false
 
-    # -- Define if Rasa X (Enterprise) is aviable as a parent helm chart.
-    ## Used by the rasa-x-helm chart
-    ## work in progress
-    # usedAsParentChart: false
-
 # -- Specify the number of Rasa Open Source replicas
 replicaCount: 1
 
@@ -628,12 +623,25 @@ nginx:
   #    # Custom configuration for Rasa Open Source upstream
 
 ## Settings for Rasa Action Server
+## See: https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa-action-server
 rasa-action-server:
   # -- Install Rasa Action Server
-  install: true
+  install: false
 
   external:
     # -- Determine if external URL is used
     enabled: false
     # -- External URL to Rasa Action Server
+    url: ""
+
+## Settings for Duckling
+## See: https://github.com/RasaHQ/helm-charts/tree/main/charts/duckling
+duckling:
+  # -- Install Duckling
+  install: false
+
+  external:
+    # -- Determine if external URL is used
+    enabled: false
+    # -- External URL to Duckling
     url: ""

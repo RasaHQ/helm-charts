@@ -72,23 +72,6 @@ You can enable Rasa X configuration be setting the `applicationSettings.rasaX.en
 {{- printf $errorString | fail -}}
 {{- end }}
 
-{{- if and (eq (include "rasa-bot.endpoints.lockStore.enabled" .) "true") (eq (include "rasa-common.redis.available" .) "false") }}
-{{- $errorString := "\n##############################################################################" -}}
-{{- $errorString = print $errorString "\n####               WARNING: Lock Store endpoint misconfiguration          ####" -}}
-{{- $errorString = print $errorString "\n##############################################################################" -}}
-{{- $errorString = print $errorString "\n" -}}
-{{- $errorString = print $errorString "\nLock Store endpoint is enabled but Redis instance is not available." -}}
-{{- $errorString = print $errorString "\n" -}}
-{{- $errorString = print $errorString "\nPlease use the following options to fix the issue:" -}}
-{{- $errorString = print $errorString "\n" -}}
-{{- $errorString = print $errorString "\n  - set the `redis.install` value parameter to `true` in order to install Redis instance" -}}
-{{- $errorString = print $errorString "\n" -}}
-{{- $errorString = print $errorString "\n    OR" -}}
-{{- $errorString = print $errorString "\n" -}}
-{{- $errorString = print $errorString "\n  - set an external Redis host by using the `.redis.external.host` parameter" -}}
-{{- printf $errorString | fail -}}
-{{- end }}
-
 {{- if and .Values.applicationSettings.rasaX.useConfigEndpoint (not .Values.applicationSettings.rasaX.url) .Values.applicationSettings.rasaX.enabled }}
 {{- $errorString := "\n##############################################################################" -}}
 {{- $errorString = print $errorString "\n####               ERROR: Rasa X/Enterprise misconfiguration              ####" -}}

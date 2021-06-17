@@ -51,7 +51,7 @@ spec:
           {{- else }}
           args:
             - "-p"
-            - "{{ .Values.service.port }}"
+            - "{{ .Values.applicationSettings.port }}"
             - --access-log=/dev/stdout
             - --error-log=/dev/stderr
           {{- end }}
@@ -68,7 +68,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.applicationSettings.port }}
               protocol: TCP
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}

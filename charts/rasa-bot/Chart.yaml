@@ -44,7 +44,6 @@ dependencies:
     version: ~10.3.18
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.install
-
   - name: redis
     version: ~14.1.0
     repository: https://charts.bitnami.com/bitnami
@@ -56,9 +55,14 @@ dependencies:
     condition: rabbitmq.install
 
   - name: rasa-action-server
-    version: 0.38.0
+    version: 0.1.0
     repository: file://../rasa-action-server
     condition: rasa-action-server.install
+
+  - name: duckling
+    version: 0.1.0
+    repository: file://../duckling
+    condition: duckling.install
 
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
