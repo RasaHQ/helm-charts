@@ -158,7 +158,7 @@ jobs:
         if: matrix.chart == 'rasa-bot'
         run: |
           kubectl wait --timeout=360s --for=condition=Ready --selector app.kubernetes.io/name=rasa-bot pod
-          kubectl logs -c model-runner -l app.kubernetes.io/name=rasa-bot
+          kubectl logs -c rasa-oss -l app.kubernetes.io/name=rasa-bot
           kubectl get svc
 
           export SERVICE_PORT=$(kubectl get -o jsonpath="{.spec.ports[0].port}" services rasa-bot)
