@@ -1,4 +1,4 @@
-# Default values for rasa-bot.
+# Default values for duckling.
 # This is a YAML-formatted file.
 
 # -- (string) Override name of app
@@ -32,21 +32,21 @@ extraEnv: []
   # - name: SOME_CUSTOM_ENV_VAR
   #   value: "custom value"
 
-## Define the rasa image to work with
+## Define the duckling image to work with
 image:
-  # -- Model Runner image name to use (relative to `registry`)
+  # -- Duckling image name to use (relative to `registry`)
   name: duckling
 
-  # -- Model Runner image tag to use
+  # -- Duckling image tag to use
   tag: "0.1.6.5-r2"
 
-  # -- Override default registry + image.name for Model Runner
+  # -- Override default registry + image.name for Duckling
   repository:
 
-  # -- Model Runner image pullPolicy
+  # -- Duckling image pullPolicy
   pullPolicy: IfNotPresent
 
-  # -- Model Runner repository pullSecret
+  # -- Duckling repository pullSecret
   ## See https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
   pullSecrets: []
   #   - name: "<SECRET>"
@@ -62,19 +62,19 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-# -- Annotations to add to the action-server's pod(s)
+# -- Annotations to add to the duckling's pod(s)
 podAnnotations: {}
 #  key: "value"
 
-# -- Labels to add to the action-server's pod(s)
+# -- Labels to add to the duckling's pod(s)
 podLabels: {}
 #  key: "value"
 
-# -- Annotations to add to the action-server deployment
+# -- Annotations to add to the duckling deployment
 deploymentAnnotations: {}
 #  key: "value"
 
-# -- Labels to add to the action-server deployment
+# -- Labels to add to the duckling deployment
 deploymentLabels: {}
 
 # -- Defines pod-level security attributes and common container settings
@@ -91,12 +91,12 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-## Configuration for the service for the action-server
+## Configuration for the service for the duckling
 service:
-  # -- Set type of action-server service
+  # -- Set type of duckling service
   type: ClusterIP
 
-  # -- Set port of action-server service (Kubernetes >= 1.15)
+  # -- Set port of duckling service (Kubernetes >= 1.15)
   port: 8000
 
   # -- Annotations to add to the service
@@ -166,7 +166,7 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-##  Autoscaling parameters for the Model Runner Deployment
+##  Autoscaling parameters for the Duckling Deployment
 ## See: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 autoscaling:
   # -- Enable autoscaling
@@ -184,7 +184,7 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-# -- Allow the Model Runner Deployment to be scheduled on selected nodes
+# -- Allow the Duckling Deployment to be scheduled on selected nodes
 ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
 nodeSelector: {}
@@ -193,7 +193,7 @@ nodeSelector: {}
 ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 tolerations: []
 
-# -- Allow the Model Runner Deployment to schedule using affinity rules
+# -- Allow the Duckling Deployment to schedule using affinity rules
 ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 affinity: {}
 
@@ -233,7 +233,7 @@ readinessProbe:
   timeoutSeconds: 5
   failureThreshold: 6
 
-# -- Allow to specify init containers for the Model Runner Deployment
+# -- Allow to specify init containers for the Duckling Deployment
 ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 initContainers: []
 #  - name: init
@@ -242,14 +242,14 @@ initContainers: []
 #    args:
 #      - echo "init container"
 
-# -- Specify additional volumes to mount in the action-server container
+# -- Specify additional volumes to mount in the duckling container
 ## Ref: https://kubernetes.io/docs/concepts/storage/volumes/
 volumes: []
 #   - hostPath:
 #       path: <HOST_PATH>
 #     name: <VOLUME_NAME>
 
-# -- Specify additional volumes to mount in the action-server container
+# -- Specify additional volumes to mount in the duckling container
 volumeMounts: []
 #   - name: <VOLUME_NAME>
 #     mountPath: <CONTAINER_PATH>

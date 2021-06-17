@@ -1,6 +1,6 @@
 # rasa-bot
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.5.0](https://img.shields.io/badge/AppVersion-2.5.0-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.0](https://img.shields.io/badge/AppVersion-2.7.0-informational?style=flat-square)
 
 Rasa Bot (Rasa Open Source Server) is an open source machine learning framework for automated text and voice-based conversations. Understand messages, hold conversations, and connect to messaging channels and APIs.
 
@@ -15,16 +15,12 @@ helm repo add rasa https://helm.rasa.com
 helm repo update
 ```
 
-## Source Code
-
-* <https://github.com/RasaHQ/charts/rasa-bot>
-* <https://rasa.com/>
-
 ## Requirements
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../rasa-action-server | rasa-action-server | 0.38.0 |
+| file://../duckling | duckling | 0.1.0 |
+| file://../rasa-action-server | rasa-action-server | 0.1.0 |
 | file://../rasa-common | rasa-common | 1.x.x |
 | https://charts.bitnami.com/bitnami | postgresql | ~10.3.18 |
 | https://charts.bitnami.com/bitnami | rabbitmq | ~8.12.1 |
@@ -379,6 +375,9 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | command | list | `[]` | Override the default command for the container |
 | deploymentAnnotations | object | `{}` | Annotations to add to the rasa-oss deployment |
 | deploymentLabels | object | `{}` | Labels to add to the rasa-oss deployment |
+| duckling.external.enabled | bool | `false` | Determine if external URL is used |
+| duckling.external.url | string | `""` | External URL to Duckling |
+| duckling.install | bool | `false` | Install Duckling |
 | extraArgs | list | `[]` | Add additional arguments to the default one |
 | extraContainers | list | `[]` | Allow to specify additional containers for the Rasa Open Source Deployment |
 | extraEnv | list | `[]` | Add extra environment variables |
@@ -437,7 +436,7 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | rabbitmq.install | bool | `true` | Install RabbitMQ |
 | rasa-action-server.external.enabled | bool | `false` | Determine if external URL is used |
 | rasa-action-server.external.url | string | `""` | External URL to Rasa Action Server |
-| rasa-action-server.install | bool | `true` | Install Rasa Action Server |
+| rasa-action-server.install | bool | `false` | Install Rasa Action Server |
 | readinessProbe | object | Every 15s / 6 KO / 1 OK | Override default readiness probe settings |
 | redis.auth.password | string | `"redis-password"` | Redis(TM) password |
 | redis.external.enabled | bool | `false` | Determine if use an external Redis host |
@@ -450,8 +449,8 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 | securityContext | object | `{}` | Allows you to overwrite the pod-level security context |
 | service.annotations | object | `{}` | Annotations to add to the service |
 | service.externalTrafficPolicy | string | `"Cluster"` | Enable client source IP preservation |
-| service.loadBalancerIP | string | `nil` |  |
-| service.nodePort | string | `nil` |  |
+| service.loadBalancerIP | string | `nil` | Exposes the Service externally using a cloud provider's load balancer |
+| service.nodePort | string | `nil` | Specify the nodePort(s) value(s) for the LoadBalancer and NodePort service types |
 | service.port | int | `5005` | Set port of rasa-bot service (Kubernetes >= 1.15) |
 | service.type | string | `"ClusterIP"` | Set type of rasa-bot service |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |

@@ -1,0 +1,41 @@
+name: Update README.md
+on:
+  pull_request:
+    types: [opened, synchronize, labeled]
+    paths:
+      - '**.md.gotmpl'
+
+jobs:
+  render_readme:
+    name: Render README.md
+    runs-on: ubuntu-20.04
+    strategy:
+      max-parallel: 1
+      matrix:
+        chart:
+          - rasa-bot
+          - rasa-action-server
+          - duckling
+          - rasa-common
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Update README.md
+        working-directory: charts/${{ matrix.chart }}
+        id: readme
+        run: |
+          export SHASUM_RENDERED=$(docker run --rm --volume "$(pwd):/helm-docs" jnorwood/helm-docs:latest -d -l error | shasum)
+          export SHASUM_CURRENT=$(cat README.md | shasum)
+
+          if [[ "${SHASUM_RENDERED}" != "${SHASUM_CURRENT}" ]]; then
+            docker run --rm --volume "$(pwd):/helm-docs" jnorwood/helm-docs:latest -d -l error > README.md
+            echo "::set-output name=changed::true"
+            echo "The README.md file has changed."
+          fi
+
+      - uses: EndBug/add-and-commit@2d7c2e89fcb436f8e139cc80813bd030bdd40c4b # v7
+        if: steps.readme.outputs.changed == 'true'
+        with:
+          default_author: github_actions
+          add: 'charts/${{ matrix.chart }}/README.md'
+          message: '[helm-docs] Update README.md'

@@ -1,33 +1,181 @@
+
 name: Continuous Integration
 on:
   push:
     branches:
     - 'main'
-    - '[0-9]+.[0-9]+.x'
-    tags:
-    - '**'
   pull_request:
     types: [opened, synchronize, labeled]
 
 jobs:
-  render_readme:
-    name: Render README.md
+  # JOB to run change detection
+  changes:
+    runs-on: ubuntu-20.04
+    outputs:
+      # Expose matched filters as job 'charts' output variable
+      charts: ${{ steps.filter.outputs.changes }}
+    steps:
+    - name: Cancel Previous Runs
+      uses: styfle/cancel-workflow-action@6135c0ff6214e01d42a5736c988e39b7831f1e2f #0.9.0
+      with:
+        access_token: ${{ github.token }}
+
+    # For pull requests it's not necessary to checkout the code
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          rasa-bot: charts/rasa-bot/**
+          rasa-action-server: charts/rasa-action-server/**
+          duckling: charts/duckling/**
+
+  lint-chart:
+    runs-on: ubuntu-20.04
+    needs: changes
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.6.0
+
+      # helm/chart-testing-action requires python version >= 3.7
+      # see: https://github.com/helm/chart-testing-action/issues/65
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.1.0
+
+      - name: Run chart-testing (lint)
+        run: ct lint --config .github/.ct.yaml
+
+  unit-tests:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        chart:
-          - rasa-bot
+        test:
+          - ./test/common
+          - ./charts/rasa-bot/test
+          - ./charts/rasa-action-server/test
+          - ./charts/duckling/test
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: Update README.md
-        working-directory: charts/${{ matrix.chart }}
-        id: readme
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '^1.16.5'
+
+      - name: Download dependencies
+        working-directory: ${{ matrix.test }}
+        run: go mod download -x all
+
+      - name: Helm dependency update
         run: |
-          SHASUM_RENDERED=$(docker run --rm --volume "$(pwd):/helm-docs" jnorwood/helm-docs:latest -d -l error | shasum)
-          SHASUM_CURRENT=$(cat README.md | shasum)
+          cd ./charts
+          for x in `ls`; do helm dependency update ./${x}; done
 
-          if [[ "${SHASUM_RENDERED}" != "${SHASUM_CURRENT}" ]]; then
-            docker run --rm --volume "$(pwd):/helm-docs" jnorwood/helm-docs:latest -d -l error > README.md
-            echo "::set-output name=changed::true"
-          fi
+      - name: Run tests
+        working-directory: ${{ matrix.test }}
+        run: go test -v
+
+  kubeval-chart:
+    runs-on: ubuntu-20.04
+    needs: changes
+    strategy:
+      matrix:
+        # When changing versions here, check that the version exists at: https://github.com/instrumenta/kubernetes-json-schema
+        k8s:
+          - v1.14.10
+          - v1.16.4
+          - v1.18.1
+        chart: ${{ fromJSON(needs.changes.outputs.charts) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.6.0
+
+      - name: Render template
+        run: |
+          helm dep up charts/${{ matrix.chart }}
+          helm template -f .github/kubeval.values.yaml charts/${{ matrix.chart }} > ${{ matrix.chart }}.yaml
+
+      - name: Run kubeval
+        uses: instrumenta/kubeval-action@5915e4adba5adccac07cb156b82e54c3fed74921
+        env:
+          KUBEVAL_SCHEMA_LOCATION: https://kubernetesjsonschema.dev/
+        with:
+          files: ${{ matrix.chart }}.yaml
+          ignore_missing_schemas: true
+
+  install-chart:
+    name: Install chart
+    runs-on: ubuntu-20.04
+    needs:
+      - lint-chart
+      - kubeval-chart
+      - changes
+    strategy:
+      matrix:
+        k8s:
+          - v1.14.10
+          - v1.16.9
+          - v1.18.4
+        chart: ${{ fromJSON(needs.changes.outputs.charts) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Create kind ${{ matrix.k8s }} cluster
+
+        uses: helm/kind-action@d39cc6f90ef2852653eecfe0687a3513aefc9f04 # v1.1.0
+        with:
+          node_image: kindest/node:${{ matrix.k8s }}
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.6.0
+
+      - name: Install chart
+        run: |
+          helm dep up charts/${{ matrix.chart }}
+          helm install ${{ matrix.chart }} charts/${{ matrix.chart }}
+
+      - name: Test Rasa Bot
+        timeout-minutes: 5
+        if: matrix.chart == 'rasa-bot'
+        run: |
+          kubectl wait --timeout=360s --for=condition=Ready --selector app.kubernetes.io/name=rasa-bot pod
+          kubectl logs -c rasa-oss -l app.kubernetes.io/name=rasa-bot
+          kubectl get svc
+
+          export SERVICE_PORT=$(kubectl get -o jsonpath="{.spec.ports[0].port}" services rasa-bot)
+          kubectl port-forward svc/rasa-bot ${SERVICE_PORT}:${SERVICE_PORT} &
+
+          until `nc -w 2 -z 127.0.0.1 ${SERVICE_PORT}`; do
+            echo "Waiting for ${SERVICE_PORT} port to be available."
+            sleep 1
+          done
+
+          curl -s  http://127.0.0.1:${SERVICE_PORT}/
+
+  validate:
+    name: Validate the PR
+    runs-on: ubuntu-20.04
+    needs:
+      - install-chart
+    steps:
+      - name: Validate the PR
+        run: echo "All good!"
