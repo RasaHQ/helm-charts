@@ -6,7 +6,7 @@
       name: {{ include "rasa-common.names.fullname" . }}
       key: model-server-token
 {{- end }}
-{{- if and (eq (include "rasa-bot.endpoints.trackerStore.enabled" .) "true") (eq (include "rasa-common.psql.available" .) "true") }}
+{{- if or (and (eq (include "rasa-bot.endpoints.trackerStore.enabled" .) "true") (eq (include "rasa-common.psql.available" .) "true")) }}
 {{ include "rasa-common.psql.envs" . }}
 {{- end }}
 {{- if and (eq (include "rasa-bot.endpoints.lockStore.enabled" .) "true") (eq (include "rasa-common.redis.available" .) "true") }}

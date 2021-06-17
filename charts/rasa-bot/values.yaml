@@ -185,11 +185,6 @@ applicationSettings:
     # -- Rasa X / Enterprise endpoint URL from which to pull the runtime config
     useConfigEndpoint: false
 
-    # -- Define if Rasa X (Enterprise) is aviable as a parent helm chart.
-    ## Used by the rasa-x-helm chart
-    ## work in progress
-    #usedAsParentChart: false
-
 # -- Specify the number of Rasa Open Source replicas
 replicaCount: 1
 
