@@ -25,6 +25,8 @@ Duckling is a Haskell library that parses text into structured data.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Allow the Duckling Deployment to schedule using affinity rules |
+| applicationSettings.port | int | `8000` | Port on which Duckling runs |
+| applicationSettings.scheme | string | `"http"` | Scheme by which the service are accessible |
 | args | list | `[]` | Override the default arguments for the container |
 | autoscaling.enabled | bool | `false` | Enable autoscaling |
 | autoscaling.maxReplicas | int | `20` | Upper limit for the number of pods that can be set by the autoscaler. It cannot be smaller than minReplicas. |
@@ -57,7 +59,7 @@ Duckling is a Haskell library that parses text into structured data.
 | podSecurityContext | object | `{}` | Defines pod-level security attributes and common container settings |
 | readinessProbe | object | Every 15s / 6 KO / 1 OK | Override default readiness probe settings |
 | registry | string | `"docker.io/rasa"` | Registry to use for all Rasa images (default docker.io) |
-| replicaCount | int | `1` | Specify the number of Duckling replicas |
+| replicaCount | int | `1` | Specify the number of model runner replicas |
 | resources | object | `{}` | Resource requests and limits |
 | securityContext | object | `{}` | Allows you to overwrite the pod-level security context |
 | service.annotations | object | `{}` | Annotations to add to the service |
