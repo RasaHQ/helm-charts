@@ -36,7 +36,7 @@ Duckling is a Haskell library that parses text into structured data.
 | deploymentAnnotations | object | `{}` | Annotations to add to the duckling deployment |
 | deploymentLabels | object | `{}` | Labels to add to the duckling deployment |
 | extraEnv | list | `[]` | Add extra environment variables |
-| fullnameOverride | string | `nil` | Override the full qualified app name |
+| fullnameOverride | string | `nil` | Override the fully qualified app name |
 | image.name | string | `"duckling"` | Duckling image name to use (relative to `registry`) |
 | image.pullPolicy | string | `"IfNotPresent"` | Duckling image pullPolicy |
 | image.pullSecrets | list | `[]` | Duckling repository pullSecret |
