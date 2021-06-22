@@ -4,7 +4,7 @@
 # -- (string) Override name of app
 nameOverride:  # ""
 
-# -- (string) Override the full qualified app name
+# -- (string) Override the fully qualified app name
 fullnameOverride:  # ""
 
 # -- Registry to use for all Rasa images (default docker.io)

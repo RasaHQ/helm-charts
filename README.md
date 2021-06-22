@@ -30,7 +30,7 @@ helm repo update
 
 ## How to contribute
 
-We are very happy to receive and merge your contributions. You can
+We are very happy to receive your contributions. You can
 find more information about how to contribute to Rasa (in lots of
 different ways!) [here](http://rasa.com/community/contribute).
 
@@ -39,7 +39,7 @@ To contribute via pull request, follow these steps:
 1. Create an issue describing the feature you want to work on
 2. Create a pull request describing your changes
 
-Remember that your PR should include!
+Remember that your PR should include:
 
 1. Details about the changes introduced by a given chart version (use the `artifacthub.io/changes` annotation in the `Chart.yaml` file)
 2. Update the chart version
