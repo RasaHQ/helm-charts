@@ -2,9 +2,9 @@
 
 ![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.0](https://img.shields.io/badge/AppVersion-2.7.0-informational?style=flat-square)
 
-The Rasa Bot chart deploys a Rasa Open Source Server. Rasa is an open source machine learning framework for automated text and voice-based conversations. 
+Rasa Bot (Rasa Open Source Server) is an open source machine learning framework for automated text and voice-based conversations. Understand messages, hold conversations, and connect to messaging channels and APIs.
 
-See the [Rasa docs](https://rasa.com/docs/rasa/) to learn more.
+See [Rasa website](https://rasa.com/docs/rasa/) to learn more.
 
 ## How to use Rasa Helm repository
 
@@ -28,15 +28,15 @@ helm repo update
 
 ## Quick start
 
-The default configuration of the rasa-bot chart deploys a Rasa Open Source Server, which will create an initial project, train a model, and load the trained model.
+The rasa-bot deploy Rasa Open Source Server which will create a initial project and train model, the trained model is loaded.
 
 Below you can find examples of how to configure your deployment or use more advanced configurations such as integration with Rasa X / Enterprise.
 
 Default components that will be installed along with the rasa-bot:
 
-* RabbitMQ used as backend for the [Event Broker](https://rasa.com/docs/rasa/event-brokers)
-* PostgreSQL used as backend for the [Tracker Store](https://rasa.com/docs/rasa/tracker-stores)
-* Redis used as backend for the [Lock Store](https://rasa.com/docs/rasa/lock-stores)
+* RabbitMQ used as backend for [Event Broker](https://rasa.com/docs/rasa/event-brokers)
+* PostgreSQL used as backend for [Tracker Store](https://rasa.com/docs/rasa/tracker-stores)
+* Redis used as backend for [Lock Store](https://rasa.com/docs/rasa/lock-stores)
 
 ### Installing the Rasa Bot Chart
 
@@ -79,9 +79,9 @@ As a best practice, a YAML file that specifies the values for the chart paramete
 helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 ```
 
-### Downloading an initial model
+### Downloading a initial model
 
-By default, the rasa-bot chart creates an initial project and trains a model, but it's also possible to define an existing model to download. In that scenario, a model is downloaded from a defined URL.
+By default, the rasa-bot chart creates an initial project and train a model, but it's also possible to define an existing model to download. In a such scenario, a model is downloaded from a defined URL.
 
 Update your `rasa-values.yaml` with the following configuration:
 
@@ -89,7 +89,7 @@ Update your `rasa-values.yaml` with the following configuration:
 applicationSettings:
   # (...)
   # Initial model to download and load if a model server or remote storage is not used.
-  # It has to be a URL (without auth) that points to a tar.gz file.
+  # It has to be a URL (without auth) that points to a tag.gz file.
   initialModel: "https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true"
 ```
 
@@ -101,7 +101,7 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 
 ### Enabling REST Channel
 
-The `RestInput` and `CallbackInput` channels can be used for custom integrations. They provide a URL where you can post messages and either receive response messages directly, or asynchronously via a webhook.
+The `RestInput and CallbackInput` channels can be used for custom integrations. They provide a URL where you can post messages and either receive response messages directly, or asynchronously via a webhook.
 
 To learn more see: https://rasa.com/docs/rasa/connectors/your-own-website/#rest-channels
 
@@ -124,7 +124,7 @@ helm upgrade -f rasa-values.yaml <RELEASE_NAME> rasa/rasa-bot
 
 ### Enabling TLS for NGINX (self-signed)
 
-Update your `rasa-values.yaml` with the following NGINX TLS self-signed configuration:
+Update your `rasa-values.yaml` with the following NGINX TLS self-singed configuration:
 
 ```yaml
 nginx:
