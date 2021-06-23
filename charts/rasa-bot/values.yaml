@@ -15,7 +15,7 @@ applicationSettings:
   # -- Enable debug mode
   debugMode: false
 
-  # -- Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tag.gz file
+  # -- Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tar.gz file
   # e.g. https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true
   initialModel: ""
 
@@ -34,6 +34,7 @@ applicationSettings:
   # -- CORS for the passed origin. Default is * to whitelist all origins
   cors: '*'
 
+  ## The credentials configuration is ignored if `applicationSettings.rasaX.useConfigEndpoint=true`
   credentials:
     # -- Enable credentials configuration for channel connectors
     enabled: true
@@ -53,6 +54,7 @@ applicationSettings:
     # See: https://rasa.com/docs/rasa/telemetry/telemetry/
     enabled: false
 
+  ## The endpoints configuration is ingored if `The credentials configuration is ignored if `applicationSettings.rasaX.useConfigEndpoint=true`
   endpoints:
     ## Fetch the model from your own HTTP server
     ## See: https://rasa.com/docs/rasa/model-storage#load-model-from-server

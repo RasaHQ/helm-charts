@@ -13,6 +13,7 @@ Duckling is a Haskell library that parses text into structured data.
 ## Source Code
 
 * <https://github.com/RasaHQ/duckling>
+* <https://github.com/facebook/duckling>
 
 ## Requirements
 

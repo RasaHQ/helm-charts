@@ -25,6 +25,7 @@ appVersion: "0.1.6.5"
 
 sources:
   - https://github.com/RasaHQ/duckling
+  - https://github.com/facebook/duckling
 
 maintainers:
   - email: hi@rasa.com
