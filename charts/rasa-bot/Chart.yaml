@@ -1,6 +1,6 @@
 apiVersion: v2
 name: rasa-bot
-description: Rasa Bot (Rasa Open Source Server) is an open source machine learning framework for automated text and voice-based conversations.
+description: The rasa-bot Helm charts deploy a Rasa Open Source bot. Rasa is an open source machine learning framework for automated text and voice-based conversations.
 
 # A chart can be either an 'application' or a 'library' chart.
 #
