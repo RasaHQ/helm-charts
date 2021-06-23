@@ -4,6 +4,7 @@ Determine rasa server to run with arguments
 {{- define "rasa-bot.rasa.server.type" -}}
 {{- if .Values.applicationSettings.rasaX.enabled -}}
 - x
+- --enable-api
 {{- if .Values.applicationSettings.rasaX.production }}
 - --production
 {{- end }}
@@ -14,6 +15,7 @@ Determine rasa server to run with arguments
 {{- end }}
 {{- else -}}
 - run
+- --enable-api
 {{- end -}}
 {{- end -}}
 
