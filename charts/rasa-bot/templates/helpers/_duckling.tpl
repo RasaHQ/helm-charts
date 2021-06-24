@@ -25,6 +25,6 @@ Return Duckling URL
 Return the common Duckling env variables.
 */}}
 {{- define "rasa-bot.duckling.envs" -}}
-- name: "RASA_DUCKLING_URL"
+- name: "RASA_DUCKLING_HTTP_URL"
   value: "{{ include "rasa-bot.duckling.url" . }}"
 {{- end -}}

@@ -11,8 +11,8 @@ Return the redis host.
 {{- define "rasa-common.redis.host" -}}
   {{- if .Values.redis.install -}}
     {{- printf "%s-master" (include "rasa-common.redis.fullname" .) -}}
-  {{- else -}}
-    {{- .Values.redis.existingHost -}}
+  {{- else if .Values.redis.external.enabled -}}
+    {{- .Values.redis.external.host -}}
   {{- end -}}
 {{- end -}}
 

@@ -18,14 +18,10 @@ spec:
     ports:
     - protocol: TCP
       port: {{ ((index .Values "rasa-action-server").service.port | int) }}
-    - protocol: TCP
-      port: {{ (index .Values "rasa-action-server").applicationSettings.port }}
 {{- else }}
     ports:
     - protocol: TCP
       port: {{ ((index .Values "rasa-action-server").service.port | int) }}
-    - protocol: TCP
-      port: {{ (index .Values "rasa-action-server").applicationSettings.port }}
 {{- end }}
 ---
 apiVersion: networking.k8s.io/v1
@@ -50,6 +46,4 @@ spec:
     ports:
     - protocol: TCP
       port: {{ ((index .Values "rasa-action-server").service.port | int) }}
-    - protocol: TCP
-      port: {{ (index .Values "rasa-action-server").applicationSettings.port }}
 {{- end }}
