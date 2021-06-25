@@ -34,9 +34,7 @@ Below you can find examples of how to configure your deployment or use more adva
 
 Default components that will be installed along with the Rasa server:
 
-* RabbitMQ used as the backend for the [Event Broker](https://rasa.com/docs/rasa/event-brokers)
 * PostgreSQL used as the backend for the [Tracker Store](https://rasa.com/docs/rasa/tracker-stores)
-* Redis used as the backend for the [Lock Store](https://rasa.com/docs/rasa/lock-stores)
 
 ### Installing the Rasa Bot Chart
 
@@ -217,105 +215,12 @@ In the example above we assumed that the `rasa-x-rabbit` secret already exists a
 
 In addition to Rasa Bot configuration, you have to update Rasa X/Enterprise configuration as well, please visit [the docs](https://link-to-the-docs) to learn more.
 
-### Using Rasa X/Enterprise deployed in the same namespace as a configuration endpoint
-
-You can use Rasa X/Enterprise as a configuration endpoint if it is deployed in the same namespace as Rasa Bot.  (Note: Rasa X/Enterprise will return credentials and endpoints with reference to cluster-internal service addresses, which are not accessible outside that namespace. Therefore you cannot use and externally running Rasa X/Enterprise instance as a configuration endpoint.)
-
-To use this option, you need to:
-1) Enable the option to use Rasa X/Enterprise as the config endpoint:
-
-    ```yaml
-    applicationSettings:
-    rasaX:
-        enabled: true
-        # Rasa X service address
-        url: "http://rasa-rasa-x:5002"
-        # Define if a runtime configuration should be pulled
-        # from Rasa X/Enterprise
-        useConfigEndpoint: true
-    ```
-
-2) Add all environment variables referred to by the credentials & endpoints pulled from Rasa X/Enterprise to your values.
-
-Below is an example of a runtime configuration that is pulled from Rasa X/Enterprise. Note the environment variables that are expected to be available:
-
-```yaml
-models:
-  url: ${RASA_MODEL_SERVER}
-  token: ${RASA_X_TOKEN}
-  wait_time_between_pulls: 10
-tracker_store:
-  type: sql
-  dialect: postgresql
-  url: rasa-x-postgresql
-  port: 5432
-  username: postgres
-  password: ${DB_PASSWORD}
-  db: ${DB_DATABASE}
-  login_db: rasa
-event_broker:
-  type: pika
-  url: rasa-x-rabbit
-  username: user
-  password: ${RABBITMQ_PASSWORD}
-  port: 5672
-  queues:
-  - ${RABBITMQ_QUEUE}
-
-action_endpoint:
-  url: "http://rasa-bot-rasa-action-server/webhook"
-  token:  ""
-lock_store:
-  type: "redis"
-  url: rasa-x-redis-master
-  port: 6379
-  password: ${REDIS_PASSWORD}
-  db: 1
-cache:
-  type: "redis"
-  url: rasa-x-redis-master
-  port: 6379
-  password: ${REDIS_PASSWORD}
-  db: 2
-  key_prefix: "rasax_cache"
-```
-
-Therefore you would add the following to rasa-values.yaml:
-
-```yaml
-## Extra environment variables used in the Rasa X/Enterprise configuration
-extraEnv:
- - name: RASA_MODEL_SERVER
-   value: http://example.com/api/projects/default/models/tags/production
- - name: RASA_X_TOKEN
-   valueFrom:
-     secretKeyRef:
-       name: rasa-x-rasa
-       key: "rasaXToken"
- - name: "DB_PASSWORD"
-   valueFrom:
-     secretKeyRef:
-       name: rasa-x-postgresql
-       key: postgresql-password
- - name: "DB_DATABASE"
-   value: "rasa_production"
- - name: "REDIS_PASSWORD"
-   valueFrom:
-     secretKeyRef:
-       name: rasa-x-redis
-       key: redis-password
- - name: "RABBITMQ_QUEUE"
-   value: rasa_production_events
- - name: "RABBITMQ_PASSWORD"
-   valueFrom:
-     secretKeyRef:
-       name: rasa-x-rabbit
-       key: rabbitmq-password
-```
-
 ## Examples of usage
 
-More examples of usage you can find in the `examples/rasa-bot` directory.
+In the [`examples/rasa-bot`](../../examples) directory you can find examples of configuration:
+
+- [How to download a model via URL using a init container and load it into Rasa OSS](../../examples/rasa-bot/download-model-helmfile.yaml)
+- [How to use Rasa X/Enterprise deployed in the same namespace as a configuration endpoint](../../examples/rasa-bot/README.md)
 
 ## Values
 
@@ -326,9 +231,10 @@ More examples of usage you can find in the `examples/rasa-bot` directory.
 | applicationSettings.credentials.additionalChannelCredentials | object | `{}` | Additional channel credentials which should be used by Rasa to connect to various input channels |
 | applicationSettings.credentials.enabled | bool | `true` | Enable credentials configuration for channel connectors |
 | applicationSettings.debugMode | bool | `false` | Enable debug mode |
+| applicationSettings.enableAPI | bool | `true` | Start the web server API in addition to the input channel |
 | applicationSettings.endpoints.action.endpointURL | string | `"/webhook"` | the URL which Rasa Open Source calls to execute custom actions |
 | applicationSettings.endpoints.additionalEndpoints | object | `{}` | Additional endpoints |
-| applicationSettings.endpoints.eventBroker.enabled | bool | `true` | Enable endpoint for Event Broker |
+| applicationSettings.endpoints.eventBroker.enabled | bool | `false` | Enable endpoint for Event Broker |
 | applicationSettings.endpoints.eventBroker.password | string | `"${RABBITMQ_PASSWORD}"` | Password used for authentication |
 | applicationSettings.endpoints.eventBroker.port | string | `"${RABBITMQ_PORT}"` | The port which an event broker is listening on |
 | applicationSettings.endpoints.eventBroker.queues | list | `["rasa_production_events"]` | Send all messages to a given queue |
@@ -336,7 +242,7 @@ More examples of usage you can find in the `examples/rasa-bot` directory.
 | applicationSettings.endpoints.eventBroker.url | string | `"${RABBITMQ_HOST}"` | The url of an event broker |
 | applicationSettings.endpoints.eventBroker.username | string | `"${RABBITMQ_USERNAME}"` | Username used for authentication |
 | applicationSettings.endpoints.lockStore.db | string | `"1"` | The database in redis which Rasa uses to store the conversation locks |
-| applicationSettings.endpoints.lockStore.enabled | bool | `true` | Enable endpoint for Lock Store |
+| applicationSettings.endpoints.lockStore.enabled | bool | `false` | Enable endpoint for Lock Store |
 | applicationSettings.endpoints.lockStore.password | string | `"${REDIS_PASSWORD}"` | Password used for authentication |
 | applicationSettings.endpoints.lockStore.port | string | `"${REDIS_PORT}"` | The port which redis is running on |
 | applicationSettings.endpoints.lockStore.type | string | `"redis"` | Lock Store type |
@@ -356,17 +262,16 @@ More examples of usage you can find in the `examples/rasa-bot` directory.
 | applicationSettings.endpoints.trackerStore.type | string | `"sql"` | Tracker Store type |
 | applicationSettings.endpoints.trackerStore.url | string | `"${DB_HOST}"` | URL of your SQL server |
 | applicationSettings.endpoints.trackerStore.username | string | `"${DB_USER}"` | The username which is used for authentication |
-| applicationSettings.initialModel | string | `""` | Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tar.gz file e.g. https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true |
+| applicationSettings.initialModel | string | `"https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true"` | Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tar.gz file e.g. https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true |
 | applicationSettings.port | int | `5005` | Port on which Rasa runs |
 | applicationSettings.rasaX.enabled | bool | `false` | Run Rasa X / Enterprise server |
-| applicationSettings.rasaX.production | bool | `true` | Run Rasa X / Enterprise in a production environment |
 | applicationSettings.rasaX.token | string | `"rasaXToken"` | Token Rasa X / Enterprise accepts as authentication token from other Rasa services |
 | applicationSettings.rasaX.url | string | `""` | URL to Rasa X / Enterprise, e.g. http://rasa-x.mydomain.com:5002 |
 | applicationSettings.rasaX.useConfigEndpoint | bool | `false` | Rasa X / Enterprise endpoint URL from which to pull the runtime config |
 | applicationSettings.scheme | string | `"http"` | Scheme by which the service are accessible |
 | applicationSettings.telemetry.enabled | bool | `false` | Enable telemetry See: https://rasa.com/docs/rasa/telemetry/telemetry/ |
 | applicationSettings.token | string | `"rasaToken"` | Token Rasa accepts as authentication token from other Rasa services |
-| applicationSettings.trainInitialModel | bool | `true` | Train a model if a initial model is not defined. This parameter is ignored if the `appplication.Settings.initialModel` is defined. |
+| applicationSettings.trainInitialModel | bool | `false` | Train a model if a initial model is not defined. This parameter is ignored if the `appplication.Settings.initialModel` is defined |
 | args | list | `[]` | Override the default arguments for the container |
 | autoscaling.enabled | bool | `false` | Enable autoscaling |
 | autoscaling.maxReplicas | int | `20` | Upper limit for the number of pods that can be set by the autoscaler. It cannot be smaller than minReplicas. |
@@ -433,7 +338,7 @@ More examples of usage you can find in the `examples/rasa-bot` directory.
 | rabbitmq.auth.username | string | `"user"` | RabbitMQ application username |
 | rabbitmq.external.enabled | bool | `false` | Determine if use an external RabbitMQ host |
 | rabbitmq.external.host | string | `"external-rabbitmq"` | External RabbitMQ hostname |
-| rabbitmq.install | bool | `true` | Install RabbitMQ |
+| rabbitmq.install | bool | `false` | Install RabbitMQ |
 | rasa-action-server.external.enabled | bool | `false` | Determine if external URL is used |
 | rasa-action-server.external.url | string | `""` | External URL to Rasa Action Server |
 | rasa-action-server.install | bool | `false` | Install Rasa Action Server |
@@ -441,7 +346,7 @@ More examples of usage you can find in the `examples/rasa-bot` directory.
 | redis.auth.password | string | `"redis-password"` | Redis(TM) password |
 | redis.external.enabled | bool | `false` | Determine if use an external Redis host |
 | redis.external.host | string | `"external-redis"` | External Redis hostname |
-| redis.install | bool | `true` | Install Redis(TM) |
+| redis.install | bool | `false` | Install Redis(TM) |
 | redis.replica.replicaCount | int | `0` | Number of Redis(TM) replicas to deploy |
 | registry | string | `"docker.io/rasa"` | Registry to use for all Rasa images (default docker.io) |
 | replicaCount | int | `1` | Specify the number of Rasa Open Source replicas |

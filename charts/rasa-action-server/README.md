@@ -1,6 +1,6 @@
 # rasa-action-server
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.40.0](https://img.shields.io/badge/AppVersion-0.40.0-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.0](https://img.shields.io/badge/AppVersion-2.7.0-informational?style=flat-square)
 
 Rasa Action Server Helm chart for Kubernetes
 
@@ -28,7 +28,6 @@ Rasa Action Server Helm chart for Kubernetes
 | affinity | object | `{}` | Allow the Action Server Deployment to schedule using affinity rules |
 | applicationSettings.port | int | `5055` | Port on which Rasa Action Server runs |
 | applicationSettings.scheme | string | `"http"` | Scheme by which the service are accessible |
-| applicationSettings.telemetry.enabled | bool | `false` | Enable telemetry See: https://rasa.com/docs/rasa/telemetry/telemetry/ |
 | args | list | `[]` | Override the default arguments for the container |
 | autoscaling.enabled | bool | `false` | Enable autoscaling |
 | autoscaling.maxReplicas | int | `20` | Upper limit for the number of pods that can be set by the autoscaler. It cannot be smaller than minReplicas. |
