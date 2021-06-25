@@ -15,14 +15,10 @@ spec:
     - podSelector:
         matchLabels:
           app.kubernetes.io/name: rasa-action-server
-    ports:
-    - protocol: TCP
-      port: {{ ((index .Values "rasa-action-server").service.port | int) }}
-{{- else }}
-    ports:
-    - protocol: TCP
-      port: {{ ((index .Values "rasa-action-server").service.port | int) }}
 {{- end }}
+    ports:
+    - protocol: TCP
+      port: {{ ((index .Values "rasa-action-server").service.port | int) }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
