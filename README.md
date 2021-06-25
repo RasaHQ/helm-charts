@@ -12,7 +12,7 @@ Helm charts for components used by Rasa:
 ## Prerequisites
 
 - [Helm 3](https://helm.sh/) (>= 3.5 )
-- Kubernetes 1.10+
+- Kubernetes 1.14+
 
 ## How to use Rasa Helm repository?
 

@@ -68,7 +68,7 @@ Hello from Rasa: 2.4.0
 
 Use a YAML file that specifies the values for the chart parameters to configure the chart. In this README we'll call this file `rasa-values.yaml`
 
-1. Copy the default [values.yaml](values.yaml) value file to `rasa-values.yaml`. 
+1. Copy the default [values.yaml](values.yaml) value file to `rasa-values.yaml`.
 2. Set custom parameters in  `rasa-values.yaml`
 3. To apply your changes, upgrade the Rasa Bot Helm chart with the new rasa-values.yaml file:
 
@@ -82,7 +82,7 @@ Use the same upgrade command above to apply any subsequent changes you make to y
 
 ### Exposing the rasa-bot deployment to the public
 
-By default the rasa-bot service is available only within the Kubernetes cluster. 
+By default the rasa-bot service is available only within the Kubernetes cluster.
 In order to make it accessible outside the cluster, update your `rasa-values.yaml` file with the following configuration:
 
 ```yaml
@@ -101,9 +101,9 @@ nginx:
     generateSelfSignedCert: true
 ```
 
-### Note on Configuring Endpoints and Channel Credentials 
+### Note on Configuring Endpoints and Channel Credentials
 
-To configure [endpoints]() and [channel credentials]() you can either specify them directly in rasa-values.yaml under `applicationSettings.endpoints` and `applicationSettings.credentials`, or you can [use Rasa X/Enterprise as a configuration endpoint]() if it is deployed in the same namespace as Rasa Bot. 
+To configure [endpoints]() and [channel credentials]() you can either specify them directly in rasa-values.yaml under `applicationSettings.endpoints` and `applicationSettings.credentials`, or you can [use Rasa X/Enterprise as a configuration endpoint]() if it is deployed in the same namespace as Rasa Bot.
 
 > It is not possible to combine the two options. If you choose to use Rasa X/Enterprise as a configuration endpoint, all other configuration of endpoints and credentials will be ignored.
 
@@ -111,7 +111,7 @@ To configure [endpoints]() and [channel credentials]() you can either specify th
 
 To load a model for Rasa Bot to serve, you can use a model server to pull models at regular intervals (typical for production). See the next section for information on loading an initial model on startup when not using a model server.
 
-You can use Rasa X/Enterprise as a model server or use your own model server. To configure your own model server, follow the instructions on the [Rasa docs](https://rasa.com/docs/rasa/model-storage#load-model-from-server). 
+You can use Rasa X/Enterprise as a model server or use your own model server. To configure your own model server, follow the instructions on the [Rasa docs](https://rasa.com/docs/rasa/model-storage#load-model-from-server).
 
 To enable a non-Rasa X model server, add this configuration information to your values:
 
@@ -145,7 +145,7 @@ applicationSettings:
 
 #### Loading an initial model
 
-The first time you install Rasa Bot, you might not have a model server available yet, or you will want some arbitrary lightweight model just to test the deployment with. For this purpose, you can choose between training or downloading an initial model. By default, the Rasa Bot chart creates an initial project and trains a model. To use this option, you don't have to change anything. 
+The first time you install Rasa Bot, you might not have a model server available yet, or you will want some arbitrary lightweight model just to test the deployment with. For this purpose, you can choose between training or downloading an initial model. By default, the Rasa Bot chart creates an initial project and trains a model. To use this option, you don't have to change anything.
 
 If you want to define an existing model to download from a defined URL instead, update your `rasa-values.yaml` with the following configuration:
 
@@ -154,7 +154,7 @@ applicationSettings:
   initialModel: "https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true"
 ```
 
-Note that the URL for the initial model download has to point to a tar.gz file and must not require authentication. 
+Note that the URL for the initial model download has to point to a tar.gz file and must not require authentication.
 
 ### Configuring Messaging Channels
 
@@ -180,10 +180,10 @@ Any Rasa Open Source server can stream events to a Rasa X/Enterprise using an [e
 This means you have three options:
 
 1. Configure Rasa Bot to refer to the event broker started by Rasa X/Enterprise
-2. Configure Rasa X/Enterprise to connect to the event broker started by Rasa Bot 
+2. Configure Rasa X/Enterprise to connect to the event broker started by Rasa Bot
 3. Configure both Rasa Bot and Rasa X/Enterprise to connect to an external event broker (e.g. a managed Kafka instance)
 
-For example: 
+For example:
 
 ```yaml
 applicationSettings:
@@ -218,106 +218,11 @@ In the example above we assumed that the `rasa-x-rabbit` secret already exists a
 
 In addition to Rasa Bot configuration, you have to update Rasa X/Enterprise configuration as well, please visit [the docs](https://link-to-the-docs) to learn more.
 
-
-### Using Rasa X/Enterprise deployed in the same namespace as a configuration endpoint
-
-You can use Rasa X/Enterprise as a configuration endpoint if it is deployed in the same namespace as Rasa Bot.  (Note: Rasa X/Enterprise will return credentials and endpoints with reference to cluster-internal service addresses, which are not accessible outside that namespace. Therefore you cannot use and externally running Rasa X/Enterprise instance as a configuration endpoint.)
-
-To use this option, you need to:
-1) Enable the option to use Rasa X/Enterprise as the config endpoint:
-
-    ```yaml
-    applicationSettings:
-    rasaX:
-        enabled: true
-        # Rasa X service address
-        url: "http://rasa-rasa-x:5002"
-        # Define if a runtime configuration should be pulled
-        # from Rasa X/Enterprise
-        useConfigEndpoint: true
-    ```
-
-2) Add all environment variables referred to by the credentials & endpoints pulled from Rasa X/Enterprise to your values.
-
-Below is an example of a runtime configuration that is pulled from Rasa X/Enterprise. Note the environment variables that are expected to be available:
-
-```yaml
-models:
-  url: ${RASA_MODEL_SERVER}
-  token: ${RASA_X_TOKEN}
-  wait_time_between_pulls: 10
-tracker_store:
-  type: sql
-  dialect: postgresql
-  url: rasa-x-postgresql
-  port: 5432
-  username: postgres
-  password: ${DB_PASSWORD}
-  db: ${DB_DATABASE}
-  login_db: rasa
-event_broker:
-  type: pika
-  url: rasa-x-rabbit
-  username: user
-  password: ${RABBITMQ_PASSWORD}
-  port: 5672
-  queues:
-  - ${RABBITMQ_QUEUE}
-
-action_endpoint:
-  url: "http://rasa-bot-rasa-action-server/webhook"
-  token:  ""
-lock_store:
-  type: "redis"
-  url: rasa-x-redis-master
-  port: 6379
-  password: ${REDIS_PASSWORD}
-  db: 1
-cache:
-  type: "redis"
-  url: rasa-x-redis-master
-  port: 6379
-  password: ${REDIS_PASSWORD}
-  db: 2
-  key_prefix: "rasax_cache"
-```
-
-Therefore you would add the following to rasa-values.yaml:
-
-```yaml
-## Extra environment variables used in the Rasa X/Enterprise configuration
-extraEnv:
- - name: RASA_MODEL_SERVER
-   value: http://example.com/api/projects/default/models/tags/production
- - name: RASA_X_TOKEN
-   valueFrom:
-     secretKeyRef:
-       name: rasa-x-rasa
-       key: "rasaXToken"
- - name: "DB_PASSWORD"
-   valueFrom:
-     secretKeyRef:
-       name: rasa-x-postgresql
-       key: postgresql-password
- - name: "DB_DATABASE"
-   value: "rasa_production"
- - name: "REDIS_PASSWORD"
-   valueFrom:
-     secretKeyRef:
-       name: rasa-x-redis
-       key: redis-password
- - name: "RABBITMQ_QUEUE"
-   value: rasa_production_events
- - name: "RABBITMQ_PASSWORD"
-   valueFrom:
-     secretKeyRef:
-       name: rasa-x-rabbit
-       key: rabbitmq-password
-```
-
-
 ## Examples of usage
 
-More examples of usage you can find in the `examples/rasa-bot` directory.
+In the [`examples/rasa-bot`](../../examples) directory you can find examples of configuration:
+
+- [How to download a model via URL using a init container and load it into Rasa OSS](../../examples/rasa-bot/download-model-helmfile.yaml)
+- [How to use Rasa X/Enterprise deployed in the same namespace as a configuration endpoint](../../examples/rasa-bot/README.md)
 
 {{ template "chart.valuesSection" . }}

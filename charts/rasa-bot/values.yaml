@@ -17,10 +17,10 @@ applicationSettings:
 
   # -- Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tar.gz file
   # e.g. https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true
-  initialModel: ""
+  initialModel: "https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true"
 
-  # -- Train a model if a initial model is not defined. This parameter is ignored if the `appplication.Settings.initialModel` is defined.
-  trainInitialModel: true
+  # -- Train a model if a initial model is not defined. This parameter is ignored if the `appplication.Settings.initialModel` is defined
+  trainInitialModel: false
 
   # -- Port on which Rasa runs
   port: 5005
@@ -33,6 +33,9 @@ applicationSettings:
 
   # -- CORS for the passed origin. Default is * to whitelist all origins
   cors: '*'
+
+  # -- Start the web server API in addition to the input channel
+  enableAPI: true
 
   ## The credentials configuration is ignored if `applicationSettings.rasaX.useConfigEndpoint=true`
   credentials:
@@ -118,7 +121,7 @@ applicationSettings:
     ## All environment variables used as values are added to the rasa-oss container automatically if `redis.install=true`.
     lockStore:
       # -- Enable endpoint for Lock Store
-      enabled: true
+      enabled: false
 
       # -- Lock Store type
       type: "redis"
@@ -142,7 +145,7 @@ applicationSettings:
     ## All environment variables used as values are added to the rasa-oss container automatically if `rabbitmq.install=true`.
     eventBroker:
       # -- Enable endpoint for Event Broker
-      enabled: true
+      enabled: false
 
       # -- Event Broker
       type: "pika"
@@ -174,9 +177,6 @@ applicationSettings:
   rasaX:
     # -- Run Rasa X / Enterprise server
     enabled: false
-
-    # -- Run Rasa X / Enterprise in a production environment
-    production: true
 
     # -- Token Rasa X / Enterprise accepts as authentication token from other Rasa services
     token: "rasaXToken"
@@ -486,7 +486,7 @@ postgresql:
 ## Redis(TM) specific settings (https://artifacthub.io/packages/helm/bitnami/redis/14.1.0)
 redis:
   # -- Install Redis(TM)
-  install: true
+  install: false
 
   ## Redis(TM) replicas configuration parameters
   ## See: https://artifacthub.io/packages/helm/bitnami/redis/14.1.0#redis-tm-replicas-configuration-parameters
@@ -513,7 +513,7 @@ redis:
 # RabbitMQ specific settings (https://artifacthub.io/packages/helm/bitnami/rabbitmq/8.12.1)
 rabbitmq:
   # -- Install RabbitMQ
-  install: true
+  install: false
 
   ## See: https://artifacthub.io/packages/helm/bitnami/rabbitmq/8.12.0#rabbitmq-parameters
   auth:

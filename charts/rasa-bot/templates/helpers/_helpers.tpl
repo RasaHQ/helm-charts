@@ -4,18 +4,17 @@ Determine rasa server to run with arguments
 {{- define "rasa-bot.rasa.server.type" -}}
 {{- if .Values.applicationSettings.rasaX.enabled -}}
 - x
-- --enable-api
-{{- if .Values.applicationSettings.rasaX.production }}
-- --production
-{{- end }}
 - --no-prompt
 {{- if .Values.applicationSettings.rasaX.useConfigEndpoint }}
+- --production
 - --config-endpoint
 - {{ .Values.applicationSettings.rasaX.url }}/api/config?token=$(RASA_X_TOKEN)
 {{- end }}
 {{- else -}}
 - run
+{{- if .Values.applicationSettings.enableAPI }}
 - --enable-api
+{{- end -}}
 {{- end -}}
 {{- end -}}
 

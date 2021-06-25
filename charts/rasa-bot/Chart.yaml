@@ -44,6 +44,7 @@ dependencies:
     version: ~10.3.18
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.install
+
   - name: redis
     version: ~14.1.0
     repository: https://charts.bitnami.com/bitnami

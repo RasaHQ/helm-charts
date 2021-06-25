@@ -18,11 +18,6 @@ applicationSettings:
   # -- Scheme by which the service are accessible
   scheme: http
 
-  telemetry:
-    # -- Enable telemetry
-    # See: https://rasa.com/docs/rasa/telemetry/telemetry/
-    enabled: false
-
 # -- Specify the number of Action Server replicas
 replicaCount: 1
 

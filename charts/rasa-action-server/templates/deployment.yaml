@@ -69,14 +69,12 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
           {{- include "rasa-action-server.containers.env" . | nindent 12 }}
-          volumeMounts:
-          {{- include "rasa-action-server.containers.volumeMounts" . | nindent 12 }}
 {{- if .Values.volumeMounts }}
+          volumeMounts:
 {{ toYaml .Values.volumeMounts | indent 12 }}
 {{- end }}
-      volumes:
-      {{- include "rasa-action-server.containers.volumes" . | nindent 8 }}
 {{- if .Values.volumes }}
+      volumes:
 {{ toYaml .Values.volumes | indent 8 }}
 {{- end }}
       {{- with .Values.nodeSelector }}
