@@ -24,18 +24,15 @@ spec:
       port: {{ template "rasa-common.rabbitmq.port" . }}
 {{- end }}
 ---
+{{- if and (not .Values.rabbitmq.external.enabled) (eq (include "rasa-common.rabbitmq.available" .) "true") }}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: allow-rabbitmq-rasa-bot-ingress
 spec:
   podSelector:
-{{- if and (not .Values.rabbitmq.external.enabled) (eq (include "rasa-common.rabbitmq.available" .) "true") }}
     matchLabels:
       app.kubernetes.io/name: rabbitmq
-{{- else }}
-    matchLabels: {}
-{{- end }}
   policyTypes:
   - Ingress
   ingress:
@@ -46,4 +43,5 @@ spec:
     ports:
     - protocol: TCP
       port: {{ template "rasa-common.rabbitmq.port" . }}
+{{- end }}
 {{- end }}

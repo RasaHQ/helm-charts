@@ -32,8 +32,13 @@ data:
     tracker_store:
     {{- range $key, $value := .Values.applicationSettings.endpoints.trackerStore }}
       {{- if not (eq $key "enabled") }}
+      {{- if kindIs "map" $value }}
+      {{ $key }}:
+        {{- $value | toYaml | nindent 8 }}
+      {{- else }}
       {{ $key }}: {{ $value }}
       {{- end }}
+    {{- end }}
     {{- end }}
 {{- end }}
 {{- if eq (include "rasa-bot.endpoints.lockStore.enabled" .) "true" }}

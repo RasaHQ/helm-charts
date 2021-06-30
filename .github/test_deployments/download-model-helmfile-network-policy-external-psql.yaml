@@ -1,0 +1,77 @@
+releases:
+  - name: rasa-bot
+    namespace: default
+    chart: ../../charts/rasa-bot
+    values:
+      - global:
+          postgresql:
+            existingSecret: "test-psql"
+      - service:
+          type: LoadBalancer
+        replicaCount: 1
+      - networkPolicy:
+          enabled: true
+          denyAll: true
+      - nginx:
+          enabled: false
+          tls:
+            enabled: true
+            generateSelfSignedCert: true
+      - applicationSettings:
+          debugMode: true
+          trainInitialModel: false
+          credentials:
+            enable: true
+            additionalChannelCredentials:
+              rest:
+          endpoints:
+            lockStore:
+              enabled: true
+            eventBroker:
+              enabled: true
+            trackerStore:
+              query:
+                sslrootcert: /ssl-certs/server-ca.pem
+                sslmode: verify-ca
+                sslcert: /ssl-certs/client-cert.pem
+                sslkey: /ssl-certs/client-key.pem
+      - initContainers:
+        - name: download-model
+          image: "busybox"
+          command: ["/bin/sh", "-c"]
+          args:
+            - "cd /app/models/ && wget https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true -O model.tar.gz; cp /tmp/certs/*.pem /ssl-certs; chown 1001: -R /ssl-certs/* && chmod -R 0600 /ssl-certs/*"
+          volumeMounts:
+            - mountPath: /app/models
+              name: models
+            - mountPath: /ssl-certs
+              name: ssl-certs
+            - name: psql-ssl-ca-cert
+              mountPath: "/tmp/certs"
+          securityContext:
+            runAsUser: 0
+      - volumes:
+        - name: models
+          emptyDir: {}
+        - name: ssl-certs
+          emptyDir: {}
+        - name: psql-ssl-ca-cert
+          secret:
+            secretName: psql-ssl-ca-cert
+            defaultMode: 0600
+      - volumeMounts:
+          - mountPath: /app/models
+            name: models
+          - mountPath: /ssl-certs
+            name: ssl-certs
+      - ingress:
+          enabled: true
+      - rabbitmq:
+          install: true
+        redis:
+          install: true
+        postgresql:
+          install: false
+          external:
+            enabled: true
+            host: "<IP_ADDRESS>"

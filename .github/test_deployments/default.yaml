@@ -2,13 +2,3 @@ releases:
   - name: rasa-bot
     namespace: default
     chart: ../../charts/rasa-bot
-    values:
-      - service:
-          type: LoadBalancer
-      - applicationSettings:
-          debugMode: true
-          credentials:
-            additionalChannelCredentials:
-              rest:
-      - ingress:
-          enabled: false

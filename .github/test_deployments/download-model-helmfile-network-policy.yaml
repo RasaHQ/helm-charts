@@ -5,7 +5,10 @@ releases:
     values:
       - service:
           type: LoadBalancer
-        replicaCount: 2
+        replicaCount: 1
+      - networkPolicy:
+          enabled: true
+          denyAll: true
       - nginx:
           enabled: false
           tls:

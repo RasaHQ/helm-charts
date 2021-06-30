@@ -21,12 +21,12 @@ It means that the endpoints configuration from the values is ignored.
 Telemetry is enabled. Visit our website to learn more: https://rasa.com/docs/rasa/telemetry/telemetry/
 {{- end }}
 
-{{- if gt (.Values.replicaCount | int) 1 }}
+{{- if and (gt (.Values.replicaCount | int) 1) (eq (include "rasa-bot.endpoints.lockStore.enabled" .) "false") }}
 ##############################################################################
-####               WARNING: The Lock Store is disable                     ####
+####               WARNING: The Lock Store is disabled                    ####
 ##############################################################################
 
-You use more than 1 replica, in such case you should use consider using a Lock Store.
+You use more than 1 replica, in such case you should consider using a Lock Store.
 
 You can enable the Lock Store by setting `redis.install` to `true` and `applicationSettings.endpoints.lockStore.enabled` to `true`.
 
@@ -45,6 +45,81 @@ You can disable Ingress by setting the `ingress.enabled` parameter to `false`
   OR
 
 You can disable NGINX by setting the `nginx.enabled` parameter to `false`
+{{- end }}
+
+{{- if and (eq (include "rasa-bot.endpoints.eventBroker.enabled" .) "false") (eq (include "rasa-common.rabbitmq.available" .) "true") }}
+##############################################################################
+####               WARNING: Event Broker misconfiguration                 ####
+##############################################################################
+
+RabbitMQ is available, but Event Broker is disabled.
+
+You can enable Event Broker by setting the `applicationSettings.endpoints.eventBroker.enabled` to `true`.
+
+{{- end }}
+
+{{- if and (eq (include "rasa-bot.endpoints.lockStore.enabled" .) "false") (eq (include "rasa-common.redis.available" .) "true") }}
+##############################################################################
+####               WARNING: Lock Store misconfiguration                   ####
+##############################################################################
+
+Redis is available, but Lock Store is disabled.
+
+You can enable Event Broker by setting the `applicationSettings.endpoints.lockStore.enabled` to `true`.
+
+{{- end }}
+
+{{- if and (eq (include "rasa-bot.endpoints.trackerStore.enabled" .) "false") (eq (include "rasa-common.psql.available" .) "true") }}
+##############################################################################
+####               WARNING: Tracker Store misconfiguration                ####
+##############################################################################
+
+PostgreSQL is available, but Tracker Store is disabled.
+
+You can enable Event Broker by setting the `applicationSettings.endpoints.trackerStore.enabled` to `true`.
+
+{{- end }}
+
+{{- if and .Values.postgresql.install .Values.postgresql.external.enabled }}
+##############################################################################
+####               WARNING: PostgreSQL misconfiguration                   ####
+##############################################################################
+
+PostgreSQL is installed and an external host is enabled at the same time, in such case the external host is not going to be used.
+
+Please disable the external host by setting the `postgresql.external.enabled` to `true`
+
+  OR
+
+Don't install PostgreSQL by setting the `postgresql.install` to `false`
+{{- end }}
+
+{{- if and .Values.redis.install .Values.redis.external.enabled }}
+##############################################################################
+####               WARNING: Redis misconfiguration                        ####
+##############################################################################
+
+Redis is installed and an external host is enabled at the same time, in such case the external host is not going to be used.
+
+Please disable the external host by setting the `redis.external.enabled` to `true`
+
+  OR
+
+Don't install Redis by setting the `redis.install` to `false`
+{{- end }}
+
+{{- if and .Values.rabbitmq.install .Values.rabbitmq.external.enabled }}
+##############################################################################
+####               WARNING: RabbitMQ misconfiguration                     ####
+##############################################################################
+
+RabbitMQ is installed and an external host is enabled at the same time, in such case the external host is not going to be used.
+
+Please disable the external host by setting the `rabbitmq.external.enabled` to `true`
+
+  OR
+
+Don't install RabbitMQ by setting the `rabbitmq.install` to `false`
 {{- end }}
 
 {{- if and .Values.applicationSettings.endpoints.models.enabled .Values.applicationSettings.endpoints.models.useRasaXasModelServer.enabled (not .Values.applicationSettings.rasaX.enabled) }}

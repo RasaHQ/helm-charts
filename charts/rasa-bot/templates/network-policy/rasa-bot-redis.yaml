@@ -24,18 +24,15 @@ spec:
       port: {{ template "rasa-common.psql.port" . }}
 {{- end }}
 ---
+{{- if and (not .Values.redis.external.enabled) (eq (include "rasa-common.redis.available" .) "true") }}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: allow-redis-rasa-bot-ingress
 spec:
   podSelector:
-{{- if and (not .Values.redis.external.enabled) (eq (include "rasa-common.redis.available" .) "true") }}
     matchLabels:
       app.kubernetes.io/name: redis
-{{- else }}
-    matchLabels: {}
-{{- end }}
   policyTypes:
   - Ingress
   ingress:
@@ -46,4 +43,5 @@ spec:
     ports:
     - protocol: TCP
       port: {{ template "rasa-common.redis.port" . }}
+{{- end }}
 {{- end }}
