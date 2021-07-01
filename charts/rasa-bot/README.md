@@ -102,13 +102,13 @@ nginx:
 
 ### Note on Configuring Endpoints and Channel Credentials
 
-To configure [endpoints](LINK) and [channel credentials](LINK) you can either specify them directly in rasa-values.yaml under `applicationSettings.endpoints` and `applicationSettings.credentials`, or you can [use Rasa X/Enterprise as a configuration endpoint]() if it is deployed in the same namespace as Rasa Bot.
+To configure [endpoints](https://rasa.com/docs/rasa/arch-overview) and [channel credentials](https://rasa.com/docs/rasa/connectors/your-own-website) you can either specify them directly in rasa-values.yaml under `applicationSettings.endpoints` and `applicationSettings.credentials`, or you can [use Rasa X/Enterprise as a configuration endpoint](../../examples/rasa-bot/README.md) if it is deployed in the same namespace as Rasa Bot.
 
 > It is not possible to combine the two options. If you choose to use Rasa X/Enterprise as a configuration endpoint, all other configuration of endpoints and credentials will be ignored.
 
 ### Options for loading models
 
-To load a model for Rasa Bot to serve, you can use a model server to pull models at regular intervals. If you're not using a model server, you'll need to configure [Loading an Initial Model](LINK).
+To load a model for Rasa Bot to serve, you can use a model server to pull models at regular intervals. If you're not using a model server, you'll need to configure [Loading an Initial Model](#loading-an-initial-model).
 
 You can use Rasa X/Enterprise as a model server or use your own model server. To configure your own model server, follow the instructions on the [Rasa docs](https://rasa.com/docs/rasa/model-storage#load-model-from-server).
 
@@ -213,7 +213,7 @@ extraEnv:
 
 In the example above we assumed that the `rasa-x-rabbit` secret already exists in the cluster and contains the `rabbitmq-password` key.
 
-In addition to Rasa Bot configuration, you have to update Rasa X/Enterprise configuration as well, please visit [the docs](https://link-to-the-docs) to learn more.
+If you're using the rasa-x-helm chart to deploy Rasa X/Enterprise you might have to update your values.yaml file, please visit [the docs](https://link-to-the-docs) to learn more.
 
 ## Examples of usage
 
