@@ -22,7 +22,7 @@ helm repo update
 
 ## Quick start
 
-The default configuration of the Rasa Bot chart deploys a Rasa Open Source Server, creates an initial bot project, trains a model, and serves the trained model.
+The default configuration of the Rasa Bot chart deploys a Rasa Open Source Server, downloads a model, and serves the downloaded model.
 
 Below you can find examples of how to configure your deployment or use more advanced configurations such as integration with Rasa X/Enterprise.
 
@@ -33,7 +33,7 @@ Default components that will be installed along with the Rasa server:
 
 ### Installing the Rasa Bot Chart
 
-To install the chart with the release name `<RELEASE_NAME>` run the following command:
+To install the chart and assign the release name `<RELEASE_NAME>`, run the following command:
 
 ```bash
 helm install --name <RELEASE_NAME> rasa/rasa-bot
@@ -54,7 +54,7 @@ To access Rasa Bot from outside of the cluster, follow the steps below:
     NGINX is enabled, in order to send a request that goes through NGINX you can use port: 80
 ```
 
-After executing the commands above we can send a request to Rasa Bot
+After executing the commands above, you can validate that it is accessible from outside the cluster by sending a curl request: 
 
 ```shell
 curl http://127.0.0.1:${SERVICE_PORT}
@@ -64,10 +64,10 @@ Hello from Rasa: 2.4.0
 
 ## Configuration
 
-Use a YAML file that specifies the values for the chart parameters to configure the chart. In this README we'll call this file `rasa-values.yaml`
+To configure the chart, use a YAML file that specifies the values for the chart parameters. In this README we'll call this file `rasa-values.yaml`. To create and use your `rasa-values.yaml` file: 
 
-1. Copy the default [values.yaml](values.yaml) value file to `rasa-values.yaml`.
-2. Set custom parameters in  `rasa-values.yaml`
+1. Copy the default [values.yaml](values.yaml) value file to a new `rasa-values.yaml` file.
+2. Set any custom parameters in `rasa-values.yaml`.
 3. To apply your changes, upgrade the Rasa Bot Helm chart with the new rasa-values.yaml file:
 
 ```shell
@@ -143,9 +143,9 @@ applicationSettings:
 
 #### Loading an initial model
 
-The first time you install Rasa Bot, you might not have a model server available yet, or you will want some arbitrary lightweight model just to test the deployment with. For this purpose, you can choose between training or downloading an initial model. By default, the Rasa Bot chart creates an initial project and trains a model. To use this option, you don't have to change anything.
+The first time you install Rasa Bot, you may not have a model server available yet, or you may want an lightweight model for testing the deployment. For this purpose, you can choose between training or downloading an initial model. By default, the Rasa Bot chart downloads an example model from GitHub. To use this option, you don't have to change anything.
 
-If you want to define an existing model to download from a defined URL instead, update your `rasa-values.yaml` with the following configuration:
+If you want to define an existing model to download from a URL you define instead, update your `rasa-values.yaml` with the URL according to the following configuration:
 
 ```yaml
 applicationSettings:
@@ -156,9 +156,9 @@ Note that the URL for the initial model download has to point to a tar.gz file a
 
 ### Configuring Messaging Channels
 
-You can enable messaging channels by specifying credentials in rasa-values.yaml in the same way you would define them in credentials.yml for running locally.
+You can enable messaging channels by specifying credentials in `rasa-values.yaml` in the same way you would define them in `credentials.yml` when running locally.
 
-For example, to enable the REST channel, update your rasa-values.yaml file with the following channel configuration:
+For example, to enable the REST channel, update your `rasa-values.yaml` file with the following channel configuration:
 
 ```yaml
 applicationSettings:
@@ -173,7 +173,7 @@ applicationSettings:
 
 ### Connecting Rasa Bot with Rasa X/Enterprise
 
-Any Rasa Open Source server can stream events to a Rasa X/Enterprise using an [event broker](). Both Rasa Bot and Rasa X/Enterprise will need to refer to the  same event broker.
+Any Rasa Open Source server can stream events to Rasa X/Enterprise using an [event broker](). Both Rasa Bot and Rasa X/Enterprise will need to refer to the  same event broker.
 
 This means you have three options:
 
@@ -181,7 +181,7 @@ This means you have three options:
 2. Configure Rasa X/Enterprise to connect to the event broker started by Rasa Bot
 3. Configure both Rasa Bot and Rasa X/Enterprise to connect to an external event broker (e.g. a managed Kafka instance)
 
-For example:
+For example, to configure Rasa Bot to refer to the event broker started by Rasa X/Enterprise:
 
 ```yaml
 applicationSettings:
@@ -212,13 +212,13 @@ extraEnv:
         key: rabbitmq-password
 ```
 
-In the example above we assumed that the `rasa-x-rabbit` secret already exists and contains the `rabbitmq-password` key.
+In the example above we assumed that the `rasa-x-rabbit` secret already exists in the cluster and contains the `rabbitmq-password` key.
 
 In addition to Rasa Bot configuration, you have to update Rasa X/Enterprise configuration as well, please visit [the docs](https://link-to-the-docs) to learn more.
 
 ## Examples of usage
 
-In the [`examples/rasa-bot`](../../examples) directory you can find examples of configuration:
+In the [`examples/rasa-bot`](../../examples) directory you can find more detailed examples of configuration:
 
 - [How to download a model via URL using a init container and load it into Rasa OSS](../../examples/rasa-bot/download-model-helmfile.yaml)
 - [How to use Rasa X/Enterprise deployed in the same namespace as a configuration endpoint](../../examples/rasa-bot/README.md)
