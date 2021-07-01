@@ -480,6 +480,7 @@ postgresql:
     enabled: false
 
     # -- External PostgreSQL hostname
+    ## The host value is accessible via the `${DB_HOST}` environment variable
     host: "external-postgresql"
 
 ## Redis(TM) specific settings (https://artifacthub.io/packages/helm/bitnami/redis/14.1.0)
@@ -506,6 +507,7 @@ redis:
     enabled: false
 
     # -- External Redis hostname
+    ## The host value is accessible via the `${REDIS_HOST}` environment variable
     host: "external-redis"
 
 
@@ -535,6 +537,7 @@ rabbitmq:
     enabled: false
 
     # -- External RabbitMQ hostname
+    ## The host value is accessible via the `${RABBITMQ_HOST}` environment variable
     host: "external-rabbitmq"
 
 nginx:
