@@ -158,6 +158,7 @@ jobs:
         if: matrix.chart == 'rasa-bot'
         run: |
           until kubectl wait --timeout=10s --for=condition=Ready --selector app.kubernetes.io/name=rasa-bot pod; do
+            kubectl get pods
             sleep 1
           done
 
