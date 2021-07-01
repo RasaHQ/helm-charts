@@ -227,7 +227,7 @@ In the [`examples/rasa-bot`](../../examples) directory you can find more detaile
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Allow the Rasa Open Source Deployment to schedule using affinity rules |
-| applicationSettings.cors | string | `"*"` | CORS for the passed origin. Default is * to whitelist all origins |
+| applicationSettings.cors | string | `"*"` | CORS for the passed origin. Default is * to allow all origins |
 | applicationSettings.credentials.additionalChannelCredentials | object | `{}` | Additional channel credentials which should be used by Rasa to connect to various input channels |
 | applicationSettings.credentials.enabled | bool | `true` | Enable credentials configuration for channel connectors |
 | applicationSettings.debugMode | bool | `false` | Enable debug mode |
@@ -262,7 +262,7 @@ In the [`examples/rasa-bot`](../../examples) directory you can find more detaile
 | applicationSettings.endpoints.trackerStore.type | string | `"sql"` | Tracker Store type |
 | applicationSettings.endpoints.trackerStore.url | string | `"${DB_HOST}"` | URL of your SQL server |
 | applicationSettings.endpoints.trackerStore.username | string | `"${DB_USER}"` | The username which is used for authentication |
-| applicationSettings.initialModel | string | `"https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true"` | Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tar.gz file e.g. https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true |
+| applicationSettings.initialModel | string | `"https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true"` | Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tar.gz file |
 | applicationSettings.port | int | `5005` | Port on which Rasa runs |
 | applicationSettings.rasaX.enabled | bool | `false` | Run Rasa X / Enterprise server |
 | applicationSettings.rasaX.token | string | `"rasaXToken"` | Token Rasa X / Enterprise accepts as authentication token from other Rasa services |
