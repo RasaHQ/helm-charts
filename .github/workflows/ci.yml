@@ -154,10 +154,13 @@ jobs:
           helm install ${{ matrix.chart }} charts/${{ matrix.chart }}
 
       - name: Test Rasa Bot
-        timeout-minutes: 5
+        timeout-minutes: 10
         if: matrix.chart == 'rasa-bot'
         run: |
-          kubectl wait --timeout=360s --for=condition=Ready --selector app.kubernetes.io/name=rasa-bot pod
+          until kubectl wait --timeout=10s --for=condition=Ready --selector app.kubernetes.io/name=rasa-bot pod; do
+            sleep 1
+          done
+
           kubectl logs -c rasa-oss -l app.kubernetes.io/name=rasa-bot
           kubectl get svc
 
