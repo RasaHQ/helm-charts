@@ -16,7 +16,6 @@ applicationSettings:
   debugMode: false
 
   # -- Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tar.gz file
-  # e.g. https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true
   initialModel: "https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true"
 
   # -- Train a model if a initial model is not defined. This parameter is ignored if the `appplication.Settings.initialModel` is defined
@@ -31,20 +30,20 @@ applicationSettings:
   # -- Token Rasa accepts as authentication token from other Rasa services
   token: "rasaToken"
 
-  # -- CORS for the passed origin. Default is * to whitelist all origins
+  # -- CORS for the passed origin. Default is * to allow all origins
   cors: '*'
 
   # -- Start the web server API in addition to the input channel
   enableAPI: true
 
-  ## The credentials configuration is ignored if `applicationSettings.rasaX.useConfigEndpoint=true`
+  ## Note: this credentials configuration is ignored if `applicationSettings.rasaX.useConfigEndpoint=true`
   credentials:
     # -- Enable credentials configuration for channel connectors
     enabled: true
 
     # -- Additional channel credentials which should be used by Rasa to connect to various
     # input channels
-    ## See: https://rasa.com/docs/rasa/connectors/your-own-website
+    ## See: https://rasa.com/docs/rasa/messaging-and-voice-channels
     additionalChannelCredentials: {}
     #  rest:
     #  facebook:
@@ -57,7 +56,7 @@ applicationSettings:
     # See: https://rasa.com/docs/rasa/telemetry/telemetry/
     enabled: false
 
-  ## The endpoints configuration is ingored if `The credentials configuration is ignored if `applicationSettings.rasaX.useConfigEndpoint=true`
+  ## Note: this endpoints configuration is ignored if `applicationSettings.rasaX.useConfigEndpoint=true`
   endpoints:
     ## Fetch the model from your own HTTP server
     ## See: https://rasa.com/docs/rasa/model-storage#load-model-from-server
