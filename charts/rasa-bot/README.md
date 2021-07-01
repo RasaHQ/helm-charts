@@ -121,7 +121,7 @@ applicationSettings:
     models:
       enabled: true
       url: http://my-server.com/models/default
-      token: ""
+      token: "auth-token"
       waitTimeBetweenPulls: 20
 ```
 
