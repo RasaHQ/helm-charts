@@ -101,13 +101,13 @@ nginx:
 
 ### Note on Configuring Endpoints and Channel Credentials
 
-To configure [endpoints]() and [channel credentials]() you can either specify them directly in rasa-values.yaml under `applicationSettings.endpoints` and `applicationSettings.credentials`, or you can [use Rasa X/Enterprise as a configuration endpoint]() if it is deployed in the same namespace as Rasa Bot.
+To configure [endpoints](LINK) and [channel credentials](LINK) you can either specify them directly in rasa-values.yaml under `applicationSettings.endpoints` and `applicationSettings.credentials`, or you can [use Rasa X/Enterprise as a configuration endpoint]() if it is deployed in the same namespace as Rasa Bot.
 
 > It is not possible to combine the two options. If you choose to use Rasa X/Enterprise as a configuration endpoint, all other configuration of endpoints and credentials will be ignored.
 
 ### Options for loading models
 
-To load a model for Rasa Bot to serve, you can use a model server to pull models at regular intervals (typical for production). See the next section for information on loading an initial model on startup when not using a model server.
+To load a model for Rasa Bot to serve, you can use a model server to pull models at regular intervals. If you're not using a model server, you'll need to configure [Loading an Initial Model](LINK).
 
 You can use Rasa X/Enterprise as a model server or use your own model server. To configure your own model server, follow the instructions on the [Rasa docs](https://rasa.com/docs/rasa/model-storage#load-model-from-server).
 
