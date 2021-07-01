@@ -82,7 +82,7 @@ Use the same upgrade command above to apply any subsequent changes you make to y
 ### Exposing the rasa-bot deployment to the public
 
 By default the rasa-bot service is available only within the Kubernetes cluster.
-In order to make it accessible outside the cluster, update your `rasa-values.yaml` file with the following configuration:
+In order to make it accessible outside the cluster via a load balancer, update your `rasa-values.yaml` file with the following configuration:
 
 ```yaml
 service:
@@ -121,7 +121,7 @@ applicationSettings:
     models:
       enabled: true
       url: http://my-server.com/models/default
-      token: "token"
+      token: ""
       waitTimeBetweenPulls: 20
 ```
 
@@ -133,7 +133,10 @@ applicationSettings:
   endpoints:
     models:
       enabled: true
-      token: "token"
+      # User Rasa X/Enterprise token
+      # If you use the rasa-x-helm chart you can set a token by using the `rasax.token` parameter
+      # See: https://github.com/RasaHQ/rasa-x-helm/blob/main/charts/rasa-x/values.yaml#L22
+      token: "rasaXToken"
       waitTimeBetweenPulls: 20
       useRasaXasModelServer:
         enabled: true
@@ -153,6 +156,8 @@ applicationSettings:
 ```
 
 Note that the URL for the initial model download has to point to a tar.gz file and must not require authentication.
+
+Visit [the docs](https://rasa.com/docs/rasa/setting-up-ci-cd) to learn more about how to train a model.
 
 ### Configuring Messaging Channels
 
