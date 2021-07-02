@@ -201,8 +201,11 @@ Additional components:
 {{- if (eq (include "rasa.initialModel.download" .) "true") }}
 
 Loaded model: {{ .Values.applicationSettings.initialModel }}
+{{- else if eq (include "rasa.initialModel.train" .) "true" }}
 
-{{ end -}}
+An initial model will be trained
+{{- end -}}
+
 {{ if .Values.ingress.enabled }}
   Rasa URL: http{{ if .Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.hostname }}
 {{ else }}

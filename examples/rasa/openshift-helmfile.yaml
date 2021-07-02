@@ -1,0 +1,26 @@
+# This example deploys the rasa chart with default values
+# OpenShift configuration
+#
+# Execute command: helmfile -f examples/rasa/openshift-helmfile.yaml sync
+#
+repositories:
+- name: rasa
+  url: https://helm.rasa.com
+
+releases:
+  - name: rasa
+    chart: rasa/rasa
+    values:
+      - postgresql:
+          volumePermissions:
+            securityContext:
+              runAsUser: "auto"
+        securityContext:
+          enabled: false
+        shmVolume:
+          chmod:
+            enabled: false
+      - nginx:
+          image:
+            name: nginxinc/nginx-unprivileged
+          port: 8080

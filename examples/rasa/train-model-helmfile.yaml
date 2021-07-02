@@ -1,0 +1,42 @@
+# This example shows how to download data from a git repository and train a model.
+#
+# Execute command: helmfile -f examples/rasa/download-model-helmfile.yaml sync
+#
+
+repositories:
+- name: rasa
+  url: https://helm.rasa.com
+
+releases:
+  - name: rasa
+    chart: rasa/rasa
+
+    values:
+      # Configure Rasa OSS
+      - applicationSettings:
+          # Enable debug mode
+          debugMode: true
+          # Train an initial model. If data files don't exist, a new project will be created (`rasa init`).
+          # It creates a init container that runs the `rasa train` command.
+          trainInitialModel: true
+
+          # Credentials configuration
+          credentials:
+            additionalChannelCredentials:
+              # Enable REST channel
+              rest:
+
+      # Add a init container to the rasa deployment that downloads data files from a git repository
+      - initContainers:
+        - name: download-data
+          image: "bitnami/git:latest"
+          command: ["/bin/sh", "-c"]
+          # The train init container expects data files in the /app directory.
+          # The commands below make sure that the /app directory is empty, and then it clones the rasa-x-demo repository.
+          # The rasa image runs with UID 1001, that's why at the end you have to change owner for /app directory.
+          args:
+            - "cd /app && rm -rf {,.[!.],..?}* && git clone https://github.com/RasaHQ/rasa-x-demo.git . && chown -R 1001:1001 /app"
+          # Mount the `/app` directory which is shared with the init container that trains a model.
+          volumeMounts:
+            - mountPath: /app
+              name: app-dir

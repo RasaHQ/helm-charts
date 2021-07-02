@@ -79,7 +79,7 @@ Determine if credential configuration for channel connectors is used
 Determine if a initial model should be downloaded
 */}}
 {{- define "rasa.initialModel.download" -}}
-{{- if and (not .Values.applicationSettings.rasaX.useConfigEndpoint) (not .Values.applicationSettings.endpoints.models.enabled) (not (empty .Values.applicationSettings.initialModel)) -}}
+{{- if and (not .Values.applicationSettings.rasaX.useConfigEndpoint) (not .Values.applicationSettings.endpoints.models.enabled) (not (empty .Values.applicationSettings.initialModel)) (not .Values.applicationSettings.trainInitialModel) -}}
 {{- print "true" -}}
 {{- else -}}
 {{- print "false" -}}
@@ -90,7 +90,7 @@ Determine if a initial model should be downloaded
 Determine if a initial model should be trained
 */}}
 {{- define "rasa.initialModel.train" -}}
-{{- if and (not .Values.applicationSettings.rasaX.useConfigEndpoint) (not .Values.applicationSettings.endpoints.models.enabled) (empty .Values.applicationSettings.initialModel) .Values.applicationSettings.trainInitialModel -}}
+{{- if and (not .Values.applicationSettings.rasaX.useConfigEndpoint) (not .Values.applicationSettings.endpoints.models.enabled) .Values.applicationSettings.trainInitialModel -}}
 {{- print "true" -}}
 {{- else -}}
 {{- print "false" -}}
