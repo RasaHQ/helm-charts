@@ -54,7 +54,7 @@ applicationSettings:
   telemetry:
     # -- Enable telemetry
     # See: https://rasa.com/docs/rasa/telemetry/telemetry/
-    enabled: false
+    enabled: true
 
   ## Note: this endpoints configuration is ignored if `applicationSettings.rasaX.useConfigEndpoint=true`
   endpoints:

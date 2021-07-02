@@ -274,7 +274,7 @@ In the [`examples/rasa-bot`](../../examples) directory you can find more detaile
 | applicationSettings.rasaX.url | string | `""` | URL to Rasa X / Enterprise, e.g. http://rasa-x.mydomain.com:5002 |
 | applicationSettings.rasaX.useConfigEndpoint | bool | `false` | Rasa X / Enterprise endpoint URL from which to pull the runtime config |
 | applicationSettings.scheme | string | `"http"` | Scheme by which the service are accessible |
-| applicationSettings.telemetry.enabled | bool | `false` | Enable telemetry See: https://rasa.com/docs/rasa/telemetry/telemetry/ |
+| applicationSettings.telemetry.enabled | bool | `true` | Enable telemetry See: https://rasa.com/docs/rasa/telemetry/telemetry/ |
 | applicationSettings.token | string | `"rasaToken"` | Token Rasa accepts as authentication token from other Rasa services |
 | applicationSettings.trainInitialModel | bool | `false` | Train a model if a initial model is not defined. This parameter is ignored if the `appplication.Settings.initialModel` is defined |
 | args | list | `[]` | Override the default arguments for the container |
