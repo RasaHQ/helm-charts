@@ -13,7 +13,7 @@ jobs:
       max-parallel: 1
       matrix:
         chart:
-          - rasa-bot
+          - rasa
           - rasa-action-server
           - duckling
           - rasa-common

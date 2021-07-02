@@ -1,14 +1,14 @@
 # This example shows how to download a model from a remote location.
 #
-# Execute command: helmfile -f examples/rasa-bot/download-model-helmfile.yaml sync
+# Execute command: helmfile -f examples/rasa/download-model-helmfile.yaml sync
 #
 repositories:
 - name: rasa
   url: https://helm.rasa.com
 
 releases:
-  - name: rasa-bot
-    chart: rasa/rasa-bot
+  - name: rasa
+    chart: rasa/rasa
     values:
       # Expose deployment via LoadBalancer
       - service:
@@ -33,7 +33,7 @@ releases:
               # Enable REST channel
               rest:
 
-      # Add a init container to the rasa-bot deployment that downloads a model
+      # Add a init container to the rasa deployment that downloads a model
       - initContainers:
         - name: download-model
           image: "busybox"

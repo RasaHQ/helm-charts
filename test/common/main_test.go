@@ -9,7 +9,7 @@ import (
 // Path to the helm chart we will test
 var (
 	helmChartPath []string = []string{
-		"../../charts/rasa-bot",
+		"../../charts/rasa",
 		"../../charts/rasa-action-server",
 		"../../charts/duckling",
 	}

@@ -1,6 +1,6 @@
 releases:
-  - name: rasa-bot
-    chart: ../../charts/rasa-bot
+  - name: rasa
+    chart: ../../charts/rasa
 
     values:
       - service:

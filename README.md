@@ -2,7 +2,7 @@
 
 Official Helm charts for Rasa products:
 
-- [Rasa Bot (Rasa Open Source Server)](charts/rasa-bot)
+- [Rasa Open Source](charts/rasa)
 - [Rasa Action Server](charts/rasa-action-server)
 
 Helm charts for components used by Rasa:

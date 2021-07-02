@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - chart: rasa-bot
+          - chart: rasa
             app: rasa
           - chart: rasa-action-server
             app: rasa-x-demo

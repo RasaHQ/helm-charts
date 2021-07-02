@@ -1,6 +1,6 @@
 releases:
-  - name: rasa-bot
-    chart: ../../charts/rasa-bot
+  - name: rasa
+    chart: ../../charts/rasa
 
     values:
       - service:
@@ -59,4 +59,4 @@ releases:
     chart: ../../../rasa-x-helm/charts/rasa-x/
     values:
       - app:
-          existingUrl: "http://rasa-bot-rasa-action-server/webhook"
+          existingUrl: "http://rasa-rasa-action-server/webhook"

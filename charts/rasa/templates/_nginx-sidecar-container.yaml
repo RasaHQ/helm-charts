@@ -1,0 +1,43 @@
+{{- define "rasa.nginx.sidecar" -}}
+{{- if and .Values.nginx.enabled }}
+- name: nginx
+  image: {{ printf "%s:%s" .Values.nginx.image.name .Values.nginx.image.tag }}
+  securityContext:
+    {{- toYaml .Values.nginx.securityContext | nindent 4 }}
+  livenessProbe:
+    {{- toYaml .Values.nginx.livenessProbe | nindent 4 }}
+  readinessProbe:
+    {{- toYaml .Values.nginx.readinessProbe | nindent 4 }}
+  resources:
+    {{- toYaml .Values.nginx.resources | nindent 4 }}
+  ports:
+{{- if .Values.nginx.tls.enabled }}
+  - name: https-nginx
+    containerPort: {{ .Values.nginx.tls.port }}
+    protocol: TCP
+{{- end }}
+  - name: http-nginx
+    containerPort: {{ .Values.nginx.port }}
+    protocol: TCP
+  volumeMounts:
+{{- if and .Values.nginx.tls.enabled (or .Values.nginx.tls.generateSelfSignedCert .Values.nginx.tls.certificateSecret) }}
+  - mountPath: "/etc/nginx/certs"
+    name: {{ include "rasa.nginx.tls.secret.name" . }}
+    readOnly: true
+{{- end }}
+  - mountPath: "/etc/nginx/nginx.conf"
+    subPath: "nginx.conf"
+    name: {{ include "rasa-common.names.fullname" . }}-nginx-config
+    readOnly: true
+  - mountPath: "/etc/nginx/conf.d/rasa.nginx.conf"
+    subPath: "rasa.nginx.conf"
+    name: {{ include "rasa-common.names.fullname" . }}-nginx-config
+    readOnly: true
+{{- if .Values.nginx.tls.enabled }}
+  - mountPath: "/etc/nginx/conf.d/ssl.conf"
+    subPath: "ssl.conf"
+    name: {{ include "rasa-common.names.fullname" . }}-nginx-config
+    readOnly: true
+{{- end }}
+{{- end }}
+{{- end -}}

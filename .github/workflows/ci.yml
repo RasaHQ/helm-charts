@@ -25,7 +25,7 @@ jobs:
       id: filter
       with:
         filters: |
-          rasa-bot: charts/rasa-bot/**
+          rasa: charts/rasa/**
           rasa-action-server: charts/rasa-action-server/**
           duckling: charts/duckling/**
 
@@ -61,7 +61,7 @@ jobs:
       matrix:
         test:
           - ./test/common
-          - ./charts/rasa-bot/test
+          - ./charts/rasa/test
           - ./charts/rasa-action-server/test
           - ./charts/duckling/test
 
@@ -153,20 +153,20 @@ jobs:
           helm dep up charts/${{ matrix.chart }}
           helm install ${{ matrix.chart }} charts/${{ matrix.chart }}
 
-      - name: Test Rasa Bot
+      - name: Test Rasa
         timeout-minutes: 10
-        if: matrix.chart == 'rasa-bot'
+        if: matrix.chart == 'rasa'
         run: |
-          until kubectl wait --timeout=10s --for=condition=Ready --selector app.kubernetes.io/name=rasa-bot pod; do
+          until kubectl wait --timeout=10s --for=condition=Ready --selector app.kubernetes.io/name=rasa pod; do
             kubectl get pods
             sleep 1
           done
 
-          kubectl logs -c rasa-oss -l app.kubernetes.io/name=rasa-bot
+          kubectl logs -c rasa-oss -l app.kubernetes.io/name=rasa
           kubectl get svc
 
-          export SERVICE_PORT=$(kubectl get -o jsonpath="{.spec.ports[0].port}" services rasa-bot)
-          kubectl port-forward svc/rasa-bot ${SERVICE_PORT}:${SERVICE_PORT} &
+          export SERVICE_PORT=$(kubectl get -o jsonpath="{.spec.ports[0].port}" services rasa)
+          kubectl port-forward svc/rasa ${SERVICE_PORT}:${SERVICE_PORT} &
 
           until `nc -w 2 -z 127.0.0.1 ${SERVICE_PORT}`; do
             echo "Waiting for ${SERVICE_PORT} port to be available."

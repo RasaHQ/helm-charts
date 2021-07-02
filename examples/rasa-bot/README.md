@@ -1,6 +1,6 @@
 # Using Rasa X/Enterprise deployed in the same namespace as a configuration endpoint
 
-You can use Rasa X/Enterprise as a configuration endpoint if it is deployed in the same Kubernetes cluster as Rasa Bot.
+You can use Rasa X/Enterprise as a configuration endpoint if it is deployed in the same Kubernetes cluster as Rasa.
 
 (Note: Rasa X/Enterprise will return credentials and endpoints with reference to cluster-internal service addresses, which are not accessible outside that namespace. Therefore you cannot use and externally running Rasa X/Enterprise instance as a configuration endpoint.)
 
@@ -48,7 +48,7 @@ event_broker:
   - ${RABBITMQ_QUEUE}
 
 action_endpoint:
-  url: "http://rasa-bot-rasa-action-server/webhook"
+  url: "http://rasa-rasa-action-server/webhook"
   token:  ""
 lock_store:
   type: "redis"

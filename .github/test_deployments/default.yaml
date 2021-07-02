@@ -1,4 +1,4 @@
 releases:
-  - name: rasa-bot
+  - name: rasa
     namespace: default
-    chart: ../../charts/rasa-bot
+    chart: ../../charts/rasa

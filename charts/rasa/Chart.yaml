@@ -1,6 +1,7 @@
 apiVersion: v2
-name: rasa-action-server
-description: Rasa Action Server Helm chart for Kubernetes
+name: rasa
+description: The rasa Helm charts deploy a Rasa Open Source bot. Rasa is an open source machine learning framework for automated text and voice-based conversations.
+
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives
@@ -15,13 +16,14 @@ type: application
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
 version: 1.0.0
+
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "2.7.0"
 
-icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU"
 
 sources:
   - https://github.com/RasaHQ/charts/rasa
@@ -29,7 +31,7 @@ sources:
 
 maintainers:
   - email: hi@rasa.com
-    name: Rasa
+    name: RasaHQ
 
 dependencies:
   - name: rasa-common
@@ -38,8 +40,33 @@ dependencies:
       - rasa-common
     version: 1.x.x
 
+  - name: postgresql
+    version: ~10.3.18
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.install
+
+  - name: redis
+    version: ~14.1.0
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.install
+
+  - name: rabbitmq
+    version: ~8.12.1
+    repository: https://charts.bitnami.com/bitnami
+    condition: rabbitmq.install
+
+  - name: rasa-action-server
+    version: ~1.0.0
+    repository: file://../rasa-action-server
+    condition: rasa-action-server.install
+
+  - name: duckling
+    version: ~1.0.0
+    repository: file://../duckling
+    condition: duckling.install
+
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: added
-      description: Add the rasa-action-server chart
+      description: Add the rasa chart

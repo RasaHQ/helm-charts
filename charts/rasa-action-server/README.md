@@ -12,7 +12,7 @@ Rasa Action Server Helm chart for Kubernetes
 
 ## Source Code
 
-* <https://github.com/RasaHQ/charts/rasa-bot>
+* <https://github.com/RasaHQ/charts/rasa>
 * <https://rasa.com/>
 
 ## Requirements

@@ -1,0 +1,67 @@
+{{ if not .Values.applicationSettings.rasaX.useConfigEndpoint }}
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: {{ include "rasa-common.names.fullname" . }}
+  labels:
+    {{- include "rasa-common.labels.standard" . | nindent 4 }}
+data:
+  credentials: |
+{{- if eq (include "rasa.credentials.enabled" .) "true" }}
+    {{- with .Values.applicationSettings.credentials.additionalChannelCredentials }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+{{- end }}
+{{- if and .Values.applicationSettings.rasaX.enabled .Values.applicationSettings.rasaX.url }}
+    rasa:
+      url: {{ .Values.applicationSettings.rasaX.url }}/api
+{{- end }}
+  endpoints: |
+{{- if eq (include "rasa.endpoints.models.enabled" .) "true" }}
+    models:
+      url: {{ .Values.applicationSettings.endpoints.models.url }}
+      token: ${MODEL_SERVER_TOKEN}
+      wait_time_between_pulls: {{ .Values.applicationSettings.endpoints.models.waitTimeBetweenPulls }}
+{{- else if and .Values.applicationSettings.rasaX.enabled .Values.applicationSettings.rasaX.url .Values.applicationSettings.endpoints.models.useRasaXasModelServer.enabled }}
+    models:
+      url: {{ .Values.applicationSettings.rasaX.url }}/api/projects/default/models/tags/{{ .Values.applicationSettings.endpoints.models.useRasaXasModelServer.tag }}
+      token: ${RASA_X_TOKEN}
+      wait_time_between_pulls: {{ .Values.applicationSettings.endpoints.models.waitTimeBetweenPulls }}
+{{- end }}
+{{- if eq (include "rasa.endpoints.trackerStore.enabled" .) "true"  }}
+    tracker_store:
+    {{- range $key, $value := .Values.applicationSettings.endpoints.trackerStore }}
+      {{- if not (eq $key "enabled") }}
+      {{- if kindIs "map" $value }}
+      {{ $key }}:
+        {{- $value | toYaml | nindent 8 }}
+      {{- else }}
+      {{ $key }}: {{ $value }}
+      {{- end }}
+    {{- end }}
+    {{- end }}
+{{- end }}
+{{- if eq (include "rasa.endpoints.lockStore.enabled" .) "true" }}
+    lock_store:
+    {{- range $key, $value := .Values.applicationSettings.endpoints.lockStore }}
+      {{- if not (eq $key "enabled") }}
+      {{ $key }}: {{ $value }}
+      {{- end }}
+    {{- end }}
+{{- end }}
+{{- if eq (include "rasa.endpoints.eventBroker.enabled" .) "true" }}
+    event_broker:
+    {{- range $key, $value := .Values.applicationSettings.endpoints.eventBroker }}
+      {{- if not (eq $key "enabled") }}
+      {{ $key }}: {{ $value }}
+      {{- end }}
+    {{- end }}
+{{- end }}
+{{- if eq (include "rasa.endpoints.action" .) "true" }}
+    action_endpoint:
+      url: ${ACTION_SERVER_URL}
+{{- end }}
+    {{- with .Values.applicationSettings.endpoints.additionalEndpoints }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+{{ end }}

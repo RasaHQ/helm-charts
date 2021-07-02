@@ -1,0 +1,47 @@
+{{- if .Values.networkPolicy.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-rasa-postgresql-egress
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: rasa
+  policyTypes:
+  - Egress
+  egress:
+{{- if and (not .Values.postgresql.external.enabled) (eq (include "rasa-common.psql.available" .) "true") }}
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: postgresql
+    ports:
+    - protocol: TCP
+      port: {{ template "rasa-common.psql.port" . }}
+{{- else }}
+  - ports:
+    - protocol: TCP
+      port: {{ template "rasa-common.psql.port" . }}
+{{- end }}
+---
+{{- if and (not .Values.postgresql.external.enabled) (eq (include "rasa-common.psql.available" .) "true") }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "rasa-common.names.fullname" . }}-allow-postgresql-rasa-ingress
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: postgresql
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: rasa
+    ports:
+    - protocol: TCP
+      port: {{ template "rasa-common.psql.port" . }}
+{{- end }}
+{{- end }}
