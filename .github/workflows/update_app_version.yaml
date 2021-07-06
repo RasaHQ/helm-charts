@@ -4,6 +4,8 @@ on:
     # Run once a day at 08:00
     - cron: '0 8 * * *'
   workflow_dispatch: {}
+  pull_request:
+    types: [opened, synchronize, labeled]
 
 jobs:
   open_pull_request:
@@ -89,24 +91,29 @@ jobs:
           git remote update origin --prune
           git checkout ${{ steps.get-branch-name.outputs.new_branch }}
 
-          yq e '.appVersion = "'${LATEST_VERSION}'"' -i charts/${{ matrix.chart }}/Chart.yaml
+          diff -Bwb "charts/${{ matrix.chart }}/Chart.yaml" <(yq e '.appVersion = "'${LATEST_VERSION}'"' -i charts/${{ matrix.chart }}/Chart.yaml) > /tmp/tmp_chart.patch
+          patch charts/${{ matrix.chart }}/Chart.yaml < /tmp/tmp_chart.patch
 
-
-          diff -Bwb "charts/${{ matrix.chart }}/values.yaml" <(yq e '.image.tag = "'${LATEST_VERSION}'"' charts/${{ matrix.chart }}/values.yaml) > /tmp/tmp.patch
-          patch charts/${{ matrix.chart }}/values.yaml < /tmp/tmp.patch
+          diff -Bwb "charts/${{ matrix.chart }}/values.yaml" <(yq e '.image.tag = "'${LATEST_VERSION}'"' charts/${{ matrix.chart }}/values.yaml) > /tmp/tmp_values.patch
+          patch charts/${{ matrix.chart }}/values.yaml < /tmp/tmp_values.patch
 
           docker run --rm --volume "${{ github.workspace }}/charts/${{ matrix.chart }}/:/helm-docs" jnorwood/helm-docs:latest -d -l error > charts/${{ matrix.chart }}/README.md
 
           git add -u
           git commit -m "other: Bump version to ${LATEST_VERSION}"
-          git push origin ${{ steps.get-branch-name.outputs.new_branch }}
+          #git push origin ${{ steps.get-branch-name.outputs.new_branch }}
 
-      - name: Open pull request ☄️
-        uses: repo-sync/pull-request@v2
-        if: env.CREATE_UPDATE_PR == 'true'
-        with:
-          github_token:  ${{ secrets.GITHUB_TOKEN }}
-          source_branch: ${{ steps.get-branch-name.outputs.new_branch }}
-          destination_branch: main
-          pr_title: "Bump the app version for the ${{ matrix.chart }} chart to ${LATEST_VERSION}"
-          pr_body: "Bump the app version for the ${{ matrix.chart }} chart to ${LATEST_VERSION}"
+          cat charts/${{ matrix.chart }}/Chart.yaml
+
+          cat charts/${{ matrix.chart }}/values.yaml
+
+
+      #- name: Open pull request ☄️
+      #  uses: repo-sync/pull-request@v2
+      #  if: env.CREATE_UPDATE_PR == 'true'
+      #  with:
+      #    github_token:  ${{ secrets.GITHUB_TOKEN }}
+      #    source_branch: ${{ steps.get-branch-name.outputs.new_branch }}
+      #    destination_branch: main
+      #    pr_title: "Bump the app version for the ${{ matrix.chart }} chart to ${LATEST_VERSION}"
+      #    pr_body: "Bump the app version for the ${{ matrix.chart }} chart to ${LATEST_VERSION}"
