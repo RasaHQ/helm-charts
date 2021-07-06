@@ -3,6 +3,32 @@ entries:
   duckling:
   - annotations:
       artifacthub.io/changes: |
+        - kind: security
+          description: Update Docker image to 0.1.6.5-r3
+    apiVersion: v2
+    appVersion: 0.1.6.5-r3
+    created: "2021-07-06T13:29:33.122180798Z"
+    dependencies:
+    - name: rasa-common
+      repository: https://helm.rasa.com
+      tags:
+      - rasa-common
+      version: 1.x.x
+    description: Duckling is a Haskell library that parses text into structured data.
+    digest: 417750f7c50dcff57e938863b66d2073ac3829cbe12043a8b48327b3c6f4bfb3
+    maintainers:
+    - email: hi@rasa.com
+      name: Rasa
+    name: duckling
+    sources:
+    - https://github.com/RasaHQ/duckling
+    - https://github.com/facebook/duckling
+    type: application
+    urls:
+    - https://github.com/RasaHQ/helm-charts/releases/download/duckling-1.1.0/duckling-1.1.0.tgz
+    version: 1.1.0
+  - annotations:
+      artifacthub.io/changes: |
         - kind: added
           description: Add the duckling chart
     apiVersion: v2
@@ -28,6 +54,54 @@ entries:
     - https://github.com/RasaHQ/helm-charts/releases/download/duckling-1.0.0/duckling-1.0.0.tgz
     version: 1.0.0
   rasa:
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: changed
+          description: Update Rasa Open Source to 2.7.1
+    apiVersion: v2
+    appVersion: 2.7.1
+    created: "2021-07-06T13:29:33.309660546Z"
+    dependencies:
+    - name: rasa-common
+      repository: https://helm.rasa.com
+      tags:
+      - rasa-common
+      version: 1.x.x
+    - condition: postgresql.install
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~10.5.2
+    - condition: redis.install
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~14.6.4
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      version: ~8.16.2
+    - condition: rasa-action-server.install
+      name: rasa-action-server
+      repository: https://helm.rasa.com
+      version: ~1.0.0
+    - condition: duckling.install
+      name: duckling
+      repository: https://helm.rasa.com
+      version: ~1.0.0
+    description: The rasa Helm charts deploy a Rasa Open Source bot. Rasa is an open
+      source machine learning framework for automated text and voice-based conversations.
+    digest: 108c6c9c8f4b97dd320c87d603402e5ae9d9fb6e577966ff1ded67e368f93991
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    maintainers:
+    - email: hi@rasa.com
+      name: Rasa
+    name: rasa
+    sources:
+    - https://github.com/RasaHQ/charts/rasa
+    - https://rasa.com/
+    type: application
+    urls:
+    - https://github.com/RasaHQ/helm-charts/releases/download/rasa-1.2.0/rasa-1.2.0.tgz
+    version: 1.2.0
   - annotations:
       artifacthub.io/changes: |
         - kind: changed
@@ -173,4 +247,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/helm-charts/releases/download/rasa-common-1.0.0/rasa-common-1.0.0.tgz
     version: 1.0.0
-generated: "2021-07-06T12:17:31.747195402Z"
+generated: "2021-07-06T13:29:33.623456321Z"
