@@ -1,5 +1,7 @@
 # Rasa Helm Charts
 
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/rasa)](https://artifacthub.io/packages/search?repo=rasa)
+
 Official Helm charts for Rasa products:
 
 - [Rasa Open Source](charts/rasa)
