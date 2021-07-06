@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    types: [opened, synchronize, labeled]
 
 jobs:
   release:
@@ -24,38 +26,19 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Prepare the chart directory
-        run: cp -a charts charts-2; cd charts; ls | grep -v rasa-common | xargs rm -rfv
-
       - name: Install Helm
         uses: azure/setup-helm@v1
         with:
           version: v3.6.0
-
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.2.1
-        with:
-          config: .github/.cr.yaml
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Helm dependency update
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
           helm repo add rasa https://helm.rasa.com
 
-          # wait for repo to be updated
-          sleep 20
-
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1
         with:
           config: .github/.cr.yaml
-          charts_dir: charts-2
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-
-      - name: debug
-        if: always()
-        run: |
-          cat .cr-index/index.yaml || true
