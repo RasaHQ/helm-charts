@@ -1,6 +1,6 @@
 dependencies:
 - name: rasa-common
-  repository: file://../rasa-common
+  repository: https://helm.rasa.com
   version: 1.0.0
-digest: sha256:610df65000b0b46ccd6a6561ade365e7de04be2a6fc0a2c2a946f6f25e68e8f0
-generated: "2021-05-03T11:44:35.227939+02:00"
+digest: sha256:2b588ba621a5cd46a60553183693606524c4bc77bac7c1619fa029f8713c7620
+generated: "2021-07-06T12:54:33.062413+02:00"
