@@ -1,0 +1,14 @@
+releases:
+  - name: rasa
+    namespace: default
+    chart: ../../charts/rasa
+    values:
+      - service:
+          type: LoadBalancer
+      - applicationSettings:
+          debugMode: true
+          credentials:
+            additionalChannelCredentials:
+              rest:
+      - ingress:
+          enabled: false

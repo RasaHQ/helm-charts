@@ -1,0 +1,50 @@
+{{- define "rasa.containers.env" -}}
+{{- if and (eq (include "rasa.endpoints.models.enabled" .) "true") .Values.applicationSettings.endpoints.models.token }}
+- name: MODEL_SERVER_TOKEN
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "rasa-common.names.fullname" . }}
+      key: model-server-token
+{{- end }}
+{{- if or (and (eq (include "rasa.endpoints.trackerStore.enabled" .) "true") (eq (include "rasa-common.psql.available" .) "true")) }}
+{{ include "rasa-common.psql.envs" . }}
+{{- end }}
+{{- if and (eq (include "rasa.endpoints.lockStore.enabled" .) "true") (eq (include "rasa-common.redis.available" .) "true") }}
+{{ include "rasa-common.redis.envs" . }}
+{{- end }}
+{{- if and (eq (include "rasa.endpoints.eventBroker.enabled" .) "true") (eq (include "rasa-common.rabbitmq.available" .) "true") }}
+{{ include "rasa-common.rabbitmq.envs" . }}
+{{- end }}
+{{- if eq (include "rasa.endpoints.action" .) "true" }}
+{{ include "rasa.actionServer.envs" . }}
+{{- end }}
+{{- if eq (include "rasa.endpoints.duckling" .) "true" }}
+{{ include "rasa.duckling.envs" . }}
+{{- end }}
+- name: "RASA_TELEMETRY_ENABLED"
+  value: {{ .Values.applicationSettings.telemetry.enabled | quote }}
+- name: "MPLCONFIGDIR"
+  value: "/tmp/.matplotlib"
+- name: "TF_CPP_MIN_LOG_LEVEL"
+  value: "2"
+{{- if .Values.applicationSettings.rasaX.enabled }}
+- name: "RASA_X_TOKEN"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "rasa-common.names.fullname" . }}
+      key: "rasa-x-token"
+{{- end }}
+- name: "RASA_TOKEN"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "rasa-common.names.fullname" . }}
+      key: "rasa-token"
+- name: "JWT_SECRET"
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "rasa-common.names.fullname" . }}
+      key: "jwt-secret"
+{{- if .Values.extraEnv }}
+{{ toYaml .Values.extraEnv }}
+{{- end }}
+{{- end -}}

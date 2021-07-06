@@ -1,0 +1,3 @@
+Action Server {{ .Values.image.name }}:{{ .Values.image.tag }} has been deployed!
+
+Checkout the docs to learn more: https://rasa.com/docs/action-server/

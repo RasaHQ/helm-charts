@@ -1,0 +1,43 @@
+{{- define "rasa.downloadInitialModel.initContainer" -}}
+- name: download-initial-model
+  image: "busybox"
+  command: ["/bin/sh", "-c"]
+  args:
+    - cd /app/models/ && wget {{ .Values.applicationSettings.initialModel }} -O model.tar.gz
+  volumeMounts:
+    - mountPath: /app/models
+      name: models
+{{- end -}}
+
+{{- define "rasa.trainInitialModel.initContainer" -}}
+- name: train-initial-model
+  image: "{{ include "rasa-common.images.image" . }}"
+  imagePullPolicy: {{ .Values.image.pullPolicy }}
+  command: ["/bin/bash", "-c"]
+  env:
+    - name: "TF_CPP_MIN_LOG_LEVEL"
+      value: "2"
+    - name: "HOME"
+      value: "/app"
+    - name: "RASA_TELEMETRY_ENABLED"
+      value: {{ .Values.applicationSettings.telemetry.enabled | quote }}
+  args:
+    - "if [ -z \"$(ls -A /app | grep -v models)\" ]; then echo \"Can't find data, creating a new project\"; rasa init --no-prompt; else rasa train; fi"
+  volumeMounts:
+    - mountPath: /app/models
+      name: models
+    - mountPath: /app
+      name: app-dir
+{{- end -}}
+
+{{- define "rasa.initialModel.initContainer.volumes" -}}
+- name: models
+  emptyDir: {}
+- name: app-dir
+  emptyDir: {}
+{{- end -}}
+
+{{- define "rasa.initialModel.initContainer.volumeMounts" -}}
+- mountPath: /app/models
+  name: models
+{{- end -}}

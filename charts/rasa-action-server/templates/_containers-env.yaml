@@ -1,0 +1,5 @@
+{{- define "rasa-action-server.containers.env" -}}
+{{- if .Values.extraEnv }}
+{{ toYaml .Values.extraEnv }}
+{{- end }}
+{{- end -}}

@@ -1,0 +1,47 @@
+{{- if .Values.networkPolicy.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "rasa-common.names.fullname" . }}-allow-rasa-rabbitmq-egress
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: rasa
+  policyTypes:
+  - Egress
+  egress:
+{{- if and (not .Values.rabbitmq.external.enabled) (eq (include "rasa-common.rabbitmq.available" .) "true") }}
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: rabbitmq
+    ports:
+    - protocol: TCP
+      port: {{ template "rasa-common.rabbitmq.port" . }}
+{{- else }}
+  - ports:
+    - protocol: TCP
+      port: {{ template "rasa-common.rabbitmq.port" . }}
+{{- end }}
+---
+{{- if and (not .Values.rabbitmq.external.enabled) (eq (include "rasa-common.rabbitmq.available" .) "true") }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-rabbitmq-rasa-ingress
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: rabbitmq
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: rasa
+    ports:
+    - protocol: TCP
+      port: {{ template "rasa-common.rabbitmq.port" . }}
+{{- end }}
+{{- end }}

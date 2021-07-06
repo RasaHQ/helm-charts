@@ -1,0 +1,62 @@
+releases:
+  - name: rasa
+    chart: ../../charts/rasa
+
+    values:
+      - service:
+          type: LoadBalancer
+      - nginx:
+          tls:
+            enabled: true
+            generateSelfSignedCert: true
+      - applicationSettings:
+          rasaX:
+            enabled: true
+            url: "http://rasa-x-rasa-x:5002"
+            useConfigEndpoint: true
+          debugMode: true
+          credentials:
+            additionalChannelCredentials:
+              rest:
+      - postgresql:
+          install: false
+        redis:
+          install: false
+        rabbitmq:
+          install: false
+
+      - ingress:
+          enabled: false
+      - extraEnv:
+         - name: RASA_MODEL_SERVER
+           value: http://rasa-x-rasa-x:5002/api/projects/default/models/tags/production
+         - name: RASA_X_TOKEN
+           valueFrom:
+             secretKeyRef:
+               name: rasa-x-rasa
+               key: "rasaXToken"
+         - name: "DB_PASSWORD"
+           valueFrom:
+             secretKeyRef:
+               name: rasa-x-postgresql
+               key: postgresql-password
+         - name: "DB_DATABASE"
+           value: "rasa_production"
+         - name: "REDIS_PASSWORD"
+           valueFrom:
+             secretKeyRef:
+               name: rasa-x-redis
+               key: redis-password
+         - name: "RABBITMQ_QUEUE"
+           value: rasa_production_events
+         - name: "RABBITMQ_PASSWORD"
+           valueFrom:
+             secretKeyRef:
+               name: rasa-x-rabbit
+               key: rabbitmq-password
+
+  - name: rasa-x
+    chart: ../../../rasa-x-helm/charts/rasa-x/
+    values:
+      - app:
+          existingUrl: "http://rasa-rasa-action-server/webhook"

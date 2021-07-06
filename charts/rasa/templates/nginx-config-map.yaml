@@ -1,0 +1,19 @@
+{{- if .Values.nginx.enabled }}
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: {{ include "rasa-common.names.fullname" . }}-nginx-config
+  labels:
+    {{- include "rasa-common.labels.standard" . | nindent 4 }}
+data:
+{{- if .Values.nginx.customConfiguration -}}
+{{- toYaml .Values.nginx.customConfiguration | nindent 2 }}
+{{- else }}
+  rasa.nginx.conf: |
+{{- include "rasa.nginx.rasa.conf" . | nindent 4 }}
+  nginx.conf: |
+{{- include "rasa.nginx.conf" . | nindent 4 }}
+  ssl.conf: |
+{{- include "rasa.nginx.ssl.conf" . | nindent 4 }}
+{{- end -}}
+{{- end }}

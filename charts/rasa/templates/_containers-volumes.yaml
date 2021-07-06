@@ -1,0 +1,55 @@
+{{- define "rasa.containers.volumes" -}}
+- name: config-dir
+  emptyDir: {}
+{{- if not .Values.applicationSettings.rasaX.useConfigEndpoint }}
+- name: "rasa-configuration"
+  configMap:
+    name: {{ include "rasa-common.names.fullname" . }}
+    items:
+      - key: "endpoints"
+        path: "endpoints.yml"
+      - key: "credentials"
+        path: "credentials.yml"
+{{- end }}
+{{- if .Values.nginx.enabled }}
+{{- if and .Values.nginx.tls.enabled (or .Values.nginx.tls.generateSelfSignedCert .Values.nginx.tls.certificateSecret) }}
+- name: "{{ include "rasa.nginx.tls.secret.name" . }}"
+  secret:
+    secretName: "{{ include "rasa.nginx.tls.secret.name" . }}"
+    items:
+      - key: "cert.pem"
+        path: "cert.pem"
+      - key: "key.pem"
+        path: "key.pem"
+{{- end }}
+- name: "{{ include "rasa-common.names.fullname" . }}-nginx-config"
+  configMap:
+    name: "{{ include "rasa-common.names.fullname" . }}-nginx-config"
+    items:
+      - key: "nginx.conf"
+        path: "nginx.conf"
+      - key: "rasa.nginx.conf"
+        path: "rasa.nginx.conf"
+        {{- if and .Values.nginx.tls.enabled (or .Values.nginx.tls.generateSelfSignedCert .Values.nginx.tls.certificateSecret) }}
+      - key: "ssl.conf"
+        path: "ssl.conf"
+        {{- end }}
+{{- end }}
+{{- end -}}
+
+
+{{- define "rasa.containers.volumeMounts" -}}
+# Mount the temporary directory for the Rasa global configuration
+- name: "config-dir"
+  mountPath: "/.config"
+{{- if not .Values.applicationSettings.rasaX.useConfigEndpoint }}
+- mountPath: "/app/endpoints.yml"
+  subPath: "endpoints.yml"
+  name: "rasa-configuration"
+  readOnly: true
+- mountPath: "/app/credentials.yml"
+  subPath: "credentials.yml"
+  name: "rasa-configuration"
+  readOnly: true
+{{- end }}
+{{- end -}}

@@ -1,0 +1,248 @@
+{{- if not .Values.applicationSettings.rasaX.usedAsParentChart }}
+rasa {{ .Values.image.tag }} has been deployed!
+
+{{- if and .Values.applicationSettings.rasaX.enabled .Values.applicationSettings.rasaX.useConfigEndpoint }}
+##############################################################################
+####               NOTICE: Rasa X/Enterprise is enabled                   ####
+##############################################################################
+
+The runtime configuration will be pulled from the Rasa X/Enterprise endpoint.
+Endpoint: {{ .Values.applicationSettings.rasaX.url }}
+
+It means that the endpoints configuration from the values is ignored.
+{{- end }}
+
+
+{{- if .Values.applicationSettings.telemetry.enabled }}
+##############################################################################
+####               NOTICE: Telemetry is enabled                           ####
+##############################################################################
+
+Telemetry is enabled. Visit our website to learn more: https://rasa.com/docs/rasa/telemetry/telemetry/
+{{- end }}
+
+{{- if and (gt (.Values.replicaCount | int) 1) (eq (include "rasa.endpoints.lockStore.enabled" .) "false") }}
+##############################################################################
+####               WARNING: The Lock Store is disabled                    ####
+##############################################################################
+
+You use more than 1 replica, in such case you should consider using a Lock Store.
+
+You can enable the Lock Store by setting `redis.install` to `true` and `applicationSettings.endpoints.lockStore.enabled` to `true`.
+
+Visit our website to learn more: https://rasa.com/docs/rasa/lock-stores
+{{- end }}
+
+{{- if and .Values.ingress.enabled .Values.nginx.enabled }}
+##############################################################################
+####               WARNING: NGINX and Ingress are enabled                 ####
+##############################################################################
+
+NGINX and Ingress are enabled. It's recommended not to use both of them together.
+
+You can disable Ingress by setting the `ingress.enabled` parameter to `false`
+
+  OR
+
+You can disable NGINX by setting the `nginx.enabled` parameter to `false`
+{{- end }}
+
+{{- if and (eq (include "rasa.endpoints.eventBroker.enabled" .) "false") (eq (include "rasa-common.rabbitmq.available" .) "true") }}
+##############################################################################
+####               WARNING: Event Broker misconfiguration                 ####
+##############################################################################
+
+RabbitMQ is available, but Event Broker is disabled.
+
+You can enable Event Broker by setting the `applicationSettings.endpoints.eventBroker.enabled` to `true`.
+
+{{- end }}
+
+{{- if and (eq (include "rasa.endpoints.lockStore.enabled" .) "false") (eq (include "rasa-common.redis.available" .) "true") }}
+##############################################################################
+####               WARNING: Lock Store misconfiguration                   ####
+##############################################################################
+
+Redis is available, but Lock Store is disabled.
+
+You can enable Event Broker by setting the `applicationSettings.endpoints.lockStore.enabled` to `true`.
+
+{{- end }}
+
+{{- if and (eq (include "rasa.endpoints.trackerStore.enabled" .) "false") (eq (include "rasa-common.psql.available" .) "true") }}
+##############################################################################
+####               WARNING: Tracker Store misconfiguration                ####
+##############################################################################
+
+PostgreSQL is available, but Tracker Store is disabled.
+
+You can enable Event Broker by setting the `applicationSettings.endpoints.trackerStore.enabled` to `true`.
+
+{{- end }}
+
+{{- if and .Values.postgresql.install .Values.postgresql.external.enabled }}
+##############################################################################
+####               WARNING: PostgreSQL misconfiguration                   ####
+##############################################################################
+
+PostgreSQL is installed and an external host is enabled at the same time, in such case the external host is not going to be used.
+
+Please disable the external host by setting the `postgresql.external.enabled` to `true`
+
+  OR
+
+Don't install PostgreSQL by setting the `postgresql.install` to `false`
+{{- end }}
+
+{{- if and .Values.redis.install .Values.redis.external.enabled }}
+##############################################################################
+####               WARNING: Redis misconfiguration                        ####
+##############################################################################
+
+Redis is installed and an external host is enabled at the same time, in such case the external host is not going to be used.
+
+Please disable the external host by setting the `redis.external.enabled` to `true`
+
+  OR
+
+Don't install Redis by setting the `redis.install` to `false`
+{{- end }}
+
+{{- if and .Values.rabbitmq.install .Values.rabbitmq.external.enabled }}
+##############################################################################
+####               WARNING: RabbitMQ misconfiguration                     ####
+##############################################################################
+
+RabbitMQ is installed and an external host is enabled at the same time, in such case the external host is not going to be used.
+
+Please disable the external host by setting the `rabbitmq.external.enabled` to `true`
+
+  OR
+
+Don't install RabbitMQ by setting the `rabbitmq.install` to `false`
+{{- end }}
+
+{{- if and .Values.applicationSettings.endpoints.models.enabled .Values.applicationSettings.endpoints.models.useRasaXasModelServer.enabled (not .Values.applicationSettings.rasaX.enabled) }}
+##############################################################################
+####               WARNING: Rasa X is used as a model server              ####
+##############################################################################
+
+You want to use Rasa X as a model server but configuration for Rasa X is disabled.
+
+You can enable Rasa X configuration be setting the `applicationSettings.rasaX.enabled` parameter to `true`.
+{{- end }}
+
+{{- if and .Values.nginx.enabled .Values.nginx.tls.enabled (and (not .Values.nginx.tls.generateSelfSignedCert) (not .Values.nginx.tls.certificateSecret)) }}
+{{- $errorString := "\n##############################################################################" -}}
+{{- $errorString = print $errorString "\n####               ERROR: NGINX TLS misconfiguration                      ####" -}}
+{{- $errorString = print $errorString "\n##############################################################################" -}}
+{{- $errorString = print $errorString "\n" -}}
+{{- $errorString = print $errorString "\n" -}}
+{{- $errorString = print $errorString "\nTLS for NGINX is enabled, but configuration for TLS certificates is not defined." -}}
+{{- $errorString = print $errorString "\n" -}}
+{{- $errorString = print $errorString "\nYou can generate self-signed certificated by setting the `nginx.tls.generateSelfSignedCert` parameter to `true`" -}}
+{{- $errorString = print $errorString "\n" -}}
+{{- $errorString = print $errorString "\n  OR" -}}
+{{- $errorString = print $errorString "\n" -}}
+{{- $errorString = print $errorString "\nDefine a secret with TLS certificates by setting a secret name as a value for the `nginx.tls.certificateSecret` parameter" -}}
+{{- printf $errorString | fail -}}
+{{- end }}
+
+{{- if and (index .Values "rasa-action-server").external.enabled (not (index .Values "rasa-action-server").install) (empty (index .Values "rasa-action-server").external.url) }}
+{{- $errorString := "\n##############################################################################" -}}
+{{- $errorString = print $errorString "\n####               ERROR: Rasa Action Server misconfiguration             ####" -}}
+{{- $errorString = print $errorString "\n##############################################################################" -}}
+{{- $errorString = print $errorString "\n" -}}
+{{- $errorString = print $errorString "\nExternal Rasa Action Server is enabled, but URL is not defined." -}}
+{{- $errorString = print $errorString "\n" -}}
+{{- $errorString = print $errorString "\nPlease define URL by setting value for the `rasa-action-server.external.url` parameter." -}}
+{{- printf $errorString | fail -}}
+{{- end }}
+
+{{- if and .Values.applicationSettings.rasaX.useConfigEndpoint (not .Values.applicationSettings.rasaX.url) .Values.applicationSettings.rasaX.enabled }}
+{{- $errorString := "\n##############################################################################" -}}
+{{- $errorString = print $errorString "\n####               ERROR: Rasa X/Enterprise misconfiguration              ####" -}}
+{{- $errorString = print $errorString "\n##############################################################################" -}}
+{{- $errorString = print $errorString "\n" -}}
+{{- $errorString = print $errorString "\nRasa X/Enterprise is enabled with the configuration endpoint but URL is not defined." -}}
+{{- $errorString = print $errorString "\nPlease use the `applicationSettings.rasaX.url` value parameter to define Rasa X/Enterprise instance." -}}
+{{- printf $errorString | fail -}}
+{{- end }}
+
+
+##############################################################################
+####      The deployment is running with the following configuration      ####
+##############################################################################
+
+Endpoints:
+
+    Lock Store enabled:     {{ .Values.applicationSettings.endpoints.lockStore.enabled }}
+    Event Broker enabled:   {{ .Values.applicationSettings.endpoints.eventBroker.enabled }}
+    Tracker Store enabled:  {{ .Values.applicationSettings.endpoints.trackerStore.enabled }}
+    Model Server enabled:   {{ .Values.applicationSettings.endpoints.models.enabled }}
+
+Additional components:
+
+    NGINX:
+      Enabled:  {{ .Values.nginx.enabled }}
+      TLS:      {{ .Values.nginx.tls.enabled }}
+
+    Redis:
+      Installed:  {{ .Values.redis.install }}
+      External:   {{ .Values.redis.external.enabled }}
+
+    RabbitMQ:
+      Installed:  {{ .Values.rabbitmq.install }}
+      External:   {{ .Values.rabbitmq.external.enabled }}
+
+    PostgreSQL:
+      Installed:  {{ .Values.postgresql.install }}
+      External:   {{ .Values.postgresql.external.enabled }}
+{{- if (eq (include "rasa.initialModel.download" .) "true") }}
+
+Loaded model: {{ .Values.applicationSettings.initialModel }}
+{{- else if eq (include "rasa.initialModel.train" .) "true" }}
+
+An initial model will be trained
+{{- end -}}
+
+{{ if .Values.ingress.enabled }}
+  Rasa URL: http{{ if .Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.hostname }}
+{{ else }}
+
+To access Rasa from outside of the cluster, follow the steps below:
+
+1. Get the Rasa URL by running these commands:
+
+{{- if contains "LoadBalancer" .Values.service.type }}
+
+  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+        Watch the status with: 'kubectl get svc --namespace {{ .Release.Namespace }} -w {{ include "rasa-common.names.fullname" . }}'
+
+    export SERVICE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].port}" services {{ include "rasa-common.names.fullname" . }})
+    export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "rasa-common.names.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+    echo "http://${SERVICE_IP}:${SERVICE_PORT}"
+
+{{ if .Values.nginx.enabled }}
+    NGINX is enabled, in order to send a request that goes through NGINX you can use port: {{ .Values.nginx.port }}{{ if .Values.nginx.tls.enabled }}, {{ .Values.nginx.tls.port }} (TLS){{ end }}
+{{ end }}
+
+{{- else if contains "ClusterIP"  .Values.service.type }}
+
+    export SERVICE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].port}" services {{ include "rasa-common.names.fullname" . }})
+    kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ include "rasa-common.names.fullname" . }} ${SERVICE_PORT}:${SERVICE_PORT} &
+    echo "http://127.0.0.1:${SERVICE_PORT}"
+
+{{ if .Values.nginx.enabled }}
+    NGINX is enabled, in order to send a request that goes through NGINX you can use port: {{ .Values.nginx.port }}{{ if .Values.nginx.tls.enabled }}, {{ .Values.nginx.tls.port }} (TLS){{ end }}
+{{ end }}
+
+{{- else if contains "NodePort" .Values.service.type }}
+
+    export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "rasa-common.names.fullname" . }})
+    export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+    echo "http://${NODE_IP}:${NODE_PORT}"
+
+{{- end }}
+{{ end }}
+{{ end }}

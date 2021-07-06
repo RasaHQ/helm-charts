@@ -1,0 +1,45 @@
+{{- if and .Values.networkPolicy.enabled (eq (include "rasa.endpoints.action" .) "true") }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-rasa-rasa-action-server-egress
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: rasa
+  policyTypes:
+  - Egress
+  egress:
+{{- if and (not (index .Values "rasa-action-server").external.enabled) (eq (include "rasa.endpoints.action" .) "true") }}
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: rasa-action-server
+{{- end }}
+    ports:
+    - protocol: TCP
+      port: {{ ((index .Values "rasa-action-server").service.port | int) }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "rasa-common.names.fullname" . }}-allow-rasa-action-server-rasa-ingress
+spec:
+  podSelector:
+{{- if and ((index .Values "rasa-action-server").external.enabled) (eq (include "rasa.endpoints.action" .) "true") }}
+    matchLabels:
+      app.kubernetes.io/name: rasa-action-server
+{{- else }}
+    matchLabels: {}
+{{- end }}
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: rasa
+    ports:
+    - protocol: TCP
+      port: {{ ((index .Values "rasa-action-server").service.port | int) }}
+{{- end }}

@@ -1,0 +1,4 @@
+releases:
+  - name: rasa
+    namespace: default
+    chart: ../../charts/rasa
