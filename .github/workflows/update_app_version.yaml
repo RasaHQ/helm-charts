@@ -89,11 +89,11 @@ jobs:
           git remote update origin --prune
           git checkout ${{ steps.get-branch-name.outputs.new_branch }}
 
-          yq e '.appVersion = "'${LATEST_VERSION}'"' -i charts/${{ matrix.chart }}/Chart.yaml
+          diff -Bwb "charts/${{ matrix.chart }}/Chart.yaml" <(yq e '.appVersion = "'${LATEST_VERSION}'"' -i charts/${{ matrix.chart }}/Chart.yaml) > /tmp/tmp_chart.patch || true
+          patch charts/${{ matrix.chart }}/Chart.yaml < /tmp/tmp_chart.patch || true
 
-
-          diff -Bwb "charts/${{ matrix.chart }}/values.yaml" <(yq e '.image.tag = "'${LATEST_VERSION}'"' charts/${{ matrix.chart }}/values.yaml) > /tmp/tmp.patch
-          patch charts/${{ matrix.chart }}/values.yaml < /tmp/tmp.patch
+          diff -Bwb "charts/${{ matrix.chart }}/values.yaml" <(yq e '.image.tag = "'${LATEST_VERSION}'"' charts/${{ matrix.chart }}/values.yaml) > /tmp/tmp_values.patch || true
+          patch charts/${{ matrix.chart }}/values.yaml < /tmp/tmp_values.patch || true
 
           docker run --rm --volume "${{ github.workspace }}/charts/${{ matrix.chart }}/:/helm-docs" jnorwood/helm-docs:latest -d -l error > charts/${{ matrix.chart }}/README.md
 
