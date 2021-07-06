@@ -1,21 +1,21 @@
 dependencies:
 - name: rasa-common
-  repository: file://../rasa-common
+  repository: https://helm.rasa.com
   version: 1.0.0
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
-  version: 10.3.18
+  version: 10.5.2
 - name: redis
   repository: https://charts.bitnami.com/bitnami
-  version: 14.1.1
+  version: 14.6.4
 - name: rabbitmq
   repository: https://charts.bitnami.com/bitnami
-  version: 8.12.2
+  version: 8.16.2
 - name: rasa-action-server
-  repository: file://../rasa-action-server
+  repository: https://helm.rasa.com
   version: 1.0.0
 - name: duckling
-  repository: file://../duckling
+  repository: https://helm.rasa.com
   version: 1.0.0
-digest: sha256:f4e57d27e654ef71a4c55bd50f990bcf3766caa4e0aa5f75e044032385ba7a47
-generated: "2021-06-17T13:55:39.707785+02:00"
+digest: sha256:10001a79beecd5e8d02334ea6889ae2acbb0624525a31af329140432df083cd4
+generated: "2021-07-06T14:13:49.153301+02:00"
