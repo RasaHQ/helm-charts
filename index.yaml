@@ -1,0 +1,32 @@
+apiVersion: v1
+entries:
+  rasa-common:
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
+          description: Add the rasa-common chart
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2021-07-06T10:51:27.381188198Z"
+    description: A Library Helm Chart for grouping common logic between rasa charts.
+    digest: efffb37fbb7103133cd4f29f904634f7a65edfbdf567f98cae1bbaf93684f3e0
+    home: https://github.com/RasaHQ/charts/tree/master/charts/rasa-common
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - common
+    - template
+    - function
+    - rasa
+    maintainers:
+    - email: hi@rasa.com
+      name: Rasa
+    name: rasa-common
+    sources:
+    - https://github.com/RasaHQ/helm-charts/rasa-common
+    - https://rasa.com/
+    type: library
+    urls:
+    - https://github.com/RasaHQ/helm-charts/releases/download/rasa-common-1.0.0/rasa-common-1.0.0.tgz
+    version: 1.0.0
+generated: "2021-07-06T10:51:27.381693011Z"
