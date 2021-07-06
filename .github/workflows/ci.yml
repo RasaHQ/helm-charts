@@ -15,6 +15,9 @@ jobs:
       # Expose matched filters as job 'charts' output variable
       charts: ${{ steps.filter.outputs.changes }}
     steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      
     - name: Cancel Previous Runs
       uses: styfle/cancel-workflow-action@6135c0ff6214e01d42a5736c988e39b7831f1e2f #0.9.0
       with:
