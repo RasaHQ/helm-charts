@@ -1,5 +1,101 @@
 apiVersion: v1
 entries:
+  duckling:
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
+          description: Add the duckling chart
+    apiVersion: v2
+    appVersion: 0.1.6.5
+    created: "2021-07-06T12:10:28.020085474Z"
+    dependencies:
+    - name: rasa-common
+      repository: https://helm.rasa.com
+      tags:
+      - rasa-common
+      version: 1.x.x
+    description: Duckling is a Haskell library that parses text into structured data.
+    digest: c519db00497958a499ff54c035abbb21c68e98f0c5bfd0782500623a60e375f8
+    maintainers:
+    - email: hi@rasa.com
+      name: Rasa
+    name: duckling
+    sources:
+    - https://github.com/RasaHQ/duckling
+    - https://github.com/facebook/duckling
+    type: application
+    urls:
+    - https://github.com/RasaHQ/helm-charts/releases/download/duckling-1.0.0/duckling-1.0.0.tgz
+    version: 1.0.0
+  rasa:
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
+          description: Add the rasa chart
+    apiVersion: v2
+    appVersion: 2.7.0
+    created: "2021-07-06T12:10:28.188491137Z"
+    dependencies:
+    - name: rasa-common
+      repository: https://helm.rasa.com
+      tags:
+      - rasa-common
+      version: 1.x.x
+    - condition: postgresql.install
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~10.3.18
+    - condition: redis.install
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~14.1.0
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      version: ~8.12.1
+    description: The rasa Helm charts deploy a Rasa Open Source bot. Rasa is an open
+      source machine learning framework for automated text and voice-based conversations.
+    digest: bf3b75be999a8ab9636958b61b3b5b12a825a9c1d0ee745a73fabed1f77c1b41
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    maintainers:
+    - email: hi@rasa.com
+      name: RasaHQ
+    name: rasa
+    sources:
+    - https://github.com/RasaHQ/charts/rasa
+    - https://rasa.com/
+    type: application
+    urls:
+    - https://github.com/RasaHQ/helm-charts/releases/download/rasa-1.0.0/rasa-1.0.0.tgz
+    version: 1.0.0
+  rasa-action-server:
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
+          description: Add the rasa-action-server chart
+    apiVersion: v2
+    appVersion: 2.7.0
+    created: "2021-07-06T12:10:28.312435965Z"
+    dependencies:
+    - name: rasa-common
+      repository: https://helm.rasa.com
+      tags:
+      - rasa-common
+      version: 1.x.x
+    description: Rasa Action Server Helm chart for Kubernetes
+    digest: 8c43333eb34bd4fa31c148f5ea08d663cf436ebd980d9cd560a60853924f4705
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    maintainers:
+    - email: hi@rasa.com
+      name: Rasa
+    name: rasa-action-server
+    sources:
+    - https://github.com/RasaHQ/charts/rasa
+    - https://rasa.com/
+    type: application
+    urls:
+    - https://github.com/RasaHQ/helm-charts/releases/download/rasa-action-server-1.0.0/rasa-action-server-1.0.0.tgz
+    version: 1.0.0
   rasa-common:
   - annotations:
       artifacthub.io/changes: |
@@ -29,4 +125,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/helm-charts/releases/download/rasa-common-1.0.0/rasa-common-1.0.0.tgz
     version: 1.0.0
-generated: "2021-07-06T10:51:27.381693011Z"
+generated: "2021-07-06T12:10:28.437206609Z"
