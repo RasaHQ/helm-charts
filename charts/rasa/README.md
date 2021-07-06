@@ -1,6 +1,6 @@
 # rasa
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.0](https://img.shields.io/badge/AppVersion-2.7.0-informational?style=flat-square)
+![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.0](https://img.shields.io/badge/AppVersion-2.7.0-informational?style=flat-square)
 
 The Rasa Helm charts deploy a Rasa Open Source Server. Rasa is an open source machine learning framework for automated text and voice-based conversations.
 
@@ -19,9 +19,9 @@ helm repo update
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | postgresql | ~10.3.18 |
-| https://charts.bitnami.com/bitnami | rabbitmq | ~8.12.1 |
-| https://charts.bitnami.com/bitnami | redis | ~14.1.0 |
+| https://charts.bitnami.com/bitnami | postgresql | ~10.5.2 |
+| https://charts.bitnami.com/bitnami | rabbitmq | ~8.16.2 |
+| https://charts.bitnami.com/bitnami | redis | ~14.6.4 |
 | https://helm.rasa.com | duckling | ~1.0.0 |
 | https://helm.rasa.com | rasa-action-server | ~1.0.0 |
 | https://helm.rasa.com | rasa-common | 1.x.x |
