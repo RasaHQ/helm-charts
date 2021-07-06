@@ -15,7 +15,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 1.0.0
+version: 1.1.0
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -41,17 +41,17 @@ dependencies:
     version: 1.x.x
 
   - name: postgresql
-    version: ~10.3.18
+    version: ~10.5.2
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.install
 
   - name: redis
-    version: ~14.1.0
+    version: ~14.6.4
     repository: https://charts.bitnami.com/bitnami
     condition: redis.install
 
   - name: rabbitmq
-    version: ~8.12.1
+    version: ~8.16.2
     repository: https://charts.bitnami.com/bitnami
     condition: rabbitmq.install
 
@@ -68,5 +68,5 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: added
-      description: Add the rasa chart
+    - kind: changed
+      description: Bump dependencies to the latest available versions
