@@ -33,7 +33,7 @@ maintainers:
 
 dependencies:
   - name: rasa-common
-    repository: file://../rasa-common
+    repository: https://helm.rasa.com
     tags:
       - rasa-common
     version: 1.x.x

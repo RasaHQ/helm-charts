@@ -35,7 +35,7 @@ maintainers:
 
 dependencies:
   - name: rasa-common
-    repository: file://../rasa-common
+    repository: https://helm.rasa.com
     tags:
       - rasa-common
     version: 1.x.x
@@ -57,12 +57,12 @@ dependencies:
 
   - name: rasa-action-server
     version: ~1.0.0
-    repository: file://../rasa-action-server
+    repository: https://helm.rasa.com
     condition: rasa-action-server.install
 
   - name: duckling
     version: ~1.0.0
-    repository: file://../duckling
+    repository: https://helm.rasa.com
     condition: duckling.install
 
 annotations:

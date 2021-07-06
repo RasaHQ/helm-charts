@@ -19,7 +19,7 @@ Duckling is a Haskell library that parses text into structured data.
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../rasa-common | rasa-common | 1.x.x |
+| https://helm.rasa.com | rasa-common | 1.x.x |
 
 ## Values
 

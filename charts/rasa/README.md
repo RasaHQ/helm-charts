@@ -19,12 +19,12 @@ helm repo update
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../duckling | duckling | ~1.0.0 |
-| file://../rasa-action-server | rasa-action-server | ~1.0.0 |
-| file://../rasa-common | rasa-common | 1.x.x |
 | https://charts.bitnami.com/bitnami | postgresql | ~10.3.18 |
 | https://charts.bitnami.com/bitnami | rabbitmq | ~8.12.1 |
 | https://charts.bitnami.com/bitnami | redis | ~14.1.0 |
+| https://helm.rasa.com | duckling | ~1.0.0 |
+| https://helm.rasa.com | rasa-action-server | ~1.0.0 |
+| https://helm.rasa.com | rasa-common | 1.x.x |
 
 ## Quick start
 
