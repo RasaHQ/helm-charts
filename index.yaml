@@ -60,6 +60,54 @@ entries:
           description: Update Rasa Open Source to 2.7.1
     apiVersion: v2
     appVersion: 2.7.1
+    created: "2021-07-06T13:44:08.471998183Z"
+    dependencies:
+    - name: rasa-common
+      repository: https://helm.rasa.com
+      tags:
+      - rasa-common
+      version: 1.x.x
+    - condition: postgresql.install
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~10.5.2
+    - condition: redis.install
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~14.6.4
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      version: ~8.16.2
+    - condition: rasa-action-server.install
+      name: rasa-action-server
+      repository: https://helm.rasa.com
+      version: ~1.0.0
+    - condition: duckling.install
+      name: duckling
+      repository: https://helm.rasa.com
+      version: ~1.0.0
+    description: The Rasa Helm chart deploy a Rasa Open Source Server. Rasa is an
+      open source machine learning framework for automated text and voice-based conversations.
+    digest: 6a5d5a15a815b5fa808a61f14248e9169d2aed9a9c3c8dfcfcf18912043b2750
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    maintainers:
+    - email: hi@rasa.com
+      name: Rasa
+    name: rasa
+    sources:
+    - https://github.com/RasaHQ/charts/rasa
+    - https://rasa.com/
+    type: application
+    urls:
+    - https://github.com/RasaHQ/helm-charts/releases/download/rasa-1.2.1/rasa-1.2.1.tgz
+    version: 1.2.1
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: changed
+          description: Update Rasa Open Source to 2.7.1
+    apiVersion: v2
+    appVersion: 2.7.1
     created: "2021-07-06T13:29:33.309660546Z"
     dependencies:
     - name: rasa-common
@@ -247,4 +295,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/helm-charts/releases/download/rasa-common-1.0.0/rasa-common-1.0.0.tgz
     version: 1.0.0
-generated: "2021-07-06T13:29:33.623456321Z"
+generated: "2021-07-06T13:44:08.472026185Z"
