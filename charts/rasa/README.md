@@ -1,6 +1,6 @@
 # rasa
 
-![Version: 1.2.1](https://img.shields.io/badge/Version-1.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.1](https://img.shields.io/badge/AppVersion-2.7.1-informational?style=flat-square)
+![Version: 1.2.2](https://img.shields.io/badge/Version-1.2.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.1](https://img.shields.io/badge/AppVersion-2.7.1-informational?style=flat-square)
 
 The Rasa Helm chart deploy a Rasa Open Source Server. Rasa is an open source machine learning framework for automated text and voice-based conversations.
 
@@ -221,7 +221,7 @@ extraEnv:
 
 In the example above we assumed that the `rasa-x-rabbit` secret already exists in the cluster and contains the `rabbitmq-password` key.
 
-If you're using the rasa-x-helm chart to deploy Rasa X/Enterprise you might have to update your values.yaml file, please visit [the docs](https://link-to-the-docs) to learn more.
+If you're using the rasa-x-helm chart to deploy Rasa X/Enterprise you might have to update your values.yaml file, please visit [the docs](https://github.com/RasaHQ/rasa-x-helm/tree/rasa-x-2.0.0#enabling-an-external-rasa-oss-deployment) to learn more.
 
 ## Examples of usage
 

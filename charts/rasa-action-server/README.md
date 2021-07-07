@@ -1,6 +1,6 @@
 # rasa-action-server
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.0](https://img.shields.io/badge/AppVersion-2.7.0-informational?style=flat-square)
+![Version: 1.0.1](https://img.shields.io/badge/Version-1.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.0](https://img.shields.io/badge/AppVersion-2.7.0-informational?style=flat-square)
 
 Rasa Action Server Helm chart for Kubernetes
 
@@ -12,8 +12,7 @@ Rasa Action Server Helm chart for Kubernetes
 
 ## Source Code
 
-* <https://github.com/RasaHQ/charts/rasa>
-* <https://rasa.com/>
+* <https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa-action-server>
 
 ## Requirements
 

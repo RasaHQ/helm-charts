@@ -15,7 +15,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 1.2.1
+version: 1.2.2
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -26,12 +26,16 @@ appVersion: "2.7.1"
 icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU"
 
 sources:
-  - https://github.com/RasaHQ/charts/rasa
-  - https://rasa.com/
+  - https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa
 
 maintainers:
   - email: hi@rasa.com
     name: Rasa
+
+keywords:
+  - kubernetes
+  - rasa
+  - rasa-oss
 
 dependencies:
   - name: rasa-common
@@ -69,4 +73,4 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: changed
-      description: Update Rasa Open Source to 2.7.1
+      description: Update the sources links

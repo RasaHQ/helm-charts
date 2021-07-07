@@ -15,7 +15,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 1.1.0
+version: 1.1.1
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -26,6 +26,7 @@ appVersion: "0.1.6.5-r3"
 sources:
   - https://github.com/RasaHQ/duckling
   - https://github.com/facebook/duckling
+  - https://github.com/RasaHQ/helm-charts/tree/main/charts/duckling
 
 maintainers:
   - email: hi@rasa.com
@@ -41,5 +42,5 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: security
-      description: Update Docker image to 0.1.6.5-r3
+    - kind: changed
+      description: Update the sources links
