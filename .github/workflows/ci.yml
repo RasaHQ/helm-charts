@@ -14,7 +14,7 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-      
+
     - name: Cancel Previous Runs
       uses: styfle/cancel-workflow-action@6135c0ff6214e01d42a5736c988e39b7831f1e2f #0.9.0
       with:
@@ -179,6 +179,8 @@ jobs:
     name: Validate the PR
     runs-on: ubuntu-20.04
     needs:
+      - unit-tests
+      - kubeval-chart
       - install-chart
     steps:
       - name: Validate the PR
