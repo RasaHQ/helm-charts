@@ -306,7 +306,7 @@ In the [`examples/rasa`](../../examples) directory you can find more detailed ex
 | image.name | string | `"rasa"` | Rasa Open Source image name to use (relative to `registry`) |
 | image.pullPolicy | string | `"IfNotPresent"` | Rasa Open Source image pullPolicy |
 | image.pullSecrets | list | `[]` | Rasa Open Source repository pullSecret |
-| image.repository | string | `nil` | Override default registry + image.name for Rasa Open Source |
+| image.repository | string | `""` | Override default registry + image.name for Rasa Open Source |
 | image.tag | string | `"2.7.1"` | Rasa Open Source image tag to use |
 | ingress.annotations | object | `{}` | Ingress annotations |
 | ingress.enabled | bool | `false` | Set to true to enable ingress |

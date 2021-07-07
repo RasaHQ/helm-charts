@@ -41,7 +41,7 @@ image:
   tag: "0.1.6.5-r3"
 
   # -- Override default registry + image.name for Duckling
-  repository:
+  repository: ""
 
   # -- Duckling image pullPolicy
   pullPolicy: IfNotPresent

@@ -64,7 +64,7 @@
                     "type": "array"
                 },
                 "repository": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "tag": {
                     "type": "string"

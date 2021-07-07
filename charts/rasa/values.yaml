@@ -219,7 +219,7 @@ image:
   tag: "2.7.1"
 
   # -- Override default registry + image.name for Rasa Open Source
-  repository:
+  repository: ""
 
   # -- Rasa Open Source image pullPolicy
   pullPolicy: IfNotPresent

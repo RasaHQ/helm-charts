@@ -42,7 +42,7 @@ Duckling is a Haskell library that parses text into structured data.
 | image.name | string | `"duckling"` | Duckling image name to use (relative to `registry`) |
 | image.pullPolicy | string | `"IfNotPresent"` | Duckling image pullPolicy |
 | image.pullSecrets | list | `[]` | Duckling repository pullSecret |
-| image.repository | string | `nil` | Override default registry + image.name for Duckling |
+| image.repository | string | `""` | Override default registry + image.name for Duckling |
 | image.tag | string | `"0.1.6.5-r3"` | Duckling image tag to use |
 | ingress.annotations | object | `{}` | Ingress annotations |
 | ingress.enabled | bool | `false` | Set to true to enable ingress |
