@@ -5,8 +5,8 @@ name: rasa-common
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
 #
 # Version and appVersion should be the same.
-version: 1.0.0
-appVersion: 1.0.0
+version: 1.0.1
+appVersion: 1.0.1
 description: A Library Helm Chart for grouping common logic between rasa charts.
 
 home: https://github.com/RasaHQ/charts/tree/master/charts/rasa-common
@@ -20,7 +20,7 @@ icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf2
 
 type: library
 sources:
-  - https://github.com/RasaHQ/helm-charts/rasa-common
+  - https://github.com/RasaHQ/helm-charts/charts/rasa-common
   - https://rasa.com/
 
 maintainers:
@@ -31,5 +31,5 @@ annotations:
   category: Infrastructure
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: added
-      description: Add the rasa-common chart
+    - kind: changed
+      description: Update the sources links
