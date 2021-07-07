@@ -1,6 +1,6 @@
 # duckling
 
-![Version: 1.1.1](https://img.shields.io/badge/Version-1.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.6.5-r3](https://img.shields.io/badge/AppVersion-0.1.6.5--r3-informational?style=flat-square)
+![Version: 1.1.2](https://img.shields.io/badge/Version-1.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.6.5-r3](https://img.shields.io/badge/AppVersion-0.1.6.5--r3-informational?style=flat-square)
 
 Duckling is a Haskell library that parses text into structured data.
 
@@ -42,7 +42,7 @@ Duckling is a Haskell library that parses text into structured data.
 | image.name | string | `"duckling"` | Duckling image name to use (relative to `registry`) |
 | image.pullPolicy | string | `"IfNotPresent"` | Duckling image pullPolicy |
 | image.pullSecrets | list | `[]` | Duckling repository pullSecret |
-| image.repository | string | `nil` | Override default registry + image.name for Duckling |
+| image.repository | string | `""` | Override default registry + image.name for Duckling |
 | image.tag | string | `"0.1.6.5-r3"` | Duckling image tag to use |
 | ingress.annotations | object | `{}` | Ingress annotations |
 | ingress.enabled | bool | `false` | Set to true to enable ingress |

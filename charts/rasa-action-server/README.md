@@ -1,6 +1,6 @@
 # rasa-action-server
 
-![Version: 1.0.1](https://img.shields.io/badge/Version-1.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.0](https://img.shields.io/badge/AppVersion-2.7.0-informational?style=flat-square)
+![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.0](https://img.shields.io/badge/AppVersion-2.7.0-informational?style=flat-square)
 
 Rasa Action Server Helm chart for Kubernetes
 
@@ -40,7 +40,7 @@ Rasa Action Server Helm chart for Kubernetes
 | image.name | string | `"rasa-x-demo"` | Action Server image name to use (relative to `registry`) |
 | image.pullPolicy | string | `"IfNotPresent"` | Action Server image pullPolicy |
 | image.pullSecrets | list | `[]` | Action Server repository pullSecret |
-| image.repository | string | `nil` | Override default registry + image.name for Action Server |
+| image.repository | string | `""` | Override default registry + image.name for Action Server |
 | image.tag | string | `"0.40.0"` | Action Server image tag to use |
 | ingress.annotations | object | `{}` | Ingress annotations |
 | ingress.enabled | bool | `false` | Set to true to enable ingress |
