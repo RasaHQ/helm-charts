@@ -15,8 +15,8 @@ releases:
           volumePermissions:
             securityContext:
               runAsUser: "auto"
-        securityContext:
-          enabled: false
+          securityContext:
+            enabled: false
         shmVolume:
           chmod:
             enabled: false
