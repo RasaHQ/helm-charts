@@ -549,7 +549,7 @@ nginx:
     # -- Image name to use
     name: "nginx"
 
-    # -- Image tag to use
+    # -- Image tag to use test
     tag: "1.19"
 
   # -- Override default liveness probe settings
