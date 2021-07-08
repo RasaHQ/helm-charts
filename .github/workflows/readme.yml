@@ -5,6 +5,7 @@ on:
     paths:
       - '**.md.gotmpl'
       - '**/values.yaml'
+      - '**/README.md'
 
 jobs:
   render_readme:
@@ -20,6 +21,8 @@ jobs:
           - rasa-common
     steps:
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.RASABOT_GITHUB_TOKEN }}
 
       - name: Update README.md
         working-directory: charts/${{ matrix.chart }}
@@ -37,7 +40,8 @@ jobs:
       - uses: EndBug/add-and-commit@2d7c2e89fcb436f8e139cc80813bd030bdd40c4b # v7
         if: steps.readme.outputs.changed == 'true'
         with:
-          author_name: rasabot
+          author_name: Roberto
+          author_email: 43567378+rasabot@users.noreply.github.com
+          default_author: github_actor
           add: 'charts/${{ matrix.chart }}/README.md'
           message: '[helm-docs] Update README.md'
-          github_token: ${{ secrets.RASABOT_GITHUB_TOKEN }}
