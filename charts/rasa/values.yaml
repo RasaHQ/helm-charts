@@ -550,7 +550,7 @@ nginx:
     name: "nginx"
 
     # -- Image tag to use test
-    tag: "1.19"
+    tag: "1.20"
 
   # -- Override default liveness probe settings
   # @default -- Every 15s / 6 KO / 1 OK

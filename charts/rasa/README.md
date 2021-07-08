@@ -1,6 +1,6 @@
 # rasa
 
-![Version: 1.2.3](https://img.shields.io/badge/Version-1.2.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.1](https://img.shields.io/badge/AppVersion-2.7.1-informational?style=flat-square)
+![Version: 1.2.4](https://img.shields.io/badge/Version-1.2.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.1](https://img.shields.io/badge/AppVersion-2.7.1-informational?style=flat-square)
 
 The Rasa Helm chart deploy a Rasa Open Source Server. Rasa is an open source machine learning framework for automated text and voice-based conversations.
 
@@ -324,7 +324,7 @@ In the [`examples/rasa`](../../examples) directory you can find more detailed ex
 | nginx.customConfiguration | object | `{}` | Custom configuration for Nginx sidecar |
 | nginx.enabled | bool | `true` | Enabled Nginx as a sidecar container |
 | nginx.image.name | string | `"nginx"` | Image name to use |
-| nginx.image.tag | string | `"1.19"` | Image tag to use |
+| nginx.image.tag | string | `"1.20"` | Image tag to use |
 | nginx.livenessProbe | object | Every 15s / 6 KO / 1 OK | Override default liveness probe settings |
 | nginx.port | int | `80` | Port number that Nginx listen on |
 | nginx.readinessProbe | object | Every 15s / 6 KO / 1 OK | Override default readiness probe settings |
