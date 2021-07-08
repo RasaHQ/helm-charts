@@ -4,6 +4,7 @@ on:
     types: [opened, synchronize, labeled]
     paths:
       - '**.md.gotmpl'
+      - '**/values.yaml'
 
 jobs:
   render_readme:
@@ -36,7 +37,7 @@ jobs:
       - uses: EndBug/add-and-commit@2d7c2e89fcb436f8e139cc80813bd030bdd40c4b # v7
         if: steps.readme.outputs.changed == 'true'
         with:
-          default_author: rasabot
+          author_name: rasabot
           add: 'charts/${{ matrix.chart }}/README.md'
           message: '[helm-docs] Update README.md'
           github_token: ${{ secrets.RASABOT_GITHUB_TOKEN }}
