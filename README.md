@@ -49,4 +49,4 @@ Remember that your PR should include:
 
 ## License
 
-Licensed under the Apache License, Version 2.0. Copyright 2021 Rasa Technologies GmbH. Copy of the license.
+Licensed under the Apache License, Version 2.0. Copyright 2021 Rasa Technologies GmbH. [Copy of the license](LICENSE).
