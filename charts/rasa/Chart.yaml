@@ -15,7 +15,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 1.2.4
+version: 1.2.5
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -72,6 +72,5 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: security
-      description: Bump NGINX image to 1.20
-  artifacthub.io/containsSecurityUpdates: "true"
+    - kind: added
+      description: Add network policy for the rabbitmq_peer_discovery_k8s plugin

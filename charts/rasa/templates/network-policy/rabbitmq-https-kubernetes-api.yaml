@@ -1,0 +1,19 @@
+{{- if and .Values.networkPolicy.enabled .Values.rabbitmq.install }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "rasa-common.names.fullname" . }}-rabbitmq-https-kubernetes-api
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: rabbitmq
+  policyTypes:
+  - Egress
+  egress:
+  - ports:
+      - protocol: TCP
+        port: 8443
+      - protocol: TCP
+        port: 443
+---
+{{- end }}
