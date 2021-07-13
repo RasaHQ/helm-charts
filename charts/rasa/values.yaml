@@ -216,8 +216,7 @@ image:
   name: rasa
 
   # -- Rasa Open Source image tag to use
-  tag: "2.7.1"
-
+  tag: "2.8.0"
   # -- Override default registry + image.name for Rasa Open Source
   repository: ""
 
