@@ -5,8 +5,8 @@ Determine rasa server to run with arguments
 {{- if .Values.applicationSettings.rasaX.enabled -}}
 - x
 - --no-prompt
-{{- if .Values.applicationSettings.rasaX.useConfigEndpoint }}
 - --production
+{{- if .Values.applicationSettings.rasaX.useConfigEndpoint }}
 - --config-endpoint
 - {{ .Values.applicationSettings.rasaX.url }}/api/config?token=$(RASA_X_TOKEN)
 {{- end }}
