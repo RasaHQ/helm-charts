@@ -27,7 +27,7 @@ Return the rabbitmq password secret name.
 Return the rabbitmq port.
 */}}
 {{- define "rasa-common.rabbitmq.port" -}}
-{{- coalesce .Values.rabbitmq.service.port 5672 -}}
+{{- default 5672 ((.Values.rabbitmq).service).port -}}
 {{- end -}}
 
 {{/*
