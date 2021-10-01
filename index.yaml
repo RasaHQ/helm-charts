@@ -999,6 +999,37 @@ entries:
   rasa-common:
   - annotations:
       artifacthub.io/changes: |
+        - kind: fixed
+          description: Issue with default value not being accessed
+          links:
+            - name: Github Issue
+              url: https://github.com/RasaHQ/helm-charts/issues/40
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 1.0.2
+    created: "2021-10-01T13:01:47.954070985Z"
+    description: A Library Helm Chart for grouping common logic between rasa charts.
+    digest: 022cef79758b93e98f2f87cc5bb35ad573c7a4351a402ea3d00bf97f6dc76b60
+    home: https://github.com/RasaHQ/charts/tree/master/charts/rasa-common
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - common
+    - template
+    - function
+    - rasa
+    maintainers:
+    - email: hi@rasa.com
+      name: Rasa
+    name: rasa-common
+    sources:
+    - https://github.com/RasaHQ/helm-charts/charts/rasa-common
+    - https://rasa.com/
+    type: library
+    urls:
+    - https://github.com/RasaHQ/helm-charts/releases/download/rasa-common-1.0.2/rasa-common-1.0.2.tgz
+    version: 1.0.2
+  - annotations:
+      artifacthub.io/changes: |
         - kind: changed
           description: Update the sources links
       category: Infrastructure
@@ -1053,4 +1084,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/helm-charts/releases/download/rasa-common-1.0.0/rasa-common-1.0.0.tgz
     version: 1.0.0
-generated: "2021-09-22T09:11:06.665779771Z"
+generated: "2021-10-01T13:01:47.954370895Z"
