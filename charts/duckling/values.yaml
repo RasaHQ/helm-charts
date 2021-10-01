@@ -38,8 +38,7 @@ image:
   name: duckling
 
   # -- Duckling image tag to use
-  tag: "0.1.6.5-r3"
-
+  tag: "0.2.0.1-r0"
   # -- Override default registry + image.name for Duckling
   repository: ""
 
