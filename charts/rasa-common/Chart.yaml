@@ -31,10 +31,8 @@ annotations:
   category: Infrastructure
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: changed
-      description: Update the sources links
     - kind: fixed
-      description: Issue with default value not beeing accessed
+      description: Issue with default value not being accessed
       links:
         - name: Github Issue
           url: https://github.com/RasaHQ/helm-charts/issues/40
