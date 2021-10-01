@@ -28,6 +28,7 @@ jobs:
           rasa: charts/rasa/**
           rasa-action-server: charts/rasa-action-server/**
           duckling: charts/duckling/**
+          rasa-common: charts/rasa-common/**
 
   lint-chart:
     runs-on: ubuntu-20.04
