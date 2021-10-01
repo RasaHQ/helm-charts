@@ -1,1 +1,5 @@
 charts/*/charts
+charts/*/index.yaml
+
+# vscode local history extension
+.history
