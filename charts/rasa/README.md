@@ -24,7 +24,7 @@ helm repo update
 | https://charts.bitnami.com/bitnami | redis | ~14.6.4 |
 | https://helm.rasa.com | duckling | ~1.0.0 |
 | https://helm.rasa.com | rasa-action-server | ~1.0.0 |
-| https://helm.rasa.com | rasa-common | 1.x.x |
+| https://helm.rasa.com | rasa-common | ~1.0.2 |
 
 ## Quick start
 

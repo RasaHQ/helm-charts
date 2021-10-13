@@ -34,7 +34,7 @@ dependencies:
     repository: https://helm.rasa.com
     tags:
       - rasa-common
-    version: 1.x.x
+    version: ~1.0.2
   - name: postgresql
     version: ~10.5.2
     repository: https://charts.bitnami.com/bitnami
