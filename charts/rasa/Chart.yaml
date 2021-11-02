@@ -1,0 +1,65 @@
+apiVersion: v2
+name: rasa
+description: The Rasa Helm chart deploy a Rasa Open Source Server. Rasa is an open source machine learning framework for automated text and voice-based conversations.
+# A chart can be either an 'application' or a 'library' chart.
+#
+# Application charts are a collection of templates that can be packaged into versioned archives
+# to be deployed.
+#
+# Library charts provide useful utilities or functions for the chart developer. They're included as
+# a dependency of application charts to inject those utilities and functions into the rendering
+# pipeline. Library charts do not define any templates and therefore cannot be deployed.
+type: application
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 1.14.0
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application. Versions are not expected to
+# follow Semantic Versioning. They should reflect the version the application is using.
+# It is recommended to use it with quotes.
+appVersion: "2.8.11"
+icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU"
+sources:
+  - https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa
+maintainers:
+  - email: hi@rasa.com
+    name: Rasa
+keywords:
+  - kubernetes
+  - rasa
+  - rasa-oss
+dependencies:
+  - name: rasa-common
+    repository: https://helm.rasa.com
+    tags:
+      - rasa-common
+    version: ~1.0.2
+  - name: postgresql
+    version: ~10.5.2
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.install
+  - name: redis
+    version: ~14.6.4
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.install
+  - name: rabbitmq
+    version: ~8.16.2
+    repository: https://charts.bitnami.com/bitnami
+    condition: rabbitmq.install
+  - name: rasa-action-server
+    version: ~1.0.0
+    repository: https://helm.rasa.com
+    condition: rasa-action-server.install
+  - name: duckling
+    version: ~1.0.0
+    repository: https://helm.rasa.com
+    condition: duckling.install
+annotations:
+  # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
+  artifacthub.io/changes: |
+    - kind: added
+      description: Bump Rasa version to 2.8.11
+      links:
+        - name: GitHub PR
+          url: https://github.com/RasaHQ/helm-charts/pull/48
