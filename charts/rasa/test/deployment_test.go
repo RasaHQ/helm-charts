@@ -70,7 +70,7 @@ func TestTemplateRendersContainerImageRepository(t *testing.T) {
 	// Verify the deployment pod template spec is set to the expected container image value
 	deploymentSpec := deployment.Spec.Template.Spec
 	require.Equal(t, len(deploymentSpec.Containers), 1)
-	require.Equal(t, deploymentSpec.Containers[0].Image, "test-image:2.8.10")
+	require.Equal(t, deploymentSpec.Containers[0].Image, "test-image:2.8.11")
 }
 
 func TestTemplateRendersContainerArgsAndCommand(t *testing.T) {
