@@ -32,9 +32,7 @@ helm repo update
 
 ## How to contribute
 
-We are very happy to receive your contributions. You can
-find more information about how to contribute to Rasa (in lots of
-different ways!) [here](http://rasa.com/community/contribute).
+We are very happy to receive your contributions. You can find more information about how to contribute to Rasa (in lots of different ways!) [here](http://rasa.com/community/contribute).
 
 To contribute via pull request, follow these steps:
 
