@@ -1,4 +1,4 @@
-name: Update README.md
+name: Update Helm Chart README.md
 on:
   pull_request:
     types: [opened, synchronize, labeled]
