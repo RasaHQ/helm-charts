@@ -4,12 +4,12 @@
 
 Official Helm charts for Rasa products:
 
-- [Rasa Open Source](charts/rasa)
-- [Rasa Action Server](charts/rasa-action-server)
+- [Rasa Open Source](https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa)
+- [Rasa Action Server](https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa-action-server)
 
 Helm charts for components used by Rasa:
 
-- [Duckling](charts/duckling)
+- [Duckling](https://github.com/RasaHQ/helm-charts/tree/main/charts/duckling)
 
 ## Prerequisites
 
@@ -47,4 +47,4 @@ Remember that your PR should include:
 
 ## License
 
-Licensed under the Apache License, Version 2.0. Copyright 2021 Rasa Technologies GmbH. [Copy of the license](LICENSE).
+Licensed under the Apache License, Version 2.0. Copyright 2021 Rasa Technologies GmbH. [LICENSE](https://github.com/RasaHQ/helm-charts/blob/main/LICENSE).
