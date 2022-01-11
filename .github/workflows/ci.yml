@@ -15,6 +15,7 @@ jobs:
     outputs:
       # Expose matched filters as job 'charts' output variable
       charts: ${{ steps.changes.outputs.charts }}
+      lint:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -29,11 +30,15 @@ jobs:
       id: filter
       with:
         filters: |
+          # Match all, excluding README.md and README.md.gotmpl (micromatch syntax)
           rasa:
-            - '!(charts/rasa/README.md)charts/rasa/**'
-          rasa-action-server: charts/rasa-action-server/**
-          duckling: charts/duckling/**
-          rasa-common: charts/rasa-common/**
+            - '!(charts/rasa/README*)charts/rasa/**'
+          rasa-action-server:
+            - '!(charts/rasa-action-server/README*)charts/rasa-action-server/**'
+          duckling:
+            - '!(charts/duckling/README*)charts/duckling/**'
+          rasa-common:
+            - '!(charts/rasa-common/README*)charts/rasa-common/**
 
     - name: Print output
       id: changes
