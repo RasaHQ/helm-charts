@@ -34,7 +34,7 @@ jobs:
           duckling:
             - '!(charts/duckling/README*)charts/duckling/**'
           rasa-common:
-            - '!(charts/rasa-common/README*)charts/rasa-common/**
+            - '!(charts/rasa-common/README*)charts/rasa-common/**'
 
     - name: Print output
       id: changes
