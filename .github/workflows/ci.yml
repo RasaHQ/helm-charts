@@ -30,8 +30,7 @@ jobs:
       with:
         filters: |
           rasa:
-            - charts/rasa/**
-            - '!charts/rasa/README.md'
+            - '!(charts/rasa/README.md)charts/rasa/**'
           rasa-action-server: charts/rasa-action-server/**
           duckling: charts/duckling/**
           rasa-common: charts/rasa-common/**
