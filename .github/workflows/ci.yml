@@ -53,13 +53,13 @@ jobs:
     needs: changes
     steps:
       - name: Checkout
-        if: needs.changes.outputs.changed
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
       - name: Set up Helm
-        if: needs.changes.outputs.changed
+        if: needs.changes.outputs.changed == 'true'
         uses: azure/setup-helm@v1
         with:
           version: v3.6.0
@@ -67,16 +67,16 @@ jobs:
       # helm/chart-testing-action requires python version >= 3.7
       # see: https://github.com/helm/chart-testing-action/issues/65
       - uses: actions/setup-python@v2
-        if: needs.changes.outputs.changed
+        if: needs.changes.outputs.changed == 'true'
         with:
           python-version: 3.7
 
       - name: Set up chart-testing
-        if: needs.changes.outputs.changed
+        if: needs.changes.outputs.changed == 'true'
         uses: helm/chart-testing-action@v2.1.0
 
       - name: Run chart-testing (lint)
-        if: needs.changes.outputs.changed
+        if: needs.changes.outputs.changed == 'true'
         run: ct lint --config .github/.ct.yaml
 
   unit-tests:
