@@ -1,6 +1,6 @@
 # rasa
 
-![Version: 1.16.0](https://img.shields.io/badge/Version-1.16.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.2](https://img.shields.io/badge/AppVersion-3.0.2-informational?style=flat-square)
+![Version: 1.16.0](https://img.shields.io/badge/Version-1.16.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.6](https://img.shields.io/badge/AppVersion-3.0.6-informational?style=flat-square)
 
 The Rasa Helm chart deploy a Rasa Open Source Server. Rasa is an open source machine learning framework for automated text and voice-based conversations.
 
@@ -261,7 +261,7 @@ In the [`examples/rasa`](../../examples) directory you can find more detailed ex
 | applicationSettings.endpoints.models.url | string | `"http://my-server.com/models/default"` | URL address that models will be pulled from |
 | applicationSettings.endpoints.models.useRasaXasModelServer.enabled | bool | `false` | Use Rasa X (Enterprise) as a model server |
 | applicationSettings.endpoints.models.useRasaXasModelServer.tag | string | `"production"` | The model with a given tag that should be pulled from the model server |
-| applicationSettings.endpoints.models.waitTimeBetweenPulls | int | `20` | Time in seconds how often the the model server will be querying |
+| applicationSettings.endpoints.models.waitTimeBetweenPulls | int | `20` | Time in seconds how often the model server will be querying |
 | applicationSettings.endpoints.trackerStore.db | string | `"${DB_DATABASE}"` | The path to the database to be used |
 | applicationSettings.endpoints.trackerStore.dialect | string | `"postgresql"` | The dialect used to communicate with your SQL backend |
 | applicationSettings.endpoints.trackerStore.enabled | bool | `true` | Enable endpoint for Tracker Store |
@@ -280,7 +280,7 @@ In the [`examples/rasa`](../../examples) directory you can find more detailed ex
 | applicationSettings.scheme | string | `"http"` | Scheme by which the service are accessible |
 | applicationSettings.telemetry.enabled | bool | `true` | Enable telemetry See: https://rasa.com/docs/rasa/telemetry/telemetry/ |
 | applicationSettings.token | string | `"rasaToken"` | Token Rasa accepts as authentication token from other Rasa services |
-| applicationSettings.trainInitialModel | bool | `false` | Train a model if a initial model is not defined. This parameter is ignored if the `appplication.Settings.initialModel` is defined |
+| applicationSettings.trainInitialModel | bool | `false` | Train a model if an initial model is not defined. This parameter is ignored if the `applicationSettings.initialModel` is defined |
 | args | list | `[]` | Override the default arguments for the container |
 | autoscaling.enabled | bool | `false` | Enable autoscaling |
 | autoscaling.maxReplicas | int | `20` | Upper limit for the number of pods that can be set by the autoscaler. It cannot be smaller than minReplicas. |
@@ -307,7 +307,7 @@ In the [`examples/rasa`](../../examples) directory you can find more detailed ex
 | image.pullPolicy | string | `"IfNotPresent"` | Rasa Open Source image pullPolicy |
 | image.pullSecrets | list | `[]` | Rasa Open Source repository pullSecret |
 | image.repository | string | `""` | Override default registry + image.name for Rasa Open Source |
-| image.tag | string | `"3.0.2"` | Rasa Open Source image tag to use |
+| image.tag | string | `"3.0.6"` | Rasa Open Source image tag to use |
 | ingress.annotations | object | `{}` | Ingress annotations |
 | ingress.enabled | bool | `false` | Set to true to enable ingress |
 | ingress.extraPaths | object | `{}` | Any additional arbitrary paths that may need to be added to the ingress under the main host |
