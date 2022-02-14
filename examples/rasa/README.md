@@ -14,7 +14,7 @@ To use this option, you need to:
         enabled: true
         # Rasa X service address
         # You can execute `kubectl -n namespace_where_rasa_x_is_deployed get svc` in order to see a list of services
-        url: "http://rasa-rasa-x:5002"
+        url: "http://rasa-x-rasa-x:5002"
         # Define if a runtime configuration should be pulled
         # from Rasa X/Enterprise
         useConfigEndpoint: true
@@ -71,7 +71,7 @@ Therefore you would add the following to rasa-values.yaml:
 ## Extra environment variables used in the Rasa X/Enterprise configuration
 extraEnv:
  - name: RASA_MODEL_SERVER
-   value: http://example.com/api/projects/default/models/tags/production
+   value: http://rasa-x-rasa-x:5002/api/projects/default/models/tags/production
  - name: RASA_X_TOKEN
    valueFrom:
      secretKeyRef:

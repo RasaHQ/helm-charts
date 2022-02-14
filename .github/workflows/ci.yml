@@ -15,31 +15,34 @@ jobs:
     outputs:
       # Expose matched filters as job 'charts' output variable
       charts: ${{ steps.changes.outputs.charts }}
+      # flag of file changes
+      changed: ${{ steps.changes.outputs.changed }}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-
-    - name: Cancel Previous Runs
-      uses: styfle/cancel-workflow-action@6135c0ff6214e01d42a5736c988e39b7831f1e2f #0.9.0
-      with:
-        access_token: ${{ github.token }}
 
     # For pull requests it's not necessary to checkout the code
     - uses: dorny/paths-filter@v2
       id: filter
       with:
         filters: |
-          rasa: charts/rasa/**
-          rasa-action-server: charts/rasa-action-server/**
-          duckling: charts/duckling/**
-          rasa-common: charts/rasa-common/**
+          # Match all, excluding README.md and README.md.gotmpl (micromatch syntax)
+          rasa:
+            - '!(charts/rasa/README*)charts/rasa/**'
+          rasa-action-server:
+            - '!(charts/rasa-action-server/README*)charts/rasa-action-server/**'
+          duckling:
+            - '!(charts/duckling/README*)charts/duckling/**'
+          rasa-common:
+            - '!(charts/rasa-common/README*)charts/rasa-common/**'
 
     - name: Print output
       id: changes
       run: |
-        CHANGES=${{ fromJSON(steps.filter.outputs.changes)[0] != null }}
+        CHANGED=${{ fromJSON(steps.filter.outputs.changes)[0] != null }}
+        echo "::set-output name=changed::${CHANGED}"
 
-        if [[ "${CHANGES}" == "true" ]]; then
+        if [[ "${CHANGED}" == "true" ]]; then
           echo "::set-output name=charts::${{ toJSON(steps.filter.outputs.changes) }}"
         else
           echo "::set-output name=charts::[\"rasa\"]"
@@ -50,11 +53,13 @@ jobs:
     needs: changes
     steps:
       - name: Checkout
+        if: needs.changes.outputs.changed == 'true'
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
       - name: Set up Helm
+        if: needs.changes.outputs.changed == 'true'
         uses: azure/setup-helm@v1
         with:
           version: v3.6.0
@@ -62,13 +67,16 @@ jobs:
       # helm/chart-testing-action requires python version >= 3.7
       # see: https://github.com/helm/chart-testing-action/issues/65
       - uses: actions/setup-python@v2
+        if: needs.changes.outputs.changed == 'true'
         with:
           python-version: 3.7
 
       - name: Set up chart-testing
+        if: needs.changes.outputs.changed == 'true'
         uses: helm/chart-testing-action@v2.1.0
 
       - name: Run chart-testing (lint)
+        if: needs.changes.outputs.changed == 'true'
         run: ct lint --config .github/.ct.yaml
 
   unit-tests:

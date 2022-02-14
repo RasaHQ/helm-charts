@@ -261,7 +261,7 @@ In the [`examples/rasa`](../../examples) directory you can find more detailed ex
 | applicationSettings.endpoints.models.url | string | `"http://my-server.com/models/default"` | URL address that models will be pulled from |
 | applicationSettings.endpoints.models.useRasaXasModelServer.enabled | bool | `false` | Use Rasa X (Enterprise) as a model server |
 | applicationSettings.endpoints.models.useRasaXasModelServer.tag | string | `"production"` | The model with a given tag that should be pulled from the model server |
-| applicationSettings.endpoints.models.waitTimeBetweenPulls | int | `20` | Time in seconds how often the the model server will be querying |
+| applicationSettings.endpoints.models.waitTimeBetweenPulls | int | `20` | Time in seconds how often the model server will be querying |
 | applicationSettings.endpoints.trackerStore.db | string | `"${DB_DATABASE}"` | The path to the database to be used |
 | applicationSettings.endpoints.trackerStore.dialect | string | `"postgresql"` | The dialect used to communicate with your SQL backend |
 | applicationSettings.endpoints.trackerStore.enabled | bool | `true` | Enable endpoint for Tracker Store |
@@ -280,7 +280,7 @@ In the [`examples/rasa`](../../examples) directory you can find more detailed ex
 | applicationSettings.scheme | string | `"http"` | Scheme by which the service are accessible |
 | applicationSettings.telemetry.enabled | bool | `true` | Enable telemetry See: https://rasa.com/docs/rasa/telemetry/telemetry/ |
 | applicationSettings.token | string | `"rasaToken"` | Token Rasa accepts as authentication token from other Rasa services |
-| applicationSettings.trainInitialModel | bool | `false` | Train a model if a initial model is not defined. This parameter is ignored if the `appplication.Settings.initialModel` is defined |
+| applicationSettings.trainInitialModel | bool | `false` | Train a model if an initial model is not defined. This parameter is ignored if the `applicationSettings.initialModel` is defined |
 | args | list | `[]` | Override the default arguments for the container |
 | autoscaling.enabled | bool | `false` | Enable autoscaling |
 | autoscaling.maxReplicas | int | `20` | Upper limit for the number of pods that can be set by the autoscaler. It cannot be smaller than minReplicas. |
