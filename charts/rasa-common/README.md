@@ -10,7 +10,7 @@ A Library Helm Chart for grouping common logic between rasa charts.
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| Rasa | hi@rasa.com |  |
+| Rasa | <hi@rasa.com> |  |
 
 ## Source Code
 
