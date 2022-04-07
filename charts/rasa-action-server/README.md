@@ -36,7 +36,7 @@ Rasa Action Server Helm chart for Kubernetes
 | deploymentAnnotations | object | `{}` | Annotations to add to the action-server deployment |
 | deploymentLabels | object | `{}` | Labels to add to the action-server deployment |
 | extraEnv | list | `[]` | Add extra environment variables |
-| fullnameOverride | string | `nil` | Override the full qualified app name |
+| fullnameOverride | string | `""` | (string) Override the full qualified app name |
 | image.name | string | `"rasa-x-demo"` | Action Server image name to use (relative to `registry`) |
 | image.pullPolicy | string | `"IfNotPresent"` | Action Server image pullPolicy |
 | image.pullSecrets | list | `[]` | Action Server repository pullSecret |
@@ -52,7 +52,7 @@ Rasa Action Server Helm chart for Kubernetes
 | ingress.tls | list | `[]` | TLS configuration for ingress |
 | initContainers | list | `[]` | Allow to specify init containers for the Action Server Deployment |
 | livenessProbe | object | Every 15s / 6 KO / 1 OK | Override default liveness probe settings |
-| nameOverride | string | `nil` | Override name of app |
+| nameOverride | string | `""` | (string) Override name of app |
 | nodeSelector | object | `{}` | Allow the Action Server Deployment to be scheduled on selected nodes |
 | podAnnotations | object | `{}` | Annotations to add to the action-server's pod(s) |
 | podLabels | object | `{}` | Labels to add to the action-server's pod(s) |

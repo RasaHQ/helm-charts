@@ -38,7 +38,7 @@ Duckling is a Haskell library that parses text into structured data.
 | deploymentAnnotations | object | `{}` | Annotations to add to the duckling deployment |
 | deploymentLabels | object | `{}` | Labels to add to the duckling deployment |
 | extraEnv | list | `[]` | Add extra environment variables |
-| fullnameOverride | string | `nil` | Override the fully qualified app name |
+| fullnameOverride | string | `""` | (string) Override the fully qualified app name |
 | image.name | string | `"duckling"` | Duckling image name to use (relative to `registry`) |
 | image.pullPolicy | string | `"IfNotPresent"` | Duckling image pullPolicy |
 | image.pullSecrets | list | `[]` | Duckling repository pullSecret |
@@ -54,7 +54,7 @@ Duckling is a Haskell library that parses text into structured data.
 | ingress.tls | list | `[]` | TLS configuration for ingress |
 | initContainers | list | `[]` | Allow to specify init containers for the Duckling Deployment |
 | livenessProbe | object | Every 15s / 6 KO / 1 OK | Override default liveness probe settings |
-| nameOverride | string | `nil` | Override name of app |
+| nameOverride | string | `""` | (string) Override name of app |
 | nodeSelector | object | `{}` | Allow the Duckling Deployment to be scheduled on selected nodes |
 | podAnnotations | object | `{}` | Annotations to add to the duckling's pod(s) |
 | podLabels | object | `{}` | Labels to add to the duckling's pod(s) |
