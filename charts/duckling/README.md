@@ -1,6 +1,6 @@
 # duckling
 
-![Version: 1.1.2](https://img.shields.io/badge/Version-1.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.6.5-r3](https://img.shields.io/badge/AppVersion-0.1.6.5--r3-informational?style=flat-square)
+![Version: 1.1.3](https://img.shields.io/badge/Version-1.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.6.5-r3](https://img.shields.io/badge/AppVersion-0.1.6.5--r3-informational?style=flat-square)
 
 Duckling is a Haskell library that parses text into structured data.
 
@@ -8,7 +8,7 @@ Duckling is a Haskell library that parses text into structured data.
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| Rasa | hi@rasa.com |  |
+| Rasa | <hi@rasa.com> |  |
 
 ## Source Code
 
@@ -38,7 +38,7 @@ Duckling is a Haskell library that parses text into structured data.
 | deploymentAnnotations | object | `{}` | Annotations to add to the duckling deployment |
 | deploymentLabels | object | `{}` | Labels to add to the duckling deployment |
 | extraEnv | list | `[]` | Add extra environment variables |
-| fullnameOverride | string | `nil` | Override the fully qualified app name |
+| fullnameOverride | string | `""` | (string) Override the fully qualified app name |
 | image.name | string | `"duckling"` | Duckling image name to use (relative to `registry`) |
 | image.pullPolicy | string | `"IfNotPresent"` | Duckling image pullPolicy |
 | image.pullSecrets | list | `[]` | Duckling repository pullSecret |
@@ -54,7 +54,7 @@ Duckling is a Haskell library that parses text into structured data.
 | ingress.tls | list | `[]` | TLS configuration for ingress |
 | initContainers | list | `[]` | Allow to specify init containers for the Duckling Deployment |
 | livenessProbe | object | Every 15s / 6 KO / 1 OK | Override default liveness probe settings |
-| nameOverride | string | `nil` | Override name of app |
+| nameOverride | string | `""` | (string) Override name of app |
 | nodeSelector | object | `{}` | Allow the Duckling Deployment to be scheduled on selected nodes |
 | podAnnotations | object | `{}` | Annotations to add to the duckling's pod(s) |
 | podLabels | object | `{}` | Labels to add to the duckling's pod(s) |

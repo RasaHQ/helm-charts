@@ -13,7 +13,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 1.16.0
+version: 1.16.1
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
@@ -58,8 +58,5 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: added
-      description: Bump Rasa version to 3.0.2
-      links:
-        - name: GitHub PR
-          url: https://github.com/RasaHQ/helm-charts/pull/55
+    - kind: fixed
+      description: Change type to string for the `nameOverride` and `fullnameOverride` fields in JSON schema.

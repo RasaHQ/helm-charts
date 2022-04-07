@@ -256,7 +256,7 @@
             "type": "array"
         },
         "fullnameOverride": {
-            "type": "null"
+            "type": "string"
         },
         "global": {
             "type": "object",
@@ -378,7 +378,7 @@
             }
         },
         "nameOverride": {
-            "type": "null"
+            "type": "string"
         },
         "networkPolicy": {
             "type": "object",
