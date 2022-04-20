@@ -1,6 +1,6 @@
 {{- define "rasa.downloadInitialModel.initContainer" -}}
 - name: download-initial-model
-  image: "busybox"
+  image: "alpine"
   command: ["/bin/sh", "-c"]
   args:
     - cd /app/models/ && wget {{ .Values.applicationSettings.initialModel }} -O model.tar.gz
