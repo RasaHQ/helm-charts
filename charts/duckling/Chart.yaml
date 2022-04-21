@@ -1,7 +1,6 @@
 apiVersion: v2
 name: duckling
 description: Duckling is a Haskell library that parses text into structured data.
-
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives
@@ -11,34 +10,28 @@ description: Duckling is a Haskell library that parses text into structured data
 # a dependency of application charts to inject those utilities and functions into the rendering
 # pipeline. Library charts do not define any templates and therefore cannot be deployed.
 type: application
-
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
 version: 1.1.3
-
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "0.1.6.5-r3"
-
+appVersion: "0.2.0.2-r0"
 sources:
   - https://github.com/RasaHQ/duckling
   - https://github.com/facebook/duckling
   - https://github.com/RasaHQ/helm-charts/tree/main/charts/duckling
-
 maintainers:
   - email: hi@rasa.com
     name: Rasa
-
 dependencies:
   - name: rasa-common
     repository: https://helm.rasa.com
     tags:
       - rasa-common
     version: 1.x.x
-
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
