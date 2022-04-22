@@ -4,6 +4,33 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: fixed
+          description: Bump to duckling 0.2.0.2
+    apiVersion: v2
+    appVersion: 0.2.0.2-r0
+    created: "2022-04-22T12:30:58.054022757Z"
+    dependencies:
+    - name: rasa-common
+      repository: https://helm.rasa.com
+      tags:
+      - rasa-common
+      version: 1.x.x
+    description: Duckling is a Haskell library that parses text into structured data.
+    digest: 75be04f28ae6aa00726a7b97a439c886592d0ef5a061465e6ad694e088548d4d
+    maintainers:
+    - email: hi@rasa.com
+      name: Rasa
+    name: duckling
+    sources:
+    - https://github.com/RasaHQ/duckling
+    - https://github.com/facebook/duckling
+    - https://github.com/RasaHQ/helm-charts/tree/main/charts/duckling
+    type: application
+    urls:
+    - https://github.com/RasaHQ/helm-charts/releases/download/duckling-1.1.4/duckling-1.1.4.tgz
+    version: 1.1.4
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: fixed
           description: Change type to string for the `nameOverride` and `fullnameOverride` fields in JSON schema.
     apiVersion: v2
     appVersion: 0.1.6.5-r3
@@ -1563,4 +1590,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/helm-charts/releases/download/rasa-common-1.0.0/rasa-common-1.0.0.tgz
     version: 1.0.0
-generated: "2022-04-20T15:30:44.83087958Z"
+generated: "2022-04-22T12:30:58.187540932Z"
