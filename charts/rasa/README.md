@@ -1,6 +1,6 @@
 # rasa
 
-![Version: 1.16.0](https://img.shields.io/badge/Version-1.16.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.0](https://img.shields.io/badge/AppVersion-3.1.0-informational?style=flat-square)
+![Version: 1.16.2](https://img.shields.io/badge/Version-1.16.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.2](https://img.shields.io/badge/AppVersion-3.0.2-informational?style=flat-square)
 
 The Rasa Helm chart deploy a Rasa Open Source Server. Rasa is an open source machine learning framework for automated text and voice-based conversations.
 
@@ -295,7 +295,7 @@ In the [`examples/rasa`](../../examples) directory you can find more detailed ex
 | extraArgs | list | `[]` | Add additional arguments to the default one |
 | extraContainers | list | `[]` | Allow to specify additional containers for the Rasa Open Source Deployment |
 | extraEnv | list | `[]` | Add extra environment variables |
-| fullnameOverride | string | `nil` | Override the full qualified app name |
+| fullnameOverride | string | `""` | (string) Override the full qualified app name |
 | global.postgresql.existingSecret | string | `""` | existingSecret which should be used for the password instead of putting it in the values file |
 | global.postgresql.postgresqlDatabase | string | `"rasa"` | postgresDatabase which should be used by Rasa |
 | global.postgresql.postgresqlPassword | string | `"password"` | postgresqlPassword is the password which is used when the postgresqlUsername equals "postgres" |
@@ -318,7 +318,7 @@ In the [`examples/rasa`](../../examples) directory you can find more detailed ex
 | ingress.tls | list | `[]` | TLS configuration for ingress |
 | initContainers | list | `[]` | Allow to specify init containers for the Rasa Open Source Deployment |
 | livenessProbe | object | Every 15s / 6 KO / 1 OK | Override default liveness probe settings |
-| nameOverride | string | `nil` | Override name of app |
+| nameOverride | string | `""` | (string) Override name of app |
 | networkPolicy.denyAll | bool | `false` | Create a network policy that deny all traffic |
 | networkPolicy.enabled | bool | `false` | Enable Kubernetes Network Policy |
 | nginx.customConfiguration | object | `{}` | Custom configuration for Nginx sidecar |
