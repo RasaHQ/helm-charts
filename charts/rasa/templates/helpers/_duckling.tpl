@@ -2,7 +2,7 @@
 Determine if endpoint for Duckling is used
 */}}
 {{- define "rasa.endpoints.duckling" -}}
-{{- if or .Values.duckling.install (and .Values.duckling.external.enabled (not .Values.duckling.external.url)) -}}
+{{- if or .Values.duckling.install (and .Values.duckling.external.enabled .Values.duckling.external.url) -}}
 {{- print "true" -}}
 {{- else -}}
 {{- print "false" -}}
