@@ -165,10 +165,10 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: fixed
-          description: Bump to rasa v3.1.0
+          description: Fix the `if` condition for an external duckling URL.
     apiVersion: v2
     appVersion: 3.1.0
-    created: "2022-04-25T08:37:35.034734975Z"
+    created: "2022-04-28T08:07:11.497894678Z"
     dependencies:
     - name: rasa-common
       repository: https://helm.rasa.com
@@ -197,7 +197,7 @@ entries:
       version: ~1.0.0
     description: The Rasa Helm chart deploy a Rasa Open Source Server. Rasa is an
       open source machine learning framework for automated text and voice-based conversations.
-    digest: dea715f47512076f6d77f41af83ae14ae88b5c085eff79598f9e71b2addc94e1
+    digest: 2577a7af3e9c54c4461d23d7eb9d15ed306204ac6f8889e9bf4ffd96ccf67e45
     icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
     keywords:
     - kubernetes
@@ -211,8 +211,8 @@ entries:
     - https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa
     type: application
     urls:
-    - https://github.com/RasaHQ/helm-charts/releases/download/rasa-1.17.0/rasa-1.17.0.tgz
-    version: 1.17.0
+    - https://github.com/RasaHQ/helm-charts/releases/download/rasa-1.17.1/rasa-1.17.1.tgz
+    version: 1.17.1
   - annotations:
       artifacthub.io/changes: |
         - kind: fixed
@@ -1641,4 +1641,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/helm-charts/releases/download/rasa-common-1.0.0/rasa-common-1.0.0.tgz
     version: 1.0.0
-generated: "2022-04-25T08:37:35.035054971Z"
+generated: "2022-04-28T08:07:11.498097478Z"
