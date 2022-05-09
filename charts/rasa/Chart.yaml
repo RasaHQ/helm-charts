@@ -59,4 +59,4 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: fixed
-      description: Correct network policy port for redis
+      description: Correct port for Redis network policy
