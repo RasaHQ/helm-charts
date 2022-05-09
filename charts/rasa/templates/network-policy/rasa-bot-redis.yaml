@@ -17,11 +17,11 @@ spec:
           app.kubernetes.io/name: redis
     ports:
     - protocol: TCP
-      port: {{ template "rasa-common.psql.port" . }}
+      port: {{ template "rasa-common.redis.port" . }}
 {{- else }}
   - ports:
     - protocol: TCP
-      port: {{ template "rasa-common.psql.port" . }}
+      port: {{ template "rasa-common.redis.port" . }}
 {{- end }}
 ---
 {{- if and (not .Values.redis.external.enabled) (eq (include "rasa-common.redis.available" .) "true") }}
