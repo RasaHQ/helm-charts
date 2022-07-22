@@ -1,6 +1,6 @@
 # rasa
 
-![Version: 1.17.0](https://img.shields.io/badge/Version-1.17.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.0](https://img.shields.io/badge/AppVersion-3.1.0-informational?style=flat-square)
+![Version: 1.17.2](https://img.shields.io/badge/Version-1.17.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.2.4](https://img.shields.io/badge/AppVersion-3.2.4-informational?style=flat-square)
 
 The Rasa Helm chart deploy a Rasa Open Source Server. Rasa is an open source machine learning framework for automated text and voice-based conversations.
 
@@ -235,9 +235,9 @@ In the [`examples/rasa`](../../examples) directory you can find more detailed ex
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` | Allow the Rasa Open Source Deployment to schedule using affinity rules |
+| affinity | object | `{}` | Allow the Rasa Open Source Deployment to schedule using affinity rules # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity |
 | applicationSettings.cors | string | `"*"` | CORS for the passed origin. Default is * to allow all origins |
-| applicationSettings.credentials.additionalChannelCredentials | object | `{}` | Additional channel credentials which should be used by Rasa to connect to various input channels |
+| applicationSettings.credentials.additionalChannelCredentials | object | `{}` | Additional channel credentials which should be used by Rasa to connect to various input channels # See: https://rasa.com/docs/rasa/messaging-and-voice-channels |
 | applicationSettings.credentials.enabled | bool | `true` | Enable credentials configuration for channel connectors |
 | applicationSettings.debugMode | bool | `false` | Enable debug mode |
 | applicationSettings.enableAPI | bool | `true` | Start the web server API in addition to the input channel |
@@ -295,7 +295,7 @@ In the [`examples/rasa`](../../examples) directory you can find more detailed ex
 | extraArgs | list | `[]` | Add additional arguments to the default one |
 | extraContainers | list | `[]` | Allow to specify additional containers for the Rasa Open Source Deployment |
 | extraEnv | list | `[]` | Add extra environment variables |
-| fullnameOverride | string | `""` | (string) Override the full qualified app name |
+| fullnameOverride | string | `""` | Override the full qualified app name |
 | global.postgresql.existingSecret | string | `""` | existingSecret which should be used for the password instead of putting it in the values file |
 | global.postgresql.postgresqlDatabase | string | `"rasa"` | postgresDatabase which should be used by Rasa |
 | global.postgresql.postgresqlPassword | string | `"password"` | postgresqlPassword is the password which is used when the postgresqlUsername equals "postgres" |
@@ -305,72 +305,72 @@ In the [`examples/rasa`](../../examples) directory you can find more detailed ex
 | global.redis.password | string | `"redis-password"` | password to use in case there no external secret was provided |
 | image.name | string | `"rasa"` | Rasa Open Source image name to use (relative to `registry`) |
 | image.pullPolicy | string | `"IfNotPresent"` | Rasa Open Source image pullPolicy |
-| image.pullSecrets | list | `[]` | Rasa Open Source repository pullSecret |
+| image.pullSecrets | list | `[]` | Rasa Open Source repository pullSecret # See https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod |
 | image.repository | string | `""` | Override default registry + image.name for Rasa Open Source |
-| image.tag | string | `"3.1.0"` | Rasa Open Source image tag to use |
+| image.tag | string | `"3.2.4"` | Rasa Open Source image tag to use |
 | ingress.annotations | object | `{}` | Ingress annotations |
 | ingress.enabled | bool | `false` | Set to true to enable ingress |
 | ingress.extraPaths | object | `{}` | Any additional arbitrary paths that may need to be added to the ingress under the main host |
 | ingress.hostname | string | `"chart-example.local"` | Hostname used for the ingress |
 | ingress.labels | object | `{}` | Labels to add to the ingress |
 | ingress.path | string | `"/"` | Ingress path |
-| ingress.pathType | string | `"ImplementationSpecific"` | Ingress Path type |
-| ingress.tls | list | `[]` | TLS configuration for ingress |
-| initContainers | list | `[]` | Allow to specify init containers for the Rasa Open Source Deployment |
-| livenessProbe | object | Every 15s / 6 KO / 1 OK | Override default liveness probe settings |
-| nameOverride | string | `""` | (string) Override name of app |
+| ingress.pathType | string | `"ImplementationSpecific"` | Ingress Path type # Ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types |
+| ingress.tls | list | `[]` | TLS configuration for ingress # See: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls |
+| initContainers | list | `[]` | Allow to specify init containers for the Rasa Open Source Deployment # Ref: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/ |
+| livenessProbe | object | Every 15s / 6 KO / 1 OK | Override default liveness probe settings # Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes |
+| nameOverride | string | `""` | Override name of app |
 | networkPolicy.denyAll | bool | `false` | Create a network policy that deny all traffic |
 | networkPolicy.enabled | bool | `false` | Enable Kubernetes Network Policy |
 | nginx.customConfiguration | object | `{}` | Custom configuration for Nginx sidecar |
-| nginx.enabled | bool | `true` | Enabled Nginx as a sidecar container |
+| nginx.enabled | bool | `true` | Enabled Nginx as a sidecar container # If you use ingress-nginx as an ingress controller you should disable NGINX. |
 | nginx.image.name | string | `"nginx"` | Image name to use |
 | nginx.image.tag | string | `"1.20"` | Image tag to use |
-| nginx.livenessProbe | object | Every 15s / 6 KO / 1 OK | Override default liveness probe settings |
+| nginx.livenessProbe | object | Every 15s / 6 KO / 1 OK | Override default liveness probe settings # Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes |
 | nginx.port | int | `80` | Port number that Nginx listen on |
-| nginx.readinessProbe | object | Every 15s / 6 KO / 1 OK | Override default readiness probe settings |
+| nginx.readinessProbe | object | Every 15s / 6 KO / 1 OK | Override default readiness probe settings # Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes |
 | nginx.resources | object | `{}` | Resource requests and limits |
 | nginx.securityContext | object | `{}` | Allows you to overwrite the pod-level security context |
 | nginx.tls.certificateSecret | string | `""` | Use a secret with TLS certificates. The secret has to include `cert.pem` and `key.pem` keys |
 | nginx.tls.enabled | bool | `false` | Enable TLS for Nginx sidecar |
 | nginx.tls.generateSelfSignedCert | bool | `false` | Generate self-signed certificates |
 | nginx.tls.port | int | `443` |  |
-| nodeSelector | object | `{}` | Allow the Rasa Open Source Deployment to be scheduled on selected nodes |
+| nodeSelector | object | `{}` | Allow the Rasa Open Source Deployment to be scheduled on selected nodes # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector # Ref: https://kubernetes.io/docs/user-guide/node-selection/ |
 | podAnnotations | object | `{}` | Annotations to add to the rasa-oss's pod(s) |
 | podLabels | object | `{}` | Labels to add to the rasa-oss's pod(s) |
-| podSecurityContext | object | `{}` | Defines pod-level security attributes and common container settings |
+| podSecurityContext | object | `{}` | Defines pod-level security attributes and common container settings # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/ |
 | postgresql.external.enabled | bool | `false` | Determine if use an external PostgreSQL host |
-| postgresql.external.host | string | `"external-postgresql"` | External PostgreSQL hostname |
+| postgresql.external.host | string | `"external-postgresql"` | External PostgreSQL hostname # The host value is accessible via the `${DB_HOST}` environment variable |
 | postgresql.install | bool | `true` | Install PostgreSQL |
 | rabbitmq.auth.erlangCookie | string | `"erlangCookie"` | Erlang cookie |
 | rabbitmq.auth.existingPasswordSecret | string | `""` | Existing secret with RabbitMQ credentials (must contain a value for `rabbitmq-password` key) |
 | rabbitmq.auth.password | string | `"password"` | RabbitMQ application password |
 | rabbitmq.auth.username | string | `"user"` | RabbitMQ application username |
 | rabbitmq.external.enabled | bool | `false` | Determine if use an external RabbitMQ host |
-| rabbitmq.external.host | string | `"external-rabbitmq"` | External RabbitMQ hostname |
+| rabbitmq.external.host | string | `"external-rabbitmq"` | External RabbitMQ hostname # The host value is accessible via the `${RABBITMQ_HOST}` environment variable |
 | rabbitmq.install | bool | `false` | Install RabbitMQ |
 | rasa-action-server.external.enabled | bool | `false` | Determine if external URL is used |
 | rasa-action-server.external.url | string | `""` | External URL to Rasa Action Server |
 | rasa-action-server.install | bool | `false` | Install Rasa Action Server |
-| readinessProbe | object | Every 15s / 6 KO / 1 OK | Override default readiness probe settings |
+| readinessProbe | object | Every 15s / 6 KO / 1 OK | Override default readiness probe settings # Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes |
 | redis.auth.password | string | `"redis-password"` | Redis(TM) password |
 | redis.external.enabled | bool | `false` | Determine if use an external Redis host |
-| redis.external.host | string | `"external-redis"` | External Redis hostname |
+| redis.external.host | string | `"external-redis"` | External Redis hostname # The host value is accessible via the `${REDIS_HOST}` environment variable |
 | redis.install | bool | `false` | Install Redis(TM) |
 | redis.replica.replicaCount | int | `0` | Number of Redis(TM) replicas to deploy |
-| registry | string | `"docker.io/rasa"` | Registry to use for all Rasa images (default docker.io) |
+| registry | string | `"docker.io/rasa"` | Registry to use for all Rasa images (default docker.io) # DockerHub - use docker.io/rasa |
 | replicaCount | int | `1` | Specify the number of Rasa Open Source replicas |
 | resources | object | `{}` | Resource requests and limits |
 | securityContext | object | `{}` | Allows you to overwrite the pod-level security context |
 | service.annotations | object | `{}` | Annotations to add to the service |
-| service.externalTrafficPolicy | string | `"Cluster"` | Enable client source IP preservation |
-| service.loadBalancerIP | string | `nil` | Exposes the Service externally using a cloud provider's load balancer |
-| service.nodePort | string | `nil` | Specify the nodePort(s) value(s) for the LoadBalancer and NodePort service types |
+| service.externalTrafficPolicy | string | `"Cluster"` | Enable client source IP preservation # Ref: http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip |
+| service.loadBalancerIP | string | `nil` | Exposes the Service externally using a cloud provider's load balancer # Ref: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer |
+| service.nodePort | string | `nil` | Specify the nodePort(s) value(s) for the LoadBalancer and NodePort service types # Ref: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport |
 | service.port | int | `5005` | Set port of rasa service (Kubernetes >= 1.15) |
 | service.type | string | `"ClusterIP"` | Set type of rasa service |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `false` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
-| strategy | object | `{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"}` | Allow the deployment to perform a rolling update |
-| tolerations | list | `[]` | Tolerations for pod assignment |
+| strategy | object | `{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"}` | Allow the deployment to perform a rolling update # ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy |
+| tolerations | list | `[]` | Tolerations for pod assignment # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
 | volumeMounts | list | `[]` | Specify additional volumes to mount in the rasa-oss container |
-| volumes | list | `[]` | Specify additional volumes to mount in the rasa-oss container |
+| volumes | list | `[]` | Specify additional volumes to mount in the rasa-oss container # Ref: https://kubernetes.io/docs/concepts/storage/volumes/ |
