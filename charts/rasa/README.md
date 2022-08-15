@@ -19,9 +19,9 @@ helm repo update
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | postgresql | ~10.5.2 |
-| https://charts.bitnami.com/bitnami | rabbitmq | ~8.16.2 |
-| https://charts.bitnami.com/bitnami | redis | ~14.6.4 |
+| https://charts.bitnami.com/bitnami | postgresql | ~10.16.2 |
+| https://charts.bitnami.com/bitnami | rabbitmq | ~8.32.2 |
+| https://charts.bitnami.com/bitnami | redis | ~15.7.6 |
 | https://helm.rasa.com | duckling | ~1.0.0 |
 | https://helm.rasa.com | rasa-action-server | ~1.0.0 |
 | https://helm.rasa.com | rasa-common | ~1.0.2 |
