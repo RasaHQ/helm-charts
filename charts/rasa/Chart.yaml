@@ -36,15 +36,15 @@ dependencies:
       - rasa-common
     version: ~1.0.2
   - name: postgresql
-    version: ~10.5.2
+    version: ~10.16.2
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.install
   - name: redis
-    version: ~14.6.4
+    version: ~15.7.6
     repository: https://charts.bitnami.com/bitnami
     condition: redis.install
   - name: rabbitmq
-    version: ~8.16.2
+    version: ~8.32.2
     repository: https://charts.bitnami.com/bitnami
     condition: rabbitmq.install
   - name: rasa-action-server
