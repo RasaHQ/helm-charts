@@ -3,3 +3,6 @@ charts/*/index.yaml
 
 # vscode local history extension
 .history
+
+# vscode local configurations
+.vscode
