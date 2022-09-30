@@ -1,6 +1,6 @@
 # rasa
 
-![Version: 1.17.3](https://img.shields.io/badge/Version-1.17.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.2.6](https://img.shields.io/badge/AppVersion-3.2.6-informational?style=flat-square)
+![Version: 1.17.3](https://img.shields.io/badge/Version-1.17.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.2.10](https://img.shields.io/badge/AppVersion-3.2.10-informational?style=flat-square)
 
 The Rasa Helm chart deploy a Rasa Open Source Server. Rasa is an open source machine learning framework for automated text and voice-based conversations.
 
@@ -307,7 +307,7 @@ In the [`examples/rasa`](../../examples) directory you can find more detailed ex
 | image.pullPolicy | string | `"IfNotPresent"` | Rasa Open Source image pullPolicy |
 | image.pullSecrets | list | `[]` | Rasa Open Source repository pullSecret # See https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod |
 | image.repository | string | `""` | Override default registry + image.name for Rasa Open Source |
-| image.tag | string | `"3.2.6"` | Rasa Open Source image tag to use |
+| image.tag | string | `"3.2.10"` | Rasa Open Source image tag to use |
 | ingress.annotations | object | `{}` | Ingress annotations |
 | ingress.enabled | bool | `false` | Set to true to enable ingress |
 | ingress.extraPaths | object | `{}` | Any additional arbitrary paths that may need to be added to the ingress under the main host |
