@@ -4,6 +4,9 @@ metadata:
   name: {{ include "rasa-common.names.fullname" . }}
   labels:
     {{- include "rasa-common.labels.standard" . | nindent 4 }}
+    {{- if .Values.deploymentLabels }}
+{{ toYaml .Values.deploymentLabels | indent 4 }}
+    {{- end }}
   {{- with .Values.service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
