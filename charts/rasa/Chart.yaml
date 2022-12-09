@@ -48,11 +48,11 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     condition: rabbitmq.install
   - name: rasa-action-server
-    version: ~1.0.0
+    version: ~1.0.4
     repository: https://helm.rasa.com
     condition: rasa-action-server.install
   - name: duckling
-    version: ~1.0.0
+    version: ~1.1.4
     repository: https://helm.rasa.com
     condition: duckling.install
 annotations:
