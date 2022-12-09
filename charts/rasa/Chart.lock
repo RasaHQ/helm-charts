@@ -13,9 +13,9 @@ dependencies:
   version: 8.32.2
 - name: rasa-action-server
   repository: https://helm.rasa.com
-  version: 1.0.3
+  version: 1.0.4
 - name: duckling
   repository: https://helm.rasa.com
   version: 1.0.0
-digest: sha256:50b086bdd30f3557ad494635ca32ba11f7ed49a7880cf35b41fc3095519a7b32
-generated: "2022-08-15T23:54:23.793206+02:00"
+digest: sha256:499240c08f1efb826952afaec02b3bcc013aaeeea9fcac1f2bc88cb21d8a68c7
+generated: "2022-12-09T11:42:24.705544-05:00"
