@@ -1556,6 +1556,32 @@ entries:
           description: Change type to string for the `nameOverride` and `fullnameOverride` fields in JSON schema.
     apiVersion: v2
     appVersion: 2.7.0
+    created: "2022-12-09T16:36:45.965042091Z"
+    dependencies:
+    - name: rasa-common
+      repository: https://helm.rasa.com
+      tags:
+      - rasa-common
+      version: 1.x.x
+    description: Rasa Action Server Helm chart for Kubernetes
+    digest: b8713caf501db47703324cf12c048eb445652cf4d78e12c9de90f0323fc3a06f
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    maintainers:
+    - email: hi@rasa.com
+      name: Rasa
+    name: rasa-action-server
+    sources:
+    - https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa-action-server
+    type: application
+    urls:
+    - https://github.com/RasaHQ/helm-charts/releases/download/rasa-action-server-1.0.4/rasa-action-server-1.0.4.tgz
+    version: 1.0.4
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: fixed
+          description: Change type to string for the `nameOverride` and `fullnameOverride` fields in JSON schema.
+    apiVersion: v2
+    appVersion: 2.7.0
     created: "2022-04-07T11:22:11.46997706Z"
     dependencies:
     - name: rasa-common
@@ -1743,4 +1769,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/helm-charts/releases/download/rasa-common-1.0.0/rasa-common-1.0.0.tgz
     version: 1.0.0
-generated: "2022-08-15T22:10:31.861160751Z"
+generated: "2022-12-09T16:36:45.965261798Z"
