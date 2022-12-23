@@ -38,8 +38,7 @@ image:
   name: rasa-x-demo
 
   # -- Action Server image tag to use
-  tag: "0.40.0"
-
+  tag: "1.2.6"
   # -- Override default registry + image.name for Action Server
   repository: ""
 

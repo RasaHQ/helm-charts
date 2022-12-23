@@ -1,6 +1,6 @@
 # rasa-action-server
 
-![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.0](https://img.shields.io/badge/AppVersion-2.7.0-informational?style=flat-square)
+![Version: 1.0.5](https://img.shields.io/badge/Version-1.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.6](https://img.shields.io/badge/AppVersion-1.2.6-informational?style=flat-square)
 
 Rasa Action Server Helm chart for Kubernetes
 
@@ -41,7 +41,7 @@ Rasa Action Server Helm chart for Kubernetes
 | image.pullPolicy | string | `"IfNotPresent"` | Action Server image pullPolicy |
 | image.pullSecrets | list | `[]` | Action Server repository pullSecret # See https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod |
 | image.repository | string | `""` | Override default registry + image.name for Action Server |
-| image.tag | string | `"0.40.0"` | Action Server image tag to use |
+| image.tag | string | `"1.2.6"` | Action Server image tag to use |
 | ingress.annotations | object | `{}` | Ingress annotations |
 | ingress.enabled | bool | `false` | Set to true to enable ingress |
 | ingress.extraPaths | object | `{}` | Any additional arbitrary paths that may need to be added to the ingress under the main host |
