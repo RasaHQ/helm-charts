@@ -298,6 +298,9 @@ ingress:
   # -- Set to true to enable ingress
   enabled: false
 
+  # -- Ingress Class Name
+  # ingressClassName: nginx
+
   # -- Ingress annotations
   annotations: {}
     # kubernetes.io/ingress.class: nginx
