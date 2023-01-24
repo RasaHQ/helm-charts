@@ -105,6 +105,10 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
           {{- include "rasa.containers.env" . | nindent 12 }}
+          {{ - with .Values.extraEnvFrom }}
+          envFrom:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
           {{- if or (eq (include "rasa.initialModel.download" .) "true") (eq (include "rasa.initialModel.train" .) "true") }}
           {{- include "rasa.initialModel.initContainer.volumeMounts" . | nindent 12 }}

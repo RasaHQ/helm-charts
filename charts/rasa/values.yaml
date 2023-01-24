@@ -210,6 +210,13 @@ extraEnv: []
   # - name: SOME_CUSTOM_ENV_VAR
   #   value: "custom value"
 
+# -- Add extra environment variables from secrets or configmaps
+extraEnvFrom: []
+  # - configMapRef:
+  #   name: configmap-name
+  # - secretRef:
+  #   name: secret-name
+
 ## Define the rasa image to work with
 image:
   # -- Rasa Open Source image name to use (relative to `registry`)
