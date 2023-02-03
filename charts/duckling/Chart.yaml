@@ -18,7 +18,7 @@ version: 1.1.4
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "0.2.0.2-r0"
+appVersion: "0.2.0.2-r2"
 sources:
   - https://github.com/RasaHQ/duckling
   - https://github.com/facebook/duckling
