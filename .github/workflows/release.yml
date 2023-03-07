@@ -27,7 +27,7 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v1
         with:
-          version: v3.6.0
+          version: v3.11.1
 
       - name: Helm dependency update
         run: |
@@ -35,7 +35,7 @@ jobs:
           helm repo add rasa https://helm.rasa.com
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.2.1
+        uses: helm/chart-releaser-action@be16258da8010256c6e82849661221415f031968
         with:
           config: .github/.cr.yaml
         env:
