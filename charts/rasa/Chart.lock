@@ -3,14 +3,14 @@ dependencies:
   repository: https://helm.rasa.com
   version: 1.0.2
 - name: postgresql
-  repository: https://charts.bitnami.com/bitnami
-  version: 10.16.2
+  repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
+  version: 10.15.1
 - name: redis
-  repository: https://charts.bitnami.com/bitnami
-  version: 15.7.6
+  repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
+  version: 15.7.2
 - name: rabbitmq
-  repository: https://charts.bitnami.com/bitnami
-  version: 8.32.2
+  repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
+  version: 8.26.0
 - name: rasa-action-server
   repository: https://helm.rasa.com
   version: 1.0.4
