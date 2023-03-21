@@ -37,7 +37,7 @@ jobs:
           helm repo add rasa https://helm.rasa.com
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.2.1
+        uses: helm/chart-releaser-action@v1.5.0
         with:
           config: .github/.cr.yaml
         env:
