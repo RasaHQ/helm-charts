@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - main
-
+env:
+  HELM_EXPERIMENTAL_OCI: '1'
+  
 jobs:
   release:
     runs-on: ubuntu-22.04
