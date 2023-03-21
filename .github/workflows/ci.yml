@@ -8,6 +8,9 @@ concurrency:
   group: ${{ github.head_ref }}
   cancel-in-progress: true
 
+env:
+  HELM_EXPERIMENTAL_OCI: '1'
+
 jobs:
   # JOB to run change detection
   changes:

@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+env:
+  HELM_EXPERIMENTAL_OCI: '1'
 
 jobs:
   release:
