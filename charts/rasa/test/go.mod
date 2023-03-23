@@ -1,6 +1,6 @@
 module github.com/RasaHQ/helm-charts/charts/rasa
 
-go 1.16
+go 1.20.2
 
 require (
 	github.com/gruntwork-io/terratest v0.41.16
