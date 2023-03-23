@@ -109,7 +109,9 @@ jobs:
 
       - name: Run tests
         working-directory: ${{ matrix.test }}
-        run: go test -v
+        run: |
+          go mod tidy
+          go test -v
 
   kubeval-chart:
     runs-on: ubuntu-22.04
