@@ -1,6 +1,6 @@
 module github.com/RasaHQ/helm-charts
 
-go 1.20.2
+go 1.20
 
 require (
 	github.com/gruntwork-io/terratest v0.41.16
