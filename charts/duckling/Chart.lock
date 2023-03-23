@@ -3,4 +3,4 @@ dependencies:
   repository: https://helm.rasa.com
   version: 1.0.2
 digest: sha256:2154e90d996acc784ae39b3780476a9eaa725197d793579f92e52312f9abd0d6
-generated: "2022-04-07T11:52:09.622191+02:00"
+generated: "2023-03-23T18:06:41.63237+01:00"
