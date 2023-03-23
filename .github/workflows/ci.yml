@@ -110,6 +110,7 @@ jobs:
       - name: Run tests
         working-directory: ${{ matrix.test }}
         run: |
+          helm repo add https://helm.rasa.com
           go mod tidy
           go test -v
 
