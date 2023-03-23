@@ -1,6 +1,6 @@
-# rasa
+#
 
-![Version: 1.17.3](https://img.shields.io/badge/Version-1.17.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.2.6](https://img.shields.io/badge/AppVersion-3.2.6-informational?style=flat-square)
+![Version: ](https://img.shields.io/badge/Version--informational?style=flat-square)
 
 The Rasa Helm chart deploy a Rasa Open Source Server. Rasa is an open source machine learning framework for automated text and voice-based conversations.
 
@@ -14,17 +14,6 @@ You need to add this repository to your Helm repositories:
 helm repo add rasa https://helm.rasa.com
 helm repo update
 ```
-
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://charts.bitnami.com/bitnami | postgresql | ~10.16.2 |
-| https://charts.bitnami.com/bitnami | rabbitmq | ~8.32.2 |
-| https://charts.bitnami.com/bitnami | redis | ~15.7.6 |
-| https://helm.rasa.com | duckling | ~1.0.0 |
-| https://helm.rasa.com | rasa-action-server | ~1.0.0 |
-| https://helm.rasa.com | rasa-common | ~1.0.2 |
 
 ## Quick start
 
@@ -307,7 +296,7 @@ In the [`examples/rasa`](../../examples) directory you can find more detailed ex
 | image.pullPolicy | string | `"IfNotPresent"` | Rasa Open Source image pullPolicy |
 | image.pullSecrets | list | `[]` | Rasa Open Source repository pullSecret # See https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod |
 | image.repository | string | `""` | Override default registry + image.name for Rasa Open Source |
-| image.tag | string | `"3.2.6"` | Rasa Open Source image tag to use |
+| image.tag | string | `"3.5.0"` | Rasa Open Source image tag to use |
 | ingress.annotations | object | `{}` | Ingress annotations |
 | ingress.enabled | bool | `false` | Set to true to enable ingress |
 | ingress.extraPaths | object | `{}` | Any additional arbitrary paths that may need to be added to the ingress under the main host |
