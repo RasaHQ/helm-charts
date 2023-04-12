@@ -54,7 +54,7 @@ Determine if Lock Store is used
 
 
 {{/*
-Determine if Lock Store is used
+Determine if Event Broker is used
 */}}
 {{- define "rasa.endpoints.eventBroker.enabled" -}}
 {{- if and (not .Values.applicationSettings.rasaX.useConfigEndpoint) .Values.applicationSettings.endpoints.eventBroker.enabled  -}}

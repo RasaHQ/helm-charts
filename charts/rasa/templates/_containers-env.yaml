@@ -15,6 +15,9 @@
 {{- if and (eq (include "rasa.endpoints.eventBroker.enabled" .) "true") (eq (include "rasa-common.rabbitmq.available" .) "true") }}
 {{ include "rasa-common.rabbitmq.envs" . }}
 {{- end }}
+{{- if and (eq (include "rasa.endpoints.secrets_manager.enabled" .) "true") (eq (include "rasa-common.vault.available" .) "true") }}
+{{ include "rasa-common.vault.envs" . }}
+{{- end }}
 {{- if eq (include "rasa.endpoints.action" .) "true" }}
 {{ include "rasa.actionServer.envs" . }}
 {{- end }}
@@ -44,6 +47,7 @@
     secretKeyRef:
       name: {{ include "rasa-common.names.fullname" . }}
       key: "jwt-secret"
+{{- end }}
 {{- if .Values.extraEnv }}
 {{ toYaml .Values.extraEnv }}
 {{- end }}

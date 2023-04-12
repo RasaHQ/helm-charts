@@ -102,9 +102,20 @@ applicationSettings:
 
       # -- The username which is used for authentication
       username: ${DB_USER}
+      # -- If you want to use Vault
+      # username:
+      #    source: secrets_manager.vault
+      #    secret_key: <key in vault secret which stores tracker store's username>
+      ## Only if your secrets are encrypted using transit secrets engine
+      #    transit_key: <key used to decrypt password secret>
 
       # -- The password which is used for authentication
       password: ${DB_PASSWORD}
+      # password:
+      #    source: secrets_manager.vault
+      #    secret_key: <key in vault secret which stores tracker store's password>
+      ## Only if your secrets are encrypted using transit secrets engine
+      #    transit_key: <key used to decrypt password secret>
 
       # -- The path to the database to be used
       db: ${DB_DATABASE}
@@ -171,6 +182,25 @@ applicationSettings:
 
     # -- Additional endpoints
     additionalEndpoints: {}
+
+    secrets_manager:
+      # -- Enable endpoint for Secrets Manager
+      enabled: false
+
+      # -- Secrets Manager type
+      type: "vault"
+
+      # -- The url of your secrets manager
+      url: ${VAULT_HOST}
+
+      # -- The token used for authentication
+      token: ${VAULT_TOKEN}
+
+      # -- The secrets path
+      secrets_path: ${VAULT_SECRETS_PATH}
+
+      # -- The tracing secrets engine mount point
+      transit_mount_point: {VAULT_TRANSIT_MOUNT_POINT}
 
   # Rasa X / Enterprise settings
   rasaX:
@@ -648,3 +678,30 @@ duckling:
     enabled: false
     # -- External URL to Duckling
     url: ""
+
+## Vault specific settings (https://github.com/hashicorp/vault-helm)
+vault:
+  # -- Determine if Vault is used
+  enabled: false
+
+  ## URL of the Vault Host
+  host: "vault.com"
+
+  ## Vault token
+  token: ""
+
+  ## Secrets path
+  secretsPath: "rasa-secrets"
+
+  ## Transit engine mount point
+  transitEngineMountPoint: ""
+
+  ## Use external Vault installation
+  ## This section is not a part of the Vault subchart
+  external:
+    # -- Determine if use an external Vault host
+    enabled: false
+
+    # -- External Vault hostname
+    ## The host value is accessible via the `${VAULT_HOST}` environment variable
+    host: "external-vault"
