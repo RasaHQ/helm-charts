@@ -1,6 +1,8 @@
 {{- define "rasa.downloadInitialModel.initContainer" -}}
 - name: download-initial-model
   image: "alpine"
+  securityContext:
+    {{- toYaml .Values.securityContext | nindent 4 }}
   command: ["/bin/sh", "-c"]
   args:
     - cd /app/models/ && wget {{ .Values.applicationSettings.initialModel }} -O model.tar.gz
@@ -12,6 +14,8 @@
 {{- define "rasa.trainInitialModel.initContainer" -}}
 - name: train-initial-model
   image: "{{ include "rasa-common.images.image" . }}"
+  securityContext:
+    {{- toYaml .Values.securityContext | nindent 4 }}
   imagePullPolicy: {{ .Values.image.pullPolicy }}
   command: ["/bin/bash", "-c"]
   env:
