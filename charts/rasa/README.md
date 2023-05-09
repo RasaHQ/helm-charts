@@ -1,6 +1,6 @@
 # rasa
 
-![Version: 1.17.3](https://img.shields.io/badge/Version-1.17.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.2.6](https://img.shields.io/badge/AppVersion-3.2.6-informational?style=flat-square)
+![Version: 1.17.6](https://img.shields.io/badge/Version-1.17.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.2.6](https://img.shields.io/badge/AppVersion-3.2.6-informational?style=flat-square)
 
 The Rasa Helm chart deploy a Rasa Open Source Server. Rasa is an open source machine learning framework for automated text and voice-based conversations.
 
@@ -19,12 +19,12 @@ helm repo update
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | postgresql | ~10.16.2 |
-| https://charts.bitnami.com/bitnami | rabbitmq | ~8.32.2 |
-| https://charts.bitnami.com/bitnami | redis | ~15.7.6 |
-| https://helm.rasa.com | duckling | ~1.0.0 |
-| https://helm.rasa.com | rasa-action-server | ~1.0.0 |
+| https://helm.rasa.com | duckling | ~1.1.4 |
+| https://helm.rasa.com | rasa-action-server | ~1.0.4 |
 | https://helm.rasa.com | rasa-common | ~1.0.2 |
+| oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm | postgresql | 10.16.2 |
+| oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm | rabbitmq | 8.32.2 |
+| oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm | redis | 15.7.6 |
 
 ## Quick start
 
@@ -262,6 +262,12 @@ In the [`examples/rasa`](../../examples) directory you can find more detailed ex
 | applicationSettings.endpoints.models.useRasaXasModelServer.enabled | bool | `false` | Use Rasa X (Enterprise) as a model server |
 | applicationSettings.endpoints.models.useRasaXasModelServer.tag | string | `"production"` | The model with a given tag that should be pulled from the model server |
 | applicationSettings.endpoints.models.waitTimeBetweenPulls | int | `20` | Time in seconds how often the model server will be querying |
+| applicationSettings.endpoints.secrets_manager.enabled | bool | `false` | Enable endpoint for Secrets Manager |
+| applicationSettings.endpoints.secrets_manager.secrets_path | string | `"${VAULT_SECRETS_PATH}"` | The secrets path |
+| applicationSettings.endpoints.secrets_manager.token | string | `"${VAULT_TOKEN}"` | The token used for authentication |
+| applicationSettings.endpoints.secrets_manager.transit_mount_point | object | `{"VAULT_TRANSIT_MOUNT_POINT":null}` | The tracing secrets engine mount point |
+| applicationSettings.endpoints.secrets_manager.type | string | `"vault"` | Secrets Manager type |
+| applicationSettings.endpoints.secrets_manager.url | string | `"${VAULT_HOST}"` | The url of your secrets manager |
 | applicationSettings.endpoints.trackerStore.db | string | `"${DB_DATABASE}"` | The path to the database to be used |
 | applicationSettings.endpoints.trackerStore.dialect | string | `"postgresql"` | The dialect used to communicate with your SQL backend |
 | applicationSettings.endpoints.trackerStore.enabled | bool | `true` | Enable endpoint for Tracker Store |
@@ -372,5 +378,12 @@ In the [`examples/rasa`](../../examples) directory you can find more detailed ex
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | strategy | object | `{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0},"type":"RollingUpdate"}` | Allow the deployment to perform a rolling update # ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy |
 | tolerations | list | `[]` | Tolerations for pod assignment # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
+| vault.enabled | bool | `false` | Determine if Vault is used |
+| vault.external.enabled | bool | `false` | Determine if use an external Vault host |
+| vault.external.host | string | `"external-vault"` | External Vault hostname # The host value is accessible via the `${VAULT_HOST}` environment variable |
+| vault.host | string | `"vault.com"` |  |
+| vault.secretsPath | string | `"rasa-secrets"` |  |
+| vault.token | string | `""` |  |
+| vault.transitEngineMountPoint | string | `""` |  |
 | volumeMounts | list | `[]` | Specify additional volumes to mount in the rasa-oss container |
 | volumes | list | `[]` | Specify additional volumes to mount in the rasa-oss container # Ref: https://kubernetes.io/docs/concepts/storage/volumes/ |
