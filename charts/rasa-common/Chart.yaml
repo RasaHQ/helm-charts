@@ -5,8 +5,8 @@ name: rasa-common
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
 #
 # Version and appVersion should be the same.
-version: 1.0.2
-appVersion: 1.0.2
+version: 1.0.3
+appVersion: 1.0.3
 description: A Library Helm Chart for grouping common logic between rasa charts.
 
 home: https://github.com/RasaHQ/charts/tree/master/charts/rasa-common
