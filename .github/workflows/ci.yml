@@ -127,19 +127,23 @@ jobs:
         chart: ${{ fromJSON(needs.changes.outputs.charts) }}
     steps:
       - name: Checkout
+        if: matrix.chart != 'rasa-common'
         uses: actions/checkout@v2
 
       - name: Set up Helm
+        if: matrix.chart != 'rasa-common'
         uses: azure/setup-helm@v3
         with:
           version: v3.11.2
 
       - name: Render template
+        if: matrix.chart != 'rasa-common'
         run: |
           helm dep up charts/${{ matrix.chart }}
           helm template -f .github/kubeval.values.yaml charts/${{ matrix.chart }} > ${{ matrix.chart }}.yaml
 
       - name: Run kubeval
+        if: matrix.chart != 'rasa-common'
         uses: instrumenta/kubeval-action@5915e4adba5adccac07cb156b82e54c3fed74921
         env:
           KUBEVAL_SCHEMA_LOCATION: https://kubernetesjsonschema.dev/
@@ -163,19 +167,23 @@ jobs:
         chart: ${{ fromJSON(needs.changes.outputs.charts) }}
     steps:
       - name: Checkout
+        if: matrix.chart != 'rasa-common'
         uses: actions/checkout@v2
 
       - name: Create kind ${{ matrix.k8s }} cluster
+        if: matrix.chart != 'rasa-common'
         uses: helm/kind-action@94729529f85113b88f4f819c17ce61382e6d8478 # v1.2.0
         with:
           node_image: kindest/node:${{ matrix.k8s }}
 
       - name: Set up Helm
+        if: matrix.chart != 'rasa-common'
         uses: azure/setup-helm@v3
         with:
           version: v3.11.2
 
       - name: Install chart
+        if: matrix.chart != 'rasa-common'
         run: |
           helm dep up charts/${{ matrix.chart }}
           helm install ${{ matrix.chart }} charts/${{ matrix.chart }}
