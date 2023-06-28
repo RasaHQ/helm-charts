@@ -122,6 +122,11 @@ applicationSettings:
       # -- Enable endpoint for Lock Store
       enabled: false
 
+      # when deploying with a rasa-plus license, enabled value should be set to true to configure the redis
+      # concurrent lock store automatically.
+      rasaPlus:
+        enabled: false
+
       # -- Lock Store type
       type: "redis"
 

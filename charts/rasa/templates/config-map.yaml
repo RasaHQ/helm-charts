@@ -43,11 +43,17 @@ data:
 {{- end }}
 {{- if eq (include "rasa.endpoints.lockStore.enabled" .) "true" }}
     lock_store:
+      {{- if $.Values.lockStore.rasaPlus.enabled }}
+      type: "rasa_plus.components.concurrent_lock_store.ConcurrentRedisLockStore"
+      host: {{ .Values.applicationSettings.endpoints.lockStore.url }}
+      {{- else -}}
+      type: {{ default "redis" .Values.applicationSettings.endpoints.lockStore.type }}
+      url: {{ .Values.applicationSettings.endpoints.lockStore.url }}
+      {{- end }}
     {{- range $key, $value := .Values.applicationSettings.endpoints.lockStore }}
-      {{- if not (eq $key "enabled") }}
+      {{- if not (or (eq $key "enabled") (eq $key "type") (eq $key "url"))}}
       {{ $key }}: {{ $value }}
       {{- end }}
-    {{- end }}
 {{- end }}
 {{- if eq (include "rasa.endpoints.eventBroker.enabled" .) "true" }}
     event_broker:
