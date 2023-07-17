@@ -58,5 +58,8 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: changed
-      description: update rasa-action-server chart version/dependency
+    - kind: fixed
+      description: Make init containers respect security context
+      links:
+        - name: GitHub PR
+          url: https://github.com/RasaHQ/helm-charts/pull/138
