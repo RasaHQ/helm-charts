@@ -1,6 +1,7 @@
 # Rasa Helm Charts
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/rasa)](https://artifacthub.io/packages/search?repo=rasa)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/rasa-x)](https://artifacthub.io/packages/helm/rasa-x/rasa-x)
 
 Official Helm charts for Rasa products:
 
@@ -28,8 +29,9 @@ helm repo update
 
 ## Where to get help
 
-- If you encounter bugs or have suggestions for this Helm chart, please create an issue in this repository.
-- If you have general questions about usage, please create a thread in the [Rasa Forum](https://forum.rasa.com/).
+- If you encounter bugs or have suggestions for this Helm chart, you may create an issue in this repository.
+- Community users may create a thread in the [Rasa Forum](https://forum.rasa.com/) for general questions or issues.
+- Commercial customers can contact their Customer Success Manager or submit a support request by going to https://rasa.com/support/.
 
 ## How to contribute
 
