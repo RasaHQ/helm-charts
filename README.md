@@ -6,6 +6,7 @@ Official Helm charts for Rasa products:
 
 - [Rasa Open Source](https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa)
 - [Rasa Action Server](https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa-action-server)
+- [Rasa X/Enterprise](https://github.com/RasaHQ/rasa-x-helm)
 
 Helm charts for components used by Rasa:
 
