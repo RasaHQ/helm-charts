@@ -189,6 +189,12 @@ applicationSettings:
 # -- Specify the number of Rasa Open Source replicas
 replicaCount: 1
 
+# -- Specify the hostAliases of Rasa Open Source pods
+hostAliases: []
+# - ip: 127.0.0.1
+#   hostnames:
+#     - "localhost"
+
 networkPolicy:
   # -- Enable Kubernetes Network Policy
   enabled: false

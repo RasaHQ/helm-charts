@@ -21,6 +21,12 @@ applicationSettings:
 # -- Specify the number of Action Server replicas
 replicaCount: 1
 
+# -- Specify the hostAliases of the Action Server pods
+hostAliases: []
+# - ip: 127.0.0.1
+#   hostnames:
+#     - "localhost"
+
 # -- Override the default arguments for the container
 args: []
 
