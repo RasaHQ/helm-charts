@@ -1,6 +1,6 @@
 # rasa
 
-![Version: 1.17.3](https://img.shields.io/badge/Version-1.17.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.2.6](https://img.shields.io/badge/AppVersion-3.2.6-informational?style=flat-square)
+![Version: 1.17.7](https://img.shields.io/badge/Version-1.17.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.2.6](https://img.shields.io/badge/AppVersion-3.2.6-informational?style=flat-square)
 
 The Rasa Helm chart deploy a Rasa Open Source Server. Rasa is an open source machine learning framework for automated text and voice-based conversations.
 
@@ -19,12 +19,12 @@ helm repo update
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | postgresql | ~10.16.2 |
-| https://charts.bitnami.com/bitnami | rabbitmq | ~8.32.2 |
-| https://charts.bitnami.com/bitnami | redis | ~15.7.6 |
-| https://helm.rasa.com | duckling | ~1.0.0 |
-| https://helm.rasa.com | rasa-action-server | ~1.0.0 |
+| https://helm.rasa.com | duckling | ~1.1.4 |
+| https://helm.rasa.com | rasa-action-server | ~1.0.4 |
 | https://helm.rasa.com | rasa-common | ~1.0.2 |
+| oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm | postgresql | 10.16.2 |
+| oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm | rabbitmq | 8.32.2 |
+| oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm | redis | 15.7.6 |
 
 ## Quick start
 
@@ -303,6 +303,7 @@ In the [`examples/rasa`](../../examples) directory you can find more detailed ex
 | global.postgresql.servicePort | int | `5432` | servicePort which is used to expose postgres to the other components |
 | global.redis | object | `{"password":"redis-password"}` | global settings of the redis subchart |
 | global.redis.password | string | `"redis-password"` | password to use in case there no external secret was provided |
+| hostAliases | list | `[]` | Specify the hostAliases of Rasa Open Source pods |
 | image.name | string | `"rasa"` | Rasa Open Source image name to use (relative to `registry`) |
 | image.pullPolicy | string | `"IfNotPresent"` | Rasa Open Source image pullPolicy |
 | image.pullSecrets | list | `[]` | Rasa Open Source repository pullSecret # See https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod |
