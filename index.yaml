@@ -195,6 +195,57 @@ entries:
           description: update rasa-action-server chart version/dependency
     apiVersion: v2
     appVersion: 3.2.6
+    created: "2023-08-22T08:50:52.377133641Z"
+    dependencies:
+    - name: rasa-common
+      repository: https://helm.rasa.com
+      tags:
+      - rasa-common
+      version: ~1.0.2
+    - condition: postgresql.install
+      name: postgresql
+      repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
+      version: 10.16.2
+    - condition: redis.install
+      name: redis
+      repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
+      version: 15.7.6
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
+      version: 8.32.2
+    - condition: rasa-action-server.install
+      name: rasa-action-server
+      repository: https://helm.rasa.com
+      version: ~1.0.4
+    - condition: duckling.install
+      name: duckling
+      repository: https://helm.rasa.com
+      version: ~1.1.4
+    description: The Rasa Helm chart deploy a Rasa Open Source Server. Rasa is an
+      open source machine learning framework for automated text and voice-based conversations.
+    digest: 765475c242a965e15bd020dc63ca4bdd027c7785ab2a5f65ecff2008814a880e
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - kubernetes
+    - rasa
+    - rasa-oss
+    maintainers:
+    - email: hi@rasa.com
+      name: Rasa
+    name: rasa
+    sources:
+    - https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa
+    type: application
+    urls:
+    - https://github.com/RasaHQ/helm-charts/releases/download/rasa-1.17.7/rasa-1.17.7.tgz
+    version: 1.17.7
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: changed
+          description: update rasa-action-server chart version/dependency
+    apiVersion: v2
+    appVersion: 3.2.6
     created: "2023-03-23T21:32:59.30496401Z"
     dependencies:
     - name: rasa-common
@@ -1736,6 +1787,32 @@ entries:
           description: Add support for adding labels to the rasa-action-server service
     apiVersion: v2
     appVersion: 2.7.0
+    created: "2023-08-22T08:50:52.522873659Z"
+    dependencies:
+    - name: rasa-common
+      repository: https://helm.rasa.com
+      tags:
+      - rasa-common
+      version: 1.x.x
+    description: Rasa Action Server Helm chart for Kubernetes
+    digest: f74d60d64ac4c3cabd345bb2fbc5c0cf3a5ca32cb44361c6ab37a28195baf8b8
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    maintainers:
+    - email: hi@rasa.com
+      name: Rasa
+    name: rasa-action-server
+    sources:
+    - https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa-action-server
+    type: application
+    urls:
+    - https://github.com/RasaHQ/helm-charts/releases/download/rasa-action-server-1.0.8/rasa-action-server-1.0.8.tgz
+    version: 1.0.8
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: changed
+          description: Add support for adding labels to the rasa-action-server service
+    apiVersion: v2
+    appVersion: 2.7.0
     created: "2023-03-23T21:32:59.450289209Z"
     dependencies:
     - name: rasa-common
@@ -2027,4 +2104,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/helm-charts/releases/download/rasa-common-1.0.0/rasa-common-1.0.0.tgz
     version: 1.0.0
-generated: "2023-03-23T21:32:59.450662612Z"
+generated: "2023-08-22T08:50:52.523233161Z"
