@@ -1,6 +1,6 @@
 # duckling
 
-![Version: 1.1.4](https://img.shields.io/badge/Version-1.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.2.0.2-r0](https://img.shields.io/badge/AppVersion-0.2.0.2--r0-informational?style=flat-square)
+![Version: 1.1.4](https://img.shields.io/badge/Version-1.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.2.0.2-r2](https://img.shields.io/badge/AppVersion-0.2.0.2--r2-informational?style=flat-square)
 
 Duckling is a Haskell library that parses text into structured data.
 
@@ -43,7 +43,7 @@ Duckling is a Haskell library that parses text into structured data.
 | image.pullPolicy | string | `"IfNotPresent"` | Duckling image pullPolicy |
 | image.pullSecrets | list | `[]` | Duckling repository pullSecret # See https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod |
 | image.repository | string | `""` | Override default registry + image.name for Duckling |
-| image.tag | string | `"0.2.0.2-r0"` | Duckling image tag to use |
+| image.tag | string | `"0.2.0.2-r2"` | Duckling image tag to use |
 | ingress.annotations | object | `{}` | Ingress annotations |
 | ingress.enabled | bool | `false` | Set to true to enable ingress |
 | ingress.extraPaths | object | `{}` | Any additional arbitrary paths that may need to be added to the ingress under the main host |
