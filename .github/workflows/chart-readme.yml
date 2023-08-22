@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.RASABOT_HELM_TOKEN }}
 
       - name: Update README.md
         working-directory: charts/${{ matrix.chart }}
@@ -45,3 +45,4 @@ jobs:
           default_author: github_actor
           add: 'charts/${{ matrix.chart }}/README.md'
           message: '[helm-docs] Update README.md'
+          github_token: ${{ secrets.RASABOT_HELM_TOKEN }}

@@ -1,6 +1,6 @@
 # rasa-action-server
 
-![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.0](https://img.shields.io/badge/AppVersion-2.7.0-informational?style=flat-square)
+![Version: 1.0.8](https://img.shields.io/badge/Version-1.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.7.0](https://img.shields.io/badge/AppVersion-2.7.0-informational?style=flat-square)
 
 Rasa Action Server Helm chart for Kubernetes
 
@@ -37,6 +37,7 @@ Rasa Action Server Helm chart for Kubernetes
 | deploymentLabels | object | `{}` | Labels to add to the action-server deployment |
 | extraEnv | list | `[]` | Add extra environment variables |
 | fullnameOverride | string | `""` | Override the full qualified app name |
+| hostAliases | list | `[]` | Specify the hostAliases of the Action Server pods |
 | image.name | string | `"rasa-x-demo"` | Action Server image name to use (relative to `registry`) |
 | image.pullPolicy | string | `"IfNotPresent"` | Action Server image pullPolicy |
 | image.pullSecrets | list | `[]` | Action Server repository pullSecret # See https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod |
