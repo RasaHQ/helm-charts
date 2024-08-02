@@ -1,24 +1,35 @@
 # Rasa Helm Charts
+The official Helm Charts for Rasa products can be found here. To get started, they require:
+- [Helm 3](https://helm.sh/) (>= 3.5 )
+- Kubernetes 1.19+
 
-[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/rasa)](https://artifacthub.io/packages/search?repo=rasa)
-[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/rasa-x)](https://artifacthub.io/packages/helm/rasa-x/rasa-x)
+## Rasa Pro
+Documentation for installing Rasa Pro with Helm can be found [here](https://rasa.com/docs/rasa-pro/production/introduction). 
 
-Official Helm charts for Rasa products:
+Download the Rasa Pro Helm charts with:
+```
+helm pull oci://europe-west3-docker.pkg.dev/rasa-releases/helm-charts/rasa
+```
 
+## Rasa Studio
+Documentation for installing Rasa Studio with Helm can be found [here](https://rasa.com/docs/studio/deployment/installation-guide). 
+
+Download the Rasa Studio Helm charts with:
+```
+helm pull oci://europe-west3-docker.pkg.dev/rasa-releases/helm-charts/studio
+```
+
+## Support
+If you encounter bugs or have suggestions for these Helm charts:
+- Community users may create a thread in the [Rasa Forum](https://forum.rasa.com/) for general questions or issues.
+- Commercial customers can contact their Customer Success Manager or submit a support request by going to [Rasa Support](https://rasa.com/support/).
+
+## Other Rasa Products
+You can find our older Helm charts for other Rasa products here:
 - [Rasa Open Source](https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa)
 - [Rasa Action Server](https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa-action-server)
 - [Rasa X/Enterprise](https://github.com/RasaHQ/rasa-x-helm)
-
-Helm charts for components used by Rasa:
-
 - [Duckling](https://github.com/RasaHQ/helm-charts/tree/main/charts/duckling)
-
-## Prerequisites
-
-- [Helm 3](https://helm.sh/) (>= 3.5 )
-- Kubernetes 1.14+
-
-## How to use Rasa Helm repository?
 
 You need to add this repository to your Helm repositories:
 
@@ -27,27 +38,6 @@ helm repo add rasa https://helm.rasa.com
 helm repo update
 ```
 
-## Where to get help
-
-- If you encounter bugs or have suggestions for this Helm chart, you may create an issue in this repository.
-- Community users may create a thread in the [Rasa Forum](https://forum.rasa.com/) for general questions or issues.
-- Commercial customers can contact their Customer Success Manager or submit a support request by going to https://rasa.com/support/.
-
-## How to contribute
-
-We are very happy to receive your contributions. You can find more information about how to contribute to Rasa (in lots of different ways!) [here](http://rasa.com/community/contribute).
-
-To contribute via pull request, follow these steps:
-
-1. Create an issue describing the feature you want to work on
-2. Create a pull request describing your changes
-
-Remember that your PR should include:
-
-1. Details about the changes introduced by a given chart version (use the `artifacthub.io/changes` annotation in the `Chart.yaml` file)
-2. Update the chart version
-3. Add additional annotations that indicate your changes (see: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations)
-
 ## License
 
-Licensed under the Apache License, Version 2.0. Copyright 2021 Rasa Technologies GmbH. [LICENSE](https://github.com/RasaHQ/helm-charts/blob/main/LICENSE).
+Licensed under the Apache License, Version 2.0. Copyright 2024 Rasa Technologies GmbH. [LICENSE](https://github.com/RasaHQ/helm-charts/blob/main/LICENSE).
