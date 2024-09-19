@@ -4,7 +4,7 @@ The official Helm Charts for Rasa products can be found here. To get started, th
 - Kubernetes 1.19+
 
 ## Rasa Pro
-Documentation for installing Rasa Pro with Helm can be found [here](https://rasa.com/docs/rasa-pro/production/introduction). 
+Documentation for installing Rasa Pro with Helm can be found [here](https://rasa.com/docs/rasa-pro/deploy/introduction).
 
 Download the Rasa Pro Helm charts with:
 ```
