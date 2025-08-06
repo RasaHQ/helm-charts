@@ -23,9 +23,6 @@ deprecated: true
 icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU"
 sources:
   - https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa
-maintainers:
-  - email: hi@rasa.com
-    name: Rasa
 keywords:
   - kubernetes
   - rasa

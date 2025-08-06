@@ -26,10 +26,6 @@ icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf2
 sources:
   - https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa-action-server
 
-maintainers:
-  - email: hi@rasa.com
-    name: Rasa
-
 dependencies:
   - name: rasa-common
     repository: https://helm.rasa.com

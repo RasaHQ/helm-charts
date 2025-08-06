@@ -24,9 +24,6 @@ sources:
   - https://github.com/RasaHQ/duckling
   - https://github.com/facebook/duckling
   - https://github.com/RasaHQ/helm-charts/tree/main/charts/duckling
-maintainers:
-  - email: hi@rasa.com
-    name: Rasa
 dependencies:
   - name: rasa-common
     repository: https://helm.rasa.com
