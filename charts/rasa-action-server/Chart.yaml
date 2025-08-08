@@ -14,21 +14,17 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 1.0.8
+version: 1.0.9
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "2.7.0"
-
+deprecated: true
 icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
 
 sources:
   - https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa-action-server
-
-maintainers:
-  - email: hi@rasa.com
-    name: Rasa
 
 dependencies:
   - name: rasa-common

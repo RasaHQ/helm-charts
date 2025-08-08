@@ -5,10 +5,10 @@ name: rasa-common
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
 #
 # Version and appVersion should be the same.
-version: 1.0.2
+version: 1.0.3
 appVersion: 1.0.2
 description: A Library Helm Chart for grouping common logic between rasa charts.
-
+deprecated: true
 home: https://github.com/RasaHQ/charts/tree/master/charts/rasa-common
 keywords:
   - common
@@ -22,10 +22,6 @@ type: library
 sources:
   - https://github.com/RasaHQ/helm-charts/charts/rasa-common
   - https://rasa.com/
-
-maintainers:
-  - email: hi@rasa.com
-    name: Rasa
 
 annotations:
   category: Infrastructure
