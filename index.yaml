@@ -7,6 +7,31 @@ entries:
           description: Bump to duckling 0.2.0.2
     apiVersion: v2
     appVersion: 0.2.0.2-r0
+    created: "2025-08-08T09:05:48.889381692Z"
+    dependencies:
+    - name: rasa-common
+      repository: https://helm.rasa.com
+      tags:
+      - rasa-common
+      version: 1.x.x
+    deprecated: true
+    description: Duckling is a Haskell library that parses text into structured data.
+    digest: f67cee5efbd5215d4a39472dc8c6f295fa5403162537299f32170cff09bc5ccc
+    name: duckling
+    sources:
+    - https://github.com/RasaHQ/duckling
+    - https://github.com/facebook/duckling
+    - https://github.com/RasaHQ/helm-charts/tree/main/charts/duckling
+    type: application
+    urls:
+    - https://github.com/RasaHQ/helm-charts/releases/download/duckling-1.1.6/duckling-1.1.6.tgz
+    version: 1.1.6
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: fixed
+          description: Bump to duckling 0.2.0.2
+    apiVersion: v2
+    appVersion: 0.2.0.2-r0
     created: "2023-03-23T21:32:59.112233022Z"
     dependencies:
     - name: rasa-common
@@ -189,6 +214,55 @@ entries:
     - https://github.com/RasaHQ/helm-charts/releases/download/duckling-1.0.0/duckling-1.0.0.tgz
     version: 1.0.0
   rasa:
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: changed
+          description: update rasa-action-server chart version/dependency
+    apiVersion: v2
+    appVersion: 3.2.6
+    created: "2025-08-08T09:05:49.080612957Z"
+    dependencies:
+    - name: rasa-common
+      repository: https://helm.rasa.com
+      tags:
+      - rasa-common
+      version: ~1.0.2
+    - condition: postgresql.install
+      name: postgresql
+      repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
+      version: 10.16.2
+    - condition: redis.install
+      name: redis
+      repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
+      version: 15.7.6
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
+      version: 8.32.2
+    - condition: rasa-action-server.install
+      name: rasa-action-server
+      repository: https://helm.rasa.com
+      version: ~1.0.4
+    - condition: duckling.install
+      name: duckling
+      repository: https://helm.rasa.com
+      version: ~1.1.4
+    deprecated: true
+    description: The Rasa Helm chart deploy a Rasa Open Source Server. Rasa is an
+      open source machine learning framework for automated text and voice-based conversations.
+    digest: 1a383bdd001fe156692c10baf3800a550a599315c3e220ffd0988e330fa2c517
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - kubernetes
+    - rasa
+    - rasa-oss
+    name: rasa
+    sources:
+    - https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa
+    type: application
+    urls:
+    - https://github.com/RasaHQ/helm-charts/releases/download/rasa-1.17.8/rasa-1.17.8.tgz
+    version: 1.17.8
   - annotations:
       artifacthub.io/changes: |
         - kind: changed
@@ -1787,6 +1861,30 @@ entries:
           description: Add support for adding labels to the rasa-action-server service
     apiVersion: v2
     appVersion: 2.7.0
+    created: "2025-08-08T09:05:49.253505119Z"
+    dependencies:
+    - name: rasa-common
+      repository: https://helm.rasa.com
+      tags:
+      - rasa-common
+      version: 1.x.x
+    deprecated: true
+    description: Rasa Action Server Helm chart for Kubernetes
+    digest: 832e7fe5a29fd54a9198914a45b8be477d0d82cff101fd32a771e702b6f1ad5d
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    name: rasa-action-server
+    sources:
+    - https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa-action-server
+    type: application
+    urls:
+    - https://github.com/RasaHQ/helm-charts/releases/download/rasa-action-server-1.0.9/rasa-action-server-1.0.9.tgz
+    version: 1.0.9
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: changed
+          description: Add support for adding labels to the rasa-action-server service
+    apiVersion: v2
+    appVersion: 2.7.0
     created: "2023-08-22T08:50:52.522873659Z"
     dependencies:
     - name: rasa-common
@@ -2027,6 +2125,35 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.0.2
+    created: "2025-08-08T09:05:49.468309787Z"
+    deprecated: true
+    description: A Library Helm Chart for grouping common logic between rasa charts.
+    digest: 789f093bfd48eb3389769289581e66797f9cbe14671b9e59fba5eac039a7bdd4
+    home: https://github.com/RasaHQ/charts/tree/master/charts/rasa-common
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - common
+    - template
+    - function
+    - rasa
+    name: rasa-common
+    sources:
+    - https://github.com/RasaHQ/helm-charts/charts/rasa-common
+    - https://rasa.com/
+    type: library
+    urls:
+    - https://github.com/RasaHQ/helm-charts/releases/download/rasa-common-1.0.3/rasa-common-1.0.3.tgz
+    version: 1.0.3
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: fixed
+          description: Issue with default value not being accessed
+          links:
+            - name: Github Issue
+              url: https://github.com/RasaHQ/helm-charts/issues/40
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 1.0.2
     created: "2021-10-01T13:01:47.954070985Z"
     description: A Library Helm Chart for grouping common logic between rasa charts.
     digest: 022cef79758b93e98f2f87cc5bb35ad573c7a4351a402ea3d00bf97f6dc76b60
@@ -2104,4 +2231,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/helm-charts/releases/download/rasa-common-1.0.0/rasa-common-1.0.0.tgz
     version: 1.0.0
-generated: "2023-08-22T08:50:52.523233161Z"
+generated: "2025-08-08T09:05:49.468651607Z"
